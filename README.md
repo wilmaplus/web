@@ -3,9 +3,11 @@ Wilma Plus Web, your favorite Android app for Wilma, now also in web version!
 
 __NOTE__: Work is still in progress!
 
-## Current State
-- [x] Sign in UI
-- [ ] Login and session handling
+## TODO
+
+- [x] Sign in GUI
+- [ ] Wilma API and sign in
+- [ ] Homepage UI
 
 ## Development server
 
