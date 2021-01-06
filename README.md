@@ -1,6 +1,5 @@
-# WilmaplusWeb
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+# Wilma Plus Web
+Wilma Plus Web, your loved Android app, now also in web version!
 
 ## Development server
 
