@@ -1,5 +1,5 @@
 # Wilma Plus Web
-Wilma Plus Web, your loved Android app, now also in web version!
+Wilma Plus Web, your favorite Android app for Wilma, now also in web version!
 
 __NOTE__: Work is still in progress!
 ## Development server
