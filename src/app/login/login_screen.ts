@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {GlobalConfig} from "../config/global";
+import {loginMethods} from "./login_methods";
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.scss']
 })
 
+
 export class LoginScreenComponent {
-  title = 'sign-in';
+  app_name = new GlobalConfig().app_name;
+  loginMethods = loginMethods
 }

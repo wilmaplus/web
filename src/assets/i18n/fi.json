@@ -1,0 +1,6 @@
+{
+  "welcome": "Tervetuloa {{app_name}}saan!",
+  "please_login": "Ole hyvä ja kirjaudu sisään",
+  "login_phone": "Kirjaudu puhelimen avulla",
+  "login_wilma": "Kirjaudu Wilma -tunnuksella"
+}

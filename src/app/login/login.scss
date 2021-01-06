@@ -1,0 +1,28 @@
+@import '~@angular/material/theming';
+@import '../../theme/colorpalette';
+
+.wplus-login {
+  // Little hack ;D
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  background: linear-gradient(135deg, mat-color($wilmaplus-primary, main) 35%, mat-color($dark-primary, darker) 100%);
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+
+.login_button {
+  margin: 5px;
+  border-radius: 18px;
+  padding-right: 12px;
+  padding-left: 10px;
+}
+
+.button-mat-icon {
+  vertical-align: top;
+  margin-bottom: 3px;
+  margin-right: 3px;
+}

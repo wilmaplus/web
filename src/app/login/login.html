@@ -1,0 +1,18 @@
+<div [ngClass]="'wplus-login'" align="center">
+  <div align="center-horizontal">
+    <img src="assets/wilmaplusLogoWhite.svg" [height]="130" alt="Wilma Plus Logo"/>
+    <div class="row">
+      <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+        <h1  translate [translateParams]="{app_name: app_name}">welcome</h1>
+      </div>
+      <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+        <h2 [ngClass]="'headline'" translate>please_login</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 col-sm-4 col-md-4 col-lg-4" *ngFor="let method of loginMethods" [class.login-button-dark]="true">
+        <button mat-raised-button color="primary" [ngClass]="'login_button'" ><mat-icon [ngClass]="'button-mat-icon'">{{method.icon}}</mat-icon>{{method.title | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
