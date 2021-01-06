@@ -1,0 +1,41 @@
+@import '~@angular/material/theming';
+@import "colorpalette";
+@include mat-core();
+
+
+$wilmaplus-primary-palette: mat-palette($wilmaplus-primary, main, lighter, darker);
+$wilmaplus-accent-palette:  mat-palette($wilmaplus-accent, main, lighter, darker);
+
+$wilmaplus-dark-primary-palette: mat-palette($dark-primary, main, lighter, darker);
+$wilmaplus-dark-accent-palette: mat-palette($dark-accent, main, lighter, darker);
+$wilmaplus-dark-warn-palette: mat-palette($dark-warn, main, lighter, darker);
+
+// Light Theme
+$wilmaplus-theme: mat-light-theme((
+  color: (
+    primary: $wilmaplus-primary-palette,
+    accent: $wilmaplus-accent-palette
+  )
+));
+
+// Dark theme
+$wilmaplus-dark-theme: mat-dark-theme((
+  color: (
+    primary: $wilmaplus-dark-primary-palette,
+    accent: $wilmaplus-dark-accent-palette,
+    warn: $wilmaplus-dark-warn-palette
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($wilmaplus-theme);
+
+.material-icons {
+  font-size: 24px;
+  font-family: 'Material Icons Outlined', 'Material Icons';
+  .mat-badge-content {
+    font-family: 'Ubuntu';
+  }
+}

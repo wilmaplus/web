@@ -1,0 +1,70 @@
+$dark-text: #000000;
+$dark-primary-text: rgba($dark-text, 0.87);
+
+$light-text: #ffffff;
+$light-primary-text: $light-text;
+
+$wilmaplus-accent: (
+  main: #4ac438,
+  lighter: #c9edc3,
+  darker: #32af24,
+  200: #4ac438, // For slide toggle,
+  contrast : (
+    main: $dark-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+
+$wilmaplus-primary: (
+  main: #059fcd,
+  lighter: #b4e2f0,
+  darker: #0383ba,
+  200: #059fcd, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+// For dark theme
+
+
+$dark-accent: (
+  main: #c78028,
+  lighter: #eed9bf,
+  darker: #b36318,
+  200: #c78028, // For slide toggle,
+  contrast : (
+    main: $dark-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+$dark-primary: (
+  main: #337480,
+  lighter: #c2d5d9,
+  darker: #205763,
+  200: #337480, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+$dark-warn: (
+  main: #ff4400,
+  lighter: #ffc7b3,
+  darker: #ff2d00,
+  200: #ff4400, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
