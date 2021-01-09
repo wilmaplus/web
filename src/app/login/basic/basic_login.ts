@@ -33,7 +33,11 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
 
   signIn() {
     this.loading = true;
-    this.openError('Menetit äsken tunnuksesi, SuPo on tulossa :D Good luck');
+    this.apiClient.getNewWilmaSession(this.server.url, (session => {
+      console.log(session);
+    }), (error) => {
+      this.openError(error.errorDescription);
+    })
   }
 
   openError(errorMessage: any, title: any = null) {
