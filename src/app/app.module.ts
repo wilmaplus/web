@@ -13,6 +13,8 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ServerSelectComponent} from "./login/server_select/server_select";
+import {ApiClient} from "./client/backend";
+import {GlobalConfig} from "./config/global";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,9 +27,9 @@ export function createTranslateLoader(http: HttpClient) {
     ServerSelectComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage: 'fi',
       loader: {
@@ -42,7 +44,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatIconModule,
     MatToolbarModule
   ],
-  providers: [],
+  providers: [HttpClientModule,ApiClient, GlobalConfig],
   bootstrap: [WilmaPlusAppComponent]
 })
 export class AppModule { }

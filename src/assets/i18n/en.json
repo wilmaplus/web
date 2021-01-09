@@ -5,5 +5,6 @@
   "login_wilma": "Sign in using Wilma account",
   "select_wilma_server": "Select Wilma server",
   "back": "Go back",
-  "login_screen": "Sign in"
+  "login_screen": "Sign in",
+  "servers-cache": "Servers hasn't been loaded yet. Please try again later"
 }
