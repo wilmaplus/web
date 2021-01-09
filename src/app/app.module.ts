@@ -15,6 +15,12 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {ServerSelectComponent} from "./login/server_select/server_select";
 import {ApiClient} from "./client/backend";
 import {GlobalConfig} from "./config/global";
+import {WilmaPlusErrorCard} from "./elements/error/error";
+import {ApiError} from "./client/types/base";
+import {MatCardModule} from "@angular/material/card";
+import {MatProgressBar, MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatListModule} from "@angular/material/list";
+import {MatRippleModule} from "@angular/material/core";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -24,7 +30,8 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     WilmaPlusAppComponent,
     LoginScreenComponent,
-    ServerSelectComponent
+    ServerSelectComponent,
+    WilmaPlusErrorCard
   ],
   imports: [
     HttpClientModule,
@@ -42,7 +49,11 @@ export function createTranslateLoader(http: HttpClient) {
     MatGridListModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatListModule,
+    MatRippleModule
   ],
   providers: [HttpClientModule,ApiClient, GlobalConfig],
   bootstrap: [WilmaPlusAppComponent]

@@ -1,0 +1,19 @@
+.server-selector {
+  width: 100%;
+  height: calc(100% - 64px);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+// Fixing issue of card expanding while showing its ripple
+.rippleCorrection {
+  margin-bottom: 0
+}
+
+mat-icon {
+  vertical-align: top;
+  margin-bottom: 3px;
+  margin-right: 3px;
+}

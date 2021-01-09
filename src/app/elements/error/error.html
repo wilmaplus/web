@@ -1,0 +1,11 @@
+<mat-card [ngClass]="'error-card'">
+  <mat-card-content>
+    <h2>{{'error_occurred' | translate}}</h2>
+    <h3>
+      {{apiError.errorDescription}}
+    </h3>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button [style]="{width: '100%'}">{{'try_again' | translate}}</button>
+  </mat-card-actions>
+</mat-card>

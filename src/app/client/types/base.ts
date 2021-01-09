@@ -1,10 +1,11 @@
 import {TranslateService} from "@ngx-translate/core";
+import {Injectable} from "@angular/core";
 
 export class ApiError {
-  private _error = false;
-  private _errorCode = null
-  private _errorDescription = null
-  private _additionalDetails = null
+  private _error: any = false;
+  private _errorCode: any = null
+  private _errorDescription: any = null
+  private _additionalDetails: any = null
 
 
   constructor(errorCode: any, errorDescription: any, additionalDetails: any, error=true) {

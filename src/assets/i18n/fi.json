@@ -6,5 +6,7 @@
   "select_wilma_server": "Valitse Wilma palvelin",
   "back": "Takaisin",
   "login_screen": "Kirjaudu sisään",
-  "servers-cache": "Palvelinlista ei ole vielä latautunut, yritä uudelleen myöhemmin"
+  "servers-cache": "Palvelinlista ei ole vielä latautunut, yritä uudelleen myöhemmin",
+  "error_occurred": "Tapahtui virhe",
+  "try_again": "Yritä uudelleen"
 }

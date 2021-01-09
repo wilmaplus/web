@@ -4,3 +4,17 @@
   </button>
   <span>{{'select_wilma_server' | translate}}</span>
 </mat-toolbar>
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
+<div [ngClass]="'server-selector'" align="center">
+  <wilmaplus-error [apiError]="error" [hidden]="!error.error"></wilmaplus-error>
+  <mat-list role="list" style="overflow-y: auto">
+      <mat-card [ngClass]="'mat-card'" role="listitem" *ngFor="let server of servers" [style]="{margin: '12px'}" (click)="selectServer(server)" matRipple>
+        <mat-card-content [ngClass]="'rippleCorrection'">
+          <h3 matLine> {{server.name}} </h3>
+          <p matLine>
+            <span> {{server.url}} </span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+  </mat-list>
+</div>

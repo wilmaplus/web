@@ -6,5 +6,7 @@
   "select_wilma_server": "Select Wilma server",
   "back": "Go back",
   "login_screen": "Sign in",
-  "servers-cache": "Servers hasn't been loaded yet. Please try again later"
+  "servers-cache": "Servers hasn't been loaded yet. Please try again later",
+  "error_occurred": "Error occurred",
+  "try_again": "Try again"
 }

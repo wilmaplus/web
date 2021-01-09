@@ -14,7 +14,6 @@ export class ApiClient {
   public getWilmaServers(callback: (servers: object[]) => void, error: (apiError: ApiError) => void) {
     let translateService = this.translate;
     this.http.get<ServerResponse>(this.config.backend_url+'/api/v1/servers').toPromise().then(function (response) {
-      console.log(response);
       if (response.status) {
         callback(response.servers);
       } else {
@@ -23,7 +22,8 @@ export class ApiClient {
         }, translateService);
       }
     }).catch(function (exception) {
-      if (exception.error) {
+      console.log(exception);
+      if (exception.status != 0) {
         ApiError.parseApiError(exception.error, (apiError: ApiError) => {
           error(apiError);
         }, translateService);
