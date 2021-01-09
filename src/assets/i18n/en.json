@@ -2,5 +2,8 @@
   "welcome": "Welcome to {{app_name}}!",
   "please_login": "Please sign in",
   "login_phone": "Sign in using your phone",
-  "login_wilma": "Sign in using Wilma account"
+  "login_wilma": "Sign in using Wilma account",
+  "select_wilma_server": "Select Wilma server",
+  "back": "Go back",
+  "login_screen": "Sign in"
 }

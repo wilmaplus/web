@@ -11,7 +11,7 @@
     </div>
     <div class="row">
       <div class="col-4 col-sm-4 col-md-4 col-lg-4" *ngFor="let method of loginMethods" [class.login-button-dark]="true">
-        <button mat-raised-button color="primary" [ngClass]="'login_button'" ><mat-icon [ngClass]="'button-mat-icon'">{{method.icon}}</mat-icon>{{method.title | translate}}</button>
+        <button mat-raised-button color="primary" [ngClass]="'login_button'" routerLink="{{method.src}}"><mat-icon [ngClass]="'button-mat-icon'">{{method.icon}}</mat-icon>{{method.title | translate}}</button>
       </div>
     </div>
   </div>

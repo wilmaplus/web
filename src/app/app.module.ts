@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { WilmaPlusAppComponent } from './wilma-plus-app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {LoginScreenComponent} from "./login/login_screen";
@@ -11,6 +11,8 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {ServerSelectComponent} from "./login/server_select/server_select";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -18,8 +20,9 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginScreenComponent
+    WilmaPlusAppComponent,
+    LoginScreenComponent,
+    ServerSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +39,10 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserAnimationsModule,
     MatGridListModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [WilmaPlusAppComponent]
 })
 export class AppModule { }
