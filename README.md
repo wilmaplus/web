@@ -1,7 +1,14 @@
 # Wilma Plus Web
-Wilma Plus Web, your loved Android app, now also in web version!
+Wilma Plus Web, your favorite Android app for Wilma, now also in web version!
 
 __NOTE__: Work is still in progress!
+
+## TODO
+
+- [x] Sign in GUI
+- [ ] Wilma API and sign in
+- [ ] Homepage UI
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
