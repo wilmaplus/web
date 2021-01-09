@@ -10,5 +10,10 @@
   "error_occurred": "Tapahtui virhe",
   "try_again": "Yritä uudelleen",
   "empty_servers": "Lista on tyhjä",
-  "empty_servers_hint": "Kokeile vaihtaa hakutermiä"
+  "empty_servers_hint": "Kokeile vaihtaa hakutermiä",
+  "sign_in_wilma": "Kirjaudu sisään",
+  "username": "Käyttäjänimi",
+  "password": "Salasana",
+  "sign_in_btn": "Kirjaudu",
+  "forgot_password": "Unohdin salasanani"
 }

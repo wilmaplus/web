@@ -21,9 +21,12 @@ import {MatCardModule} from "@angular/material/card";
 import {MatProgressBar, MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatListModule} from "@angular/material/list";
 import {MatRippleModule} from "@angular/material/core";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {LoginWilmaComponent} from "./login/basic/basic_login";
+import {BottomSheetError} from "./elements/error/bottomsheet/error_bottomsheet";
+import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -34,7 +37,9 @@ export function createTranslateLoader(http: HttpClient) {
     WilmaPlusAppComponent,
     LoginScreenComponent,
     ServerSelectComponent,
-    WilmaPlusErrorCard
+    WilmaPlusErrorCard,
+    LoginWilmaComponent,
+    BottomSheetError
   ],
   imports: [
     HttpClientModule,
@@ -59,7 +64,9 @@ export function createTranslateLoader(http: HttpClient) {
     MatRippleModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule,
+    MatBottomSheetModule
   ],
   providers: [HttpClientModule,ApiClient, GlobalConfig],
   bootstrap: [WilmaPlusAppComponent]

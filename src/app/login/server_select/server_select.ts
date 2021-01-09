@@ -53,7 +53,7 @@ export class ServerSelectComponent extends WilmaPlusAppComponent {
   }
 
   selectServer(server: object) {
-    console.log(server);
+    this._location.go('login', '', server)
   }
 
   filterServers() {

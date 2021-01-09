@@ -10,5 +10,10 @@
   "error_occurred": "Error occurred",
   "try_again": "Try again",
   "empty_servers": "List is empty",
-  "empty_servers_hint": "Try changing search query"
+  "empty_servers_hint": "Try changing search query",
+  "sign_in_wilma": "Sign in",
+  "username": "Username",
+  "password": "Password",
+  "sign_in_btn": "Sign in",
+  "forgot_password": "Forgot password"
 }

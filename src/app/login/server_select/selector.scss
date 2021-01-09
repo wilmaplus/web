@@ -1,3 +1,5 @@
+@import "../icon_fix";
+
 .server-selector {
   width: 100%;
   height: calc(100% - 64px);
@@ -22,8 +24,3 @@
   cursor: pointer;
 }
 
-mat-icon {
-  vertical-align: top;
-  margin-bottom: 3px;
-  margin-right: 3px;
-}

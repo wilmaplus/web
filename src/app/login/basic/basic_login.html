@@ -1,0 +1,39 @@
+<div class="login-background">
+<mat-toolbar style="color: white; background-color: transparent;">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>{{server.name ? server.name :  'sign_in_wilma' | translate}}</span>
+</mat-toolbar>
+<div [ngClass]="'wplus-login'" align="center">
+  <div align="center-horizontal">
+    <mat-card [ngClass]="'login-card'">
+      <mat-progress-bar *ngIf="loading" class="login-progressbar" mode="indeterminate" color="accent"></mat-progress-bar>
+      <mat-card-content>
+        <h2>{{'sign_in_wilma' | translate}}</h2>
+        <mat-form-field class="input-full-width">
+          <mat-label>{{'username' | translate}}</mat-label>
+          <input type="email" matInput [(ngModel)]="login.username">
+          <mat-error *ngIf="formError.username">
+            {{formError.username}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="input-full-width">
+          <mat-label>{{'password' | translate}}</mat-label>
+          <input type="password" matInput [(ngModel)]="login.password">
+          <mat-error *ngIf="formError.password">
+            {{formError.password}}
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <button mat-raised-button class="login_button" color="accent" (click)="signIn()">
+        <mat-icon [ngClass]="'button-mat-icon'">vpn_key</mat-icon>{{'sign_in_btn' | translate}}
+      </button>
+      <div class="reset-password">
+        <button mat-button>{{'forgot_password' | translate}}</button>
+      </div>
+    </mat-card>
+
+  </div>
+</div>
+</div>
