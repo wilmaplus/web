@@ -12,6 +12,15 @@
   margin-bottom: 0
 }
 
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+
+.server-card {
+  max-width: 400px;
+}
+
 mat-icon {
   vertical-align: top;
   margin-bottom: 3px;

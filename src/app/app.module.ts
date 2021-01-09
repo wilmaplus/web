@@ -21,6 +21,9 @@ import {MatCardModule} from "@angular/material/card";
 import {MatProgressBar, MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatListModule} from "@angular/material/list";
 import {MatRippleModule} from "@angular/material/core";
+import {FormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -53,7 +56,10 @@ export function createTranslateLoader(http: HttpClient) {
     MatCardModule,
     MatProgressBarModule,
     MatListModule,
-    MatRippleModule
+    MatRippleModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [HttpClientModule,ApiClient, GlobalConfig],
   bootstrap: [WilmaPlusAppComponent]

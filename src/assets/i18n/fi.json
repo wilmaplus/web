@@ -8,5 +8,7 @@
   "login_screen": "Kirjaudu sisään",
   "servers-cache": "Palvelinlista ei ole vielä latautunut, yritä uudelleen myöhemmin",
   "error_occurred": "Tapahtui virhe",
-  "try_again": "Yritä uudelleen"
+  "try_again": "Yritä uudelleen",
+  "empty_servers": "Lista on tyhjä",
+  "empty_servers_hint": "Kokeile vaihtaa hakutermiä"
 }

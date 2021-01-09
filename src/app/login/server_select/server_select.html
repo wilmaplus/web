@@ -1,14 +1,25 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button (click)="goBack()">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  <span>{{'select_wilma_server' | translate}}</span>
-</mat-toolbar>
-<mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
-<div [ngClass]="'server-selector'" align="center">
-  <wilmaplus-error [apiError]="error" [hidden]="!error.error"></wilmaplus-error>
-  <mat-list role="list" style="overflow-y: auto">
-      <mat-card [ngClass]="'mat-card'" role="listitem" *ngFor="let server of servers" [style]="{margin: '12px'}" (click)="selectServer(server)" matRipple>
+<div>
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span [hidden]="search">{{'select_wilma_server' | translate}}</span>
+    <span [ngClass]="search ? '' : 'toolbar-spacer'"></span>
+    <mat-form-field *ngIf="search" [style]="{flex: '1 1'}">
+      <input matInput type="text" [(ngModel)]="searchQuery">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="searchQuery.length < 1 ? search=false : searchQuery=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-icon-button aria-label="Search" (click)="search===true ? disableSearch() : search=true">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
+  <div [ngClass]="'server-selector'" align="center">
+    <wilmaplus-error [apiError]="error" [hidden]="!error.error"></wilmaplus-error>
+    <mat-list role="list" style="overflow-y: auto">
+      <mat-card [ngClass]="'server-card'" role="listitem" *ngFor="let server of filterServers()" [style]="{margin: '12px'}" (click)="selectServer(server)" matRipple>
         <mat-card-content [ngClass]="'rippleCorrection'">
           <h3 matLine> {{server.name}} </h3>
           <p matLine>
@@ -16,5 +27,11 @@
           </p>
         </mat-card-content>
       </mat-card>
-  </mat-list>
+    </mat-list>
+    <div *ngIf="!error.error && !loading && filterServers().length < 1">
+      <h1>{{'empty_servers' | translate}}</h1>
+      <p>{{'empty_servers_hint' | translate}}</p>
+    </div>
+  </div>
+
 </div>
