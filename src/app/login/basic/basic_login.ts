@@ -3,10 +3,13 @@ import {ApiError} from "../../client/types/base";
 import {Title} from "@angular/platform-browser";
 import {TranslateService} from "@ngx-translate/core";
 import {Location} from "@angular/common";
-import {ApiClient} from "../../client/backend";
+import {ApiClient} from "../../client/apiclient";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {CustomServerBottomSheet} from "../../elements/server_select/custom_server_bottomsheet/bottomsheet";
+import {AuthApi} from "../../authapi/auth_api";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {BottomSheetError} from "../../elements/error/bottomsheet/error_bottomsheet";
 
 @Component({
@@ -19,11 +22,10 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
   server: any = null
   loading: boolean = false
   error = ApiError.emptyError();
-  formError = {username: null, password: null}
   login = {username: '', password: ''}
 
-  constructor(private _bottomSheet: MatBottomSheet, private router: Router, titleService: Title, translate: TranslateService, private translateService: TranslateService,private _location: Location, private apiClient: ApiClient) {
-    super(titleService, translate);
+  constructor(_snackBar: MatSnackBar, private _bottomSheet: MatBottomSheet, private authApi: AuthApi, private router: Router, titleService: Title, translate: TranslateService, private translateService: TranslateService,private _location: Location, private apiClient: ApiClient) {
+    super(_snackBar, titleService, translate);
     this.setTitle('sign_in_wilma');
   }
 
@@ -32,26 +34,57 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
   }
 
   signIn() {
-    this.loading = true;
-    this.apiClient.getNewWilmaSession(this.server.url, (session => {
-      console.log(session);
-    }), (error) => {
-      this.openError(error.errorDescription);
-    })
+    this.validateForm(() => {
+      this.loading = true;
+      this.apiClient.getNewWilmaSession(this.server.url, (session => {
+        this.apiClient.signIn(this.login.username, this.login.password, session, this.server.url,  (homepage, session) => {
+          this.loading = false;
+          // TODO save in DB and forward to homepage
+          console.log(homepage);
+          this.showSnackBar("Tervetuloa "+homepage.Name+"!", 4000);
+        }, (error) => {
+          if (error.errorCode === "internal-4" || error.errorCode === "invalid_auth") {
+            this.loading = false;
+            this.translateService.get('invalid_credentials').subscribe((value: string) => {
+              this.showSnackBar(value, 3500);
+            })
+          } else {
+            this.openError(error);
+          }
+        });
+      }), (error) => {
+        this.openError(error);
+      })
+    });
   }
 
-  openError(errorMessage: any, title: any = null) {
-    if (title == null)
-    this.translateService.get('error_occurred').subscribe((value: string) => {
-      this.openErrorDialog(value, errorMessage)
+  private validateForm(callback: () => void) {
+    this.translateService.get(['invalid_password', 'invalid_username']).subscribe((values:any) => {
+      if (this.login.username.length < 1) {
+        this.showSnackBar(values.invalid_username, 3000);
+        return;
+      }
+      if (this.login.password.length < 1) {
+        this.showSnackBar(values.invalid_password, 3000);
+        return;
+      }
+      callback();
     });
+
+  }
+
+  openError(apiError: ApiError) {
+    this.loading = false;
+    if (apiError.wilmaError)
+      this.openErrorDialog(apiError.errorCode, apiError.errorDescription)
     else
-      this.openErrorDialog(title, errorMessage);
+      this.translateService.get('error_occurred').subscribe((value: string) => {
+        this.openErrorDialog(value, apiError.errorDescription)
+      });
   }
 
   private openErrorDialog(title: any, message: any) {
-    this._bottomSheet.open(BottomSheetError, {data: {title: title, message: message}});
-
+    this._bottomSheet.open(BottomSheetError, {data: {title: title, message: message, retryCallback: () => {this.signIn()}}});
   }
 
   ngOnInit(): void {

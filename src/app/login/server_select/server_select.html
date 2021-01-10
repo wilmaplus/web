@@ -13,6 +13,9 @@
   <button mat-icon-button aria-label="Search" (click)="search===true ? disableSearch() : search=true">
     <mat-icon>search</mat-icon>
   </button>
+  <button mat-icon-button aria-label="Add Wilma server" (click)="openAddServer()">
+    <mat-icon>add</mat-icon>
+  </button>
 </mat-toolbar>
 <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
 <div [ngClass]="'server-selector'" align="center">

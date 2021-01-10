@@ -1,0 +1,7 @@
+<div>
+  <h1>{{'enter_custom_url' | translate}}</h1>
+  <mat-form-field class="input-full-width">
+    <input type="url" matInput [(ngModel)]="url" placeholder="wilma.????.fi" (ngModelChange)="onInputChange()">
+  </mat-form-field>
+  <button color="accent" mat-raised-button (click)="done()" [disabled]="urlInvalid">{{'continue' | translate}}</button>
+</div>

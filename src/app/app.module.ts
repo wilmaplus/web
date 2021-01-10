@@ -13,20 +13,24 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ServerSelectComponent} from "./login/server_select/server_select";
-import {ApiClient} from "./client/backend";
+import {ApiClient} from "./client/apiclient";
 import {GlobalConfig} from "./config/global";
 import {WilmaPlusErrorCard} from "./elements/error/error";
-import {ApiError} from "./client/types/base";
 import {MatCardModule} from "@angular/material/card";
-import {MatProgressBar, MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatListModule} from "@angular/material/list";
 import {MatRippleModule} from "@angular/material/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {LoginWilmaComponent} from "./login/basic/basic_login";
-import {BottomSheetError} from "./elements/error/bottomsheet/error_bottomsheet";
+import {CustomServerBottomSheet} from "./elements/server_select/custom_server_bottomsheet/bottomsheet";
 import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
+import {AuthApi} from "./authapi/auth_api";
+import {AuthDatabase} from "./authapi/db/database";
+import {AccountModel} from "./authapi/accounts_db/model";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {BottomSheetError} from "./elements/error/bottomsheet/error_bottomsheet";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -39,9 +43,11 @@ export function createTranslateLoader(http: HttpClient) {
     ServerSelectComponent,
     WilmaPlusErrorCard,
     LoginWilmaComponent,
-    BottomSheetError
+    BottomSheetError,
+    CustomServerBottomSheet
   ],
   imports: [
+
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
@@ -66,9 +72,10 @@ export function createTranslateLoader(http: HttpClient) {
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatSnackBarModule
   ],
-  providers: [HttpClientModule,ApiClient, GlobalConfig],
+  providers: [HttpClientModule, ApiClient, GlobalConfig, AccountModel, AuthDatabase, AuthApi],
   bootstrap: [WilmaPlusAppComponent]
 })
 export class AppModule { }

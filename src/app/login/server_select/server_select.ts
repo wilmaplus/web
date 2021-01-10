@@ -3,8 +3,13 @@ import {Location} from '@angular/common';
 import {WilmaPlusAppComponent} from "../../wilma-plus-app.component";
 import {Title} from "@angular/platform-browser";
 import {TranslateService} from "@ngx-translate/core";
-import {ApiClient} from "../../client/backend";
+import {ApiClient} from "../../client/apiclient";
 import {ApiError} from "../../client/types/base";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {BottomSheetError} from "../../elements/error/bottomsheet/error_bottomsheet";
+import {CustomServerBottomSheet} from "../../elements/server_select/custom_server_bottomsheet/bottomsheet";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'server-select',
@@ -20,8 +25,8 @@ export class ServerSelectComponent extends WilmaPlusAppComponent {
   searchQuery = ''
   search = false
 
-  constructor(titleService: Title, translate: TranslateService, private _location: Location, private apiClient: ApiClient, private chRef: ChangeDetectorRef) {
-    super(titleService, translate);
+  constructor(_snackBar: MatSnackBar, private router: Router, private _bottomSheet: MatBottomSheet,titleService: Title, translate: TranslateService, private _location: Location, private apiClient: ApiClient, private chRef: ChangeDetectorRef) {
+    super(_snackBar, titleService, translate);
     this.setTitle('select_wilma_server');
     this.apiClient.getWilmaServers((servers: object[]) => {
       this.loading = false;
@@ -40,20 +45,23 @@ export class ServerSelectComponent extends WilmaPlusAppComponent {
     this.search = false;
   }
 
-@HostListener('document:keydown.escape', ['$event'])
-  keyHandler(event: object) {
-    // @ts-ignore
+ @HostListener('document:keydown.escape', ['$event'])
+  keyHandler(event: any) {
     if (event.key === "Escape") {
       this.disableSearch();
     }
   }
 
-  goBack() {
-    this._location.back();
+  openAddServer() {
+    let callback = (url: string) => {
+      console.log(url);
+      this.router.navigate(['/login/wilma'], {state: {server: {url: url, name: null}}})
+    };
+    this._bottomSheet.open(CustomServerBottomSheet, {data: {doneCallback: callback}});
   }
 
-  selectServer(server: object) {
-    this._location.go('login', '', server)
+  goBack() {
+    this._location.back();
   }
 
   filterServers() {

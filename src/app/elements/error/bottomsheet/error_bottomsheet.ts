@@ -10,16 +10,17 @@ import {MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
 export class BottomSheetError {
   title: string = ''
   message: string = ''
-  retryCallback: void
+  retryCallback: () => void
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {title: string, message: string, retryCallback: void}, private _bottomSheetRef: MatBottomSheetRef<BottomSheetError>) {
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {title: string, message: string, retryCallback: () => void}, private _bottomSheetRef: MatBottomSheetRef<BottomSheetError>) {
     this.title = data.title;
     this.message = data.message;
     this.retryCallback = data.retryCallback;
   }
 
   retry() {
-
+    this._bottomSheetRef.dismiss();
+    this.retryCallback();
   }
 
 }

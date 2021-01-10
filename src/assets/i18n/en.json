@@ -15,5 +15,11 @@
   "username": "Username",
   "password": "Password",
   "sign_in_btn": "Sign in",
-  "forgot_password": "Forgot password"
+  "forgot_password": "Forgot password",
+  "dismiss": "Dismiss",
+  "invalid_username": "Type in your username and try again",
+  "invalid_password": "Type in your password and try again",
+  "invalid_credentials": "Please check your credentials and try again",
+  "enter_custom_url": "Enter Wilma server's url",
+  "continue": "Continue"
 }

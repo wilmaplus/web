@@ -4,6 +4,7 @@ import {loginMethods} from "./login_methods";
 import {Title} from "@angular/platform-browser";
 import {TranslateService} from "@ngx-translate/core";
 import {WilmaPlusAppComponent} from "../wilma-plus-app.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'login-screen',
@@ -14,8 +15,8 @@ import {WilmaPlusAppComponent} from "../wilma-plus-app.component";
 
 export class LoginScreenComponent extends WilmaPlusAppComponent{
 
-  constructor(titleService: Title, translate: TranslateService) {
-    super(titleService, translate);
+  constructor(_snackBar: MatSnackBar, titleService: Title, translate: TranslateService) {
+    super(_snackBar, titleService, translate);
     this.setTitle('login_screen');
   }
 

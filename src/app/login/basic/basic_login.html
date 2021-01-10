@@ -13,24 +13,18 @@
         <h2>{{'sign_in_wilma' | translate}}</h2>
         <mat-form-field class="input-full-width">
           <mat-label>{{'username' | translate}}</mat-label>
-          <input type="email" matInput [(ngModel)]="login.username">
-          <mat-error *ngIf="formError.username">
-            {{formError.username}}
-          </mat-error>
+          <input type="email" matInput [(ngModel)]="login.username" [disabled]="loading">
         </mat-form-field>
-        <mat-form-field class="input-full-width">
+        <mat-form-field class="input-full-width" >
           <mat-label>{{'password' | translate}}</mat-label>
-          <input type="password" matInput [(ngModel)]="login.password">
-          <mat-error *ngIf="formError.password">
-            {{formError.password}}
-          </mat-error>
+          <input type="password" matInput [(ngModel)]="login.password" [disabled]="loading">
         </mat-form-field>
       </mat-card-content>
-      <button mat-raised-button class="login_button" color="accent" (click)="signIn()">
+      <button mat-raised-button class="login_button" color="accent" (click)="signIn()" [disabled]="loading">
         <mat-icon [ngClass]="'button-mat-icon'">vpn_key</mat-icon>{{'sign_in_btn' | translate}}
       </button>
       <div class="reset-password">
-        <button mat-button>{{'forgot_password' | translate}}</button>
+        <button mat-button [disabled]="loading">{{'forgot_password' | translate}}</button>
       </div>
     </mat-card>
 
