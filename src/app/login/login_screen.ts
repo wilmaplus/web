@@ -8,6 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {preCheck} from "./utilities/precheck";
 import {AuthApi} from "../authapi/auth_api";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
 
 @Component({
   selector: 'login-screen',
@@ -18,8 +19,8 @@ import {AuthApi} from "../authapi/auth_api";
 
 export class LoginScreenComponent extends WilmaPlusAppComponent{
 
-  constructor(_snackBar: MatSnackBar, titleService: Title, router: Router,  translate: TranslateService, private authApi: AuthApi) {
-    super(_snackBar, router, titleService, translate);
+  constructor(_snackBar: MatSnackBar, titleService: Title, router: Router,  translate: TranslateService, _bottomSheet: MatBottomSheet, private authApi: AuthApi) {
+    super(_snackBar, router, titleService, translate, _bottomSheet);
     this.setTitle('login_screen');
     preCheck(router, authApi);
   }

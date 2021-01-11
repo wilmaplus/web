@@ -29,9 +29,10 @@ import {AuthApi} from "./authapi/auth_api";
 import {AuthDatabase} from "./authapi/db/database";
 import {AccountModel} from "./authapi/accounts_db/model";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {BottomSheetError} from "./elements/error/bottomsheet/error_bottomsheet";
+import {AccountSelector} from "./main/account_selector/bottomsheet";
 import {WilmaClient} from './main/client';
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {BottomSheetError} from "./elements/error/bottomsheet/error_botomsheet";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,7 +47,8 @@ export function createTranslateLoader(http: HttpClient) {
     LoginWilmaComponent,
     BottomSheetError,
     CustomServerBottomSheet,
-    WilmaClient
+    WilmaClient,
+    AccountSelector
   ],
   imports: [
 

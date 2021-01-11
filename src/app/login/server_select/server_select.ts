@@ -26,8 +26,8 @@ export class ServerSelectComponent extends WilmaPlusAppComponent {
   searchQuery = ''
   search = false
 
-  constructor(_snackBar: MatSnackBar, private router: Router, private authApi: AuthApi, private _bottomSheet: MatBottomSheet,titleService: Title, translate: TranslateService, private _location: Location, private apiClient: ApiClient, private chRef: ChangeDetectorRef) {
-    super(_snackBar, router, titleService, translate);
+  constructor(_snackBar: MatSnackBar, private router: Router, private authApi: AuthApi, _bottomSheet: MatBottomSheet,titleService: Title, translate: TranslateService, private _location: Location, private apiClient: ApiClient, private chRef: ChangeDetectorRef) {
+    super(_snackBar, router, titleService, translate, _bottomSheet);
     this.setTitle('select_wilma_server');
     preCheck(router, authApi);
     this.apiClient.getWilmaServers((servers: object[]) => {

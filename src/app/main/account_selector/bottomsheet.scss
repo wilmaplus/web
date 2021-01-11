@@ -1,0 +1,49 @@
+@import "../../icon_fix";
+@import '~@angular/material/theming';
+@import '../../../theme/colorpalette';
+
+.add_button {
+  display: flex;
+  flex-direction: row;
+}
+
+.accounts_list {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.add_button * {
+  margin: 12px;
+}
+
+// Fixing issue of card expanding while showing its ripple
+.rippleCorrection {
+  margin-bottom: 0
+}
+
+.add_button mat-icon {
+  color: mat-color($wilmaplus-primary, main);
+}
+
+.account-card {
+  cursor: pointer;
+}
+
+.profile-image {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  margin: 3px;
+}
+
+.card-text {
+  flex: 1 1 auto;
+  display: flex;
+  align-self: stretch;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: row;
+}

@@ -22,5 +22,8 @@
   "invalid_credentials": "Tarkista kirjautumistiedot ja yritä uudelleen",
   "enter_custom_url": "Syötä Wilma palvelimen URL",
   "continue": "Jatka",
-  "account_exists": "Tili on jo lisätty"
+  "account_exists": "Tili on jo lisätty",
+  "add_account": "Lisää tili",
+  "accounts": "Tilit",
+  "select_account_or_role": "Valitse tili tai rooli"
 }

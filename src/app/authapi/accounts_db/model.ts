@@ -36,8 +36,8 @@ export class AccountModel implements IAccountModel {
     this.password = btoa(password);
   }
 
-  public getPassword() {
-    return atob(this.password);
+  public static getPassword(password:string) {
+    return atob(password);
   }
 
   public static newUser(homepage: Homepage, server: string, username: string, password: string, session: string) {

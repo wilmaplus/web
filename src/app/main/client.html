@@ -2,13 +2,13 @@
   <mat-drawer #drawer mode="over" class="sidenav">
     <div class="header">
       <div class="actions">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="openSelectorDialog()">
           <mat-icon>swap_horiz</mat-icon>
         </button>
       </div>
       <img class="profile-image" alt="Profile image" [src]="ui.profileImage || '../../assets/profile_placeholder.jpg'"/>
       <h2>{{ui.name || appName}}</h2>
-      <h3>{{ui.school || version}}</h3>
+      <h3>{{(ui.name && ui.school) ? ui.school || version : ''}}</h3>
     </div>
   </mat-drawer>
   <mat-drawer-content>

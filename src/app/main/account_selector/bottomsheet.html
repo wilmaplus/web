@@ -1,0 +1,22 @@
+
+<div>
+  <h2>{{title | translate}}</h2>
+  <div class="accounts_list">
+    <span>{{'accounts' | translate}}</span>
+    <mat-list role="list">
+      <mat-card [ngClass]="'account-card'" role="listitem" *ngFor="let account of accounts" [style]="{margin: '12px'}" matRipple>
+        <mat-card-content [ngClass]="'rippleCorrection card-body'">
+          <img class="profile-image" alt="Profile image" [src]="account.photo ? 'data:image/png;base64, '+account.photo : '../../assets/profile_placeholder.jpg'"/>
+          <div class="card-text">
+            <div style="text-align: center">
+              <h3>{{account.name}}</h3>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-list>
+  </div>
+  <div class="add_button" (click)="addAccount()" *ngIf="addAccountsEnabled" mat-ripple>
+    <mat-icon>add</mat-icon><h3>{{'add_account' | translate}}</h3>
+  </div>
+</div>

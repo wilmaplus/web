@@ -9,7 +9,6 @@ import {Router} from "@angular/router";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AuthApi} from "../../authapi/auth_api";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {BottomSheetError} from "../../elements/error/bottomsheet/error_bottomsheet";
 import {AccountModel} from "../../authapi/accounts_db/model";
 import {preCheck} from "../utilities/precheck";
 
@@ -25,8 +24,8 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
   error = ApiError.emptyError();
   login = {username: '', password: ''}
 
-  constructor(_snackBar: MatSnackBar, private _bottomSheet: MatBottomSheet, private authApi: AuthApi, private router: Router, titleService: Title, translate: TranslateService, private translateService: TranslateService,private _location: Location, private apiClient: ApiClient) {
-    super(_snackBar, router, titleService, translate);
+  constructor(_snackBar: MatSnackBar,_bottomSheet: MatBottomSheet, private authApi: AuthApi, private router: Router, titleService: Title, translate: TranslateService, private translateService: TranslateService,private _location: Location, private apiClient: ApiClient) {
+    super(_snackBar, router, titleService, translate, _bottomSheet);
     this.setTitle('sign_in_wilma');
     preCheck(router, authApi);
   }
@@ -58,9 +57,9 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
                 this.authApi.selectAccount(account);
                 // Navigating to client
                 this.router.navigate(['/']);
-              },  (error) => {this.openError(error)})
+              },  (error) => {this.openError(error, () => {this.signIn()})})
             }
-          }, (error) => {this.openError(error)});
+          }, (error) => {this.openError(error, () => {this.signIn()})});
           console.log(homepage);
         }, (error) => {
           if (error.errorCode === "internal-4" || error.errorCode === "invalid_auth") {
@@ -69,10 +68,10 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
               this.showSnackBar(value, 3500);
             })
           } else {
-            this.openError(error);
+            this.openError(error, () => {this.signIn()});
           }
         });
-      }), (error) => {this.openError(error)})
+      }), (error) => {this.openError(error, () => {this.signIn()})})
     });
   }
 
@@ -91,19 +90,6 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
 
   }
 
-  openError(apiError: ApiError) {
-    this.loading = false;
-    if (apiError.wilmaError)
-      this.openErrorDialog(apiError.errorCode, apiError.errorDescription)
-    else
-      this.translateService.get('error_occurred').subscribe((value: string) => {
-        this.openErrorDialog(value, apiError.errorDescription)
-      });
-  }
-
-  private openErrorDialog(title: any, message: any) {
-    this._bottomSheet.open(BottomSheetError, {data: {title: title, message: message, retryCallback: () => {this.signIn()}}});
-  }
 
   ngOnInit(): void {
     if (window.history.state.server) {
