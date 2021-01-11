@@ -48,7 +48,11 @@ export class ApiClient {
     let translateService = this.translate;
     this.http.post<SignInResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/login', {username: username, password: password, server: server, loginId: session}).toPromise().then(function (response) {
       if (response.status) {
-        callback(response.response, response.session);
+        try {
+          callback(response.response, response.session);
+        } catch (e) {
+          error(new ApiError('internal-5', e.toString(), e));
+        }
       } else {
         ApiError.parseApiError(response, (apiError: ApiError) => {
           error(apiError);
@@ -75,7 +79,11 @@ export class ApiClient {
     let translateService = this.translate;
     this.http.get<Session>(ApiClient.correctAddress(wilmaServer)+"index_json").toPromise().then(function (response) {
       if (response.LoginResult === "Failed") {
-        callback(response.SessionID);
+        try {
+          callback(response.SessionID);
+        } catch (e) {
+          error(new ApiError('internal-6', e.toString(), e));
+        }
       } else {
         error(new ApiError('wapi-1', "Unexpected value: "+response.LoginResult, response));
       }

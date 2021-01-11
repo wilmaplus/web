@@ -21,5 +21,6 @@
   "invalid_password": "Type in your password and try again",
   "invalid_credentials": "Please check your credentials and try again",
   "enter_custom_url": "Enter Wilma server's url",
-  "continue": "Continue"
+  "continue": "Continue",
+  "account_exists": "Account is already added"
 }

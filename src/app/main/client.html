@@ -1,0 +1,27 @@
+<mat-drawer-container [hasBackdrop]="true" style="height: 100%;">
+  <mat-drawer #drawer mode="over" class="sidenav">
+    <div class="header">
+      <div class="actions">
+        <button mat-icon-button>
+          <mat-icon>swap_horiz</mat-icon>
+        </button>
+      </div>
+      <img class="profile-image" alt="Profile image" [src]="ui.profileImage || '../../assets/profile_placeholder.jpg'"/>
+      <h2>{{ui.name || appName}}</h2>
+      <h3>{{ui.school || version}}</h3>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="client">
+      <mat-toolbar color="primary" style="background: transparent;">
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>{{pageTitle}}</span>
+        <span class="toolbar-spacer"></span>
+      </mat-toolbar>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+

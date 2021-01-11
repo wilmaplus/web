@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { WilmaPlusAppComponent } from './wilma-plus-app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +30,8 @@ import {AuthDatabase} from "./authapi/db/database";
 import {AccountModel} from "./authapi/accounts_db/model";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BottomSheetError} from "./elements/error/bottomsheet/error_bottomsheet";
+import {WilmaClient} from './main/client';
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -44,7 +45,8 @@ export function createTranslateLoader(http: HttpClient) {
     WilmaPlusErrorCard,
     LoginWilmaComponent,
     BottomSheetError,
-    CustomServerBottomSheet
+    CustomServerBottomSheet,
+    WilmaClient
   ],
   imports: [
 
@@ -73,9 +75,10 @@ export function createTranslateLoader(http: HttpClient) {
     MatInputModule,
     ReactiveFormsModule,
     MatBottomSheetModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSidenavModule
   ],
   providers: [HttpClientModule, ApiClient, GlobalConfig, AccountModel, AuthDatabase, AuthApi],
   bootstrap: [WilmaPlusAppComponent]
 })
-export class AppModule { }
+export class AppModule {}

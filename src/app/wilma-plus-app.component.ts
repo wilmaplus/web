@@ -3,6 +3,7 @@ import {Title} from "@angular/platform-browser";
 import {TranslateService} from "@ngx-translate/core";
 import {GlobalConfig} from "./config/global";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class WilmaPlusAppComponent {
   _snackbar: MatSnackBar
 
-  public constructor(_snackBar: MatSnackBar, private titleService: Title, private translate: TranslateService) {
+  public constructor(_snackBar: MatSnackBar,router: Router, private titleService: Title, private translate: TranslateService) {
     this._snackbar = _snackBar;
   }
 

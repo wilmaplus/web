@@ -14,7 +14,7 @@ export interface Homepage {
   Roles: Role[];
 }
 
-interface Role {
+export interface Role {
   Slug: string;
   Name: string;
   Type: number;

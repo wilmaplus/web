@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostListener, Pipe} from "@angular/core";
+import {ChangeDetectorRef, Component, HostListener,} from "@angular/core";
 import {Location} from '@angular/common';
 import {WilmaPlusAppComponent} from "../../wilma-plus-app.component";
 import {Title} from "@angular/platform-browser";
@@ -7,9 +7,10 @@ import {ApiClient} from "../../client/apiclient";
 import {ApiError} from "../../client/types/base";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {BottomSheetError} from "../../elements/error/bottomsheet/error_bottomsheet";
 import {CustomServerBottomSheet} from "../../elements/server_select/custom_server_bottomsheet/bottomsheet";
 import {Router} from "@angular/router";
+import {preCheck} from "../utilities/precheck";
+import {AuthApi} from "../../authapi/auth_api";
 
 @Component({
   selector: 'server-select',
@@ -25,9 +26,10 @@ export class ServerSelectComponent extends WilmaPlusAppComponent {
   searchQuery = ''
   search = false
 
-  constructor(_snackBar: MatSnackBar, private router: Router, private _bottomSheet: MatBottomSheet,titleService: Title, translate: TranslateService, private _location: Location, private apiClient: ApiClient, private chRef: ChangeDetectorRef) {
-    super(_snackBar, titleService, translate);
+  constructor(_snackBar: MatSnackBar, private router: Router, private authApi: AuthApi, private _bottomSheet: MatBottomSheet,titleService: Title, translate: TranslateService, private _location: Location, private apiClient: ApiClient, private chRef: ChangeDetectorRef) {
+    super(_snackBar, router, titleService, translate);
     this.setTitle('select_wilma_server');
+    preCheck(router, authApi);
     this.apiClient.getWilmaServers((servers: object[]) => {
       this.loading = false;
       this.servers = servers;
@@ -38,6 +40,10 @@ export class ServerSelectComponent extends WilmaPlusAppComponent {
       this.error = error;
       chRef.detectChanges();
     });
+  }
+
+  navigateTo(url: any) {
+    this.router.navigate([url]);
   }
 
   disableSearch() {

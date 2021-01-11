@@ -21,5 +21,6 @@
   "invalid_password": "Tarkista salasana",
   "invalid_credentials": "Tarkista kirjautumistiedot ja yritä uudelleen",
   "enter_custom_url": "Syötä Wilma palvelimen URL",
-  "continue": "Jatka"
+  "continue": "Jatka",
+  "account_exists": "Tili on jo lisätty"
 }

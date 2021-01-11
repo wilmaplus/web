@@ -1,0 +1,45 @@
+@import "../icon_fix";
+@import '~@angular/material/theming';
+@import '../../theme/colorpalette';
+
+.client {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, mat-color($wilmaplus-primary, main) 35%, mat-color($dark-primary, darker) 100%);
+}
+
+
+.sidenav {
+  width: 300px;
+}
+
+.sidenav .header {
+  min-height: 150px;
+  background-color: mat-color($wilmaplus-primary, main);
+  color: mat-contrast($wilmaplus-primary, main);
+  padding: 32px 32px 7px;
+}
+
+.sidenav .header h2 {
+  margin: 3px;
+}
+
+.sidenav .header h3 {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+
+.sidenav .header .profile-image {
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  margin: 3px;
+}
+
+.sidenav .header .actions {
+  display: flex;
+  justify-content: flex-end;
+  align-content: flex-end;
+}

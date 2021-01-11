@@ -7,10 +7,11 @@ import {ApiClient} from "../../client/apiclient";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {CustomServerBottomSheet} from "../../elements/server_select/custom_server_bottomsheet/bottomsheet";
 import {AuthApi} from "../../authapi/auth_api";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {BottomSheetError} from "../../elements/error/bottomsheet/error_bottomsheet";
+import {AccountModel} from "../../authapi/accounts_db/model";
+import {preCheck} from "../utilities/precheck";
 
 @Component({
   selector: 'login-wilma',
@@ -25,23 +26,42 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
   login = {username: '', password: ''}
 
   constructor(_snackBar: MatSnackBar, private _bottomSheet: MatBottomSheet, private authApi: AuthApi, private router: Router, titleService: Title, translate: TranslateService, private translateService: TranslateService,private _location: Location, private apiClient: ApiClient) {
-    super(_snackBar, titleService, translate);
+    super(_snackBar, router, titleService, translate);
     this.setTitle('sign_in_wilma');
+    preCheck(router, authApi);
   }
 
   goBack() {
     this._location.back();
   }
 
+
   signIn() {
     this.validateForm(() => {
       this.loading = true;
+      // Getting new Login session
       this.apiClient.getNewWilmaSession(this.server.url, (session => {
+        // Signing in
         this.apiClient.signIn(this.login.username, this.login.password, session, this.server.url,  (homepage, session) => {
-          this.loading = false;
-          // TODO save in DB and forward to homepage
+          // Creating new account model
+          let account = AccountModel.newUser(homepage, this.server.url, this.login.username, this.login.password, session);
+          this.authApi.accountExists(account, (exists) => {
+            if (exists) {
+              // Account exists, alerting user and stopping
+              this.loading = false;
+              this.translateService.get('account_exists').subscribe((value: string) => {
+                this.showSnackBar(value, 3500);
+              });
+            } else {
+             // Adding account and setting as selected
+              this.authApi.addAccount(account, () => {
+                this.authApi.selectAccount(account);
+                // Navigating to client
+                this.router.navigate(['/']);
+              },  (error) => {this.openError(error)})
+            }
+          }, (error) => {this.openError(error)});
           console.log(homepage);
-          this.showSnackBar("Tervetuloa "+homepage.Name+"!", 4000);
         }, (error) => {
           if (error.errorCode === "internal-4" || error.errorCode === "invalid_auth") {
             this.loading = false;
@@ -52,9 +72,7 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
             this.openError(error);
           }
         });
-      }), (error) => {
-        this.openError(error);
-      })
+      }), (error) => {this.openError(error)})
     });
   }
 
@@ -88,7 +106,6 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
   }
 
   ngOnInit(): void {
-    console.log(window.history.state);
     if (window.history.state.server) {
       this.server = window.history.state.server;
     } else {

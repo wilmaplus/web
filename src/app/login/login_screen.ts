@@ -5,6 +5,9 @@ import {Title} from "@angular/platform-browser";
 import {TranslateService} from "@ngx-translate/core";
 import {WilmaPlusAppComponent} from "../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
+import {preCheck} from "./utilities/precheck";
+import {AuthApi} from "../authapi/auth_api";
 
 @Component({
   selector: 'login-screen',
@@ -15,9 +18,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 
 export class LoginScreenComponent extends WilmaPlusAppComponent{
 
-  constructor(_snackBar: MatSnackBar, titleService: Title, translate: TranslateService) {
-    super(_snackBar, titleService, translate);
+  constructor(_snackBar: MatSnackBar, titleService: Title, router: Router,  translate: TranslateService, private authApi: AuthApi) {
+    super(_snackBar, router, titleService, translate);
     this.setTitle('login_screen');
+    preCheck(router, authApi);
   }
 
   app_name = new GlobalConfig().app_name;
