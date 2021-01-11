@@ -6,7 +6,7 @@ __NOTE__: Work is still in progress!
 ## TODO
 
 - [x] Sign in GUI
-- [ ] Wilma API and sign in
+- [x] Wilma API and sign in
 - [ ] Homepage UI
 
 ## Development server
