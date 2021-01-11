@@ -6,7 +6,7 @@ __NOTE__: Work is still in progress!
 ## TODO
 
 - [x] Sign in GUI
-- [ ] Wilma API and sign in
+- [x] Wilma API and sign in
 - [ ] Homepage UI
 
 ## Development server
@@ -32,3 +32,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Note about images and logos
+All logos/images are not a subject to project's license, they belong to their respective owners.
+Do not use any of project's icons/images without permission!
