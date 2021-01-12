@@ -29,6 +29,10 @@
   cursor: pointer;
 }
 
+.account-card * {
+  margin-top: 2px;
+}
+
 .profile-image {
   border-radius: 50%;
   height: 50px;
@@ -38,9 +42,14 @@
 }
 
 .card-text {
-  flex: 1 1 auto;
+  margin-left: 6px;
   display: flex;
-  align-self: stretch;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-text h3 {
+  margin: 0;
 }
 
 .card-body {
