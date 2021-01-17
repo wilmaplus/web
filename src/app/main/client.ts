@@ -5,7 +5,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {TranslateService} from "@ngx-translate/core";
 import {DomSanitizer, Title} from "@angular/platform-browser";
 import {AuthApi} from "../authapi/auth_api";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import { version } from '../../../package.json';
 import {AccountModel, IAccountModel} from "../authapi/accounts_db/model";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
@@ -41,19 +41,26 @@ export class WilmaClient extends WilmaPlusAppComponent {
   appName = new GlobalConfig().app_name
   version = version
   ui = new UISettings()
+  translateService: TranslateService
   account: IAccountModel|null = null
   private router: Router;
   @ViewChild('drawer', {static: true}) sidenav: MatSidenav | undefined;
   pages = [
-    {name: 'homepage', path: '/home', icon: 'home'},
+    {name: 'home', path: '/home', icon: 'home'},
     {name: 'settings', path: '/settings', icon: 'settings'}
   ]
 
   constructor(snackBar: MatSnackBar, _bottomSheet: MatBottomSheet, router: Router, titleService: Title, translate: TranslateService, private authApi: AuthApi, private _sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) {
     super(snackBar, router, titleService, translate, _bottomSheet);
     console.log(version);
+    this.translateService = translate;
     this.router = router;
     this.init(authApi, router);
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.updateTitle();
+      }
+    })
   }
 
   init(authApi: AuthApi, router: Router) {
@@ -109,12 +116,29 @@ export class WilmaClient extends WilmaPlusAppComponent {
   private startupUI() {
     if (this.router.url === "/")
       this.navigateToPage('home');
+    else {
+      this.updateTitle();
+    }
+  }
+
+  private updateTitle() {
+    let segments = this.router.url.split("/");
+    if (segments[segments.length-1] !== "")
+    this.translateService.get(segments[segments.length-1]).subscribe(value => {
+      this.setTitle(value)
+      this.pageTitle = value;
+    });
   }
 
   navigateToPage(pageName: string, closeDrawer: boolean=false) {
     if (closeDrawer)
       this.sidenav?.close();
     this.router.navigate([pageName], {relativeTo: this.activatedRoute});
+  }
+
+  navigateFromSideNav(page: any) {
+    this.sidenav?.close();
+    this.router.navigate([page.path], {relativeTo: this.activatedRoute});
   }
 
   private openForcedRoleSelectionDialog() {
