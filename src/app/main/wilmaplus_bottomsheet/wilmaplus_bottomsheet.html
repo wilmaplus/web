@@ -1,0 +1,13 @@
+<div>
+  <h1 style="margin-top: 9px;">{{data.translate ? (data.title | translate) : data.title || ''}}</h1>
+  <p>{{data.translate ? (data.details | translate) : data.details || ''}}</p>
+
+  <mat-checkbox class="checkBoxMargin" *ngIf="data !== undefined && data.checkBoxText !== undefined && data.checkBoxText !== null" [checked]="data.checkBoxChecked || false">{{data.translate ? (data.checkBoxText | translate) : data.checkBoxText || ''}}</mat-checkbox>
+
+  <mat-progress-bar mode="indeterminate" class="progressBar" *ngIf="data.showProgressBar" color="accent"></mat-progress-bar>
+
+  <div class="buttonsContainer">
+    <button mat-raised-button *ngIf="data !== undefined && data.negativeText !== undefined && data.negativeText.length > 0 && !data.hideNegativeButton" [color]="data.negativeColor || 'warn'" (click)="data.negativeListener()">{{data.translate ? (data.negativeText | translate) : data.negativeText || ''}}</button>
+    <button mat-raised-button *ngIf="data !== undefined && data.positiveText !== undefined && data.positiveText.length > 0" [color]="data.positiveColor || 'primary'" (click)="data.positiveListener()">{{data.translate ? (data.positiveText | translate) : data.positiveText || ''}}</button>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import {IAccountModel} from "../authapi/accounts_db/model";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AccountSelector} from "./account_selector/bottomsheet";
 import {Role} from "../client/types/wilma_api/homepage";
+import {WilmaPlusBottomSheet} from "./wilmaplus_bottomsheet/wilmaplus_bottomsheet";
 
 class UISettings {
   name: string|null
@@ -74,6 +75,6 @@ export class WilmaClient extends WilmaPlusAppComponent {
     let onRoleSelect = (role:Role) => {
       console.log(role);
     };
-    this._bottomSheet.open(AccountSelector, {data: {onAccountSelect: onAccountSelect, onRoleSelect:onRoleSelect, title: null, addAccounts: true}});
+    this._bottomSheet.open(AccountSelector, {data: {onAccountSelect: onAccountSelect, onRoleSelect:onRoleSelect, title: null, addAccounts: true}, panelClass: 'removePadding'});
   }
 }

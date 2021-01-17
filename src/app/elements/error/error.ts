@@ -12,4 +12,12 @@ export class WilmaPlusErrorCard {
   @Input()
   apiError: ApiError = ApiError.emptyError()
 
+  @Input()
+  retry: (() => void) | undefined
+
+  triggerRetry() {
+    if (this.retry !== undefined)
+      this.retry();
+  }
+
 }

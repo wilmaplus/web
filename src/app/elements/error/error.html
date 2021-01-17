@@ -6,6 +6,6 @@
     </h3>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button [style]="{width: '100%'}">{{'try_again' | translate}}</button>
+    <button (click)="triggerRetry()" mat-button [style]="{width: '100%'}">{{'try_again' | translate}}</button>
   </mat-card-actions>
 </mat-card>

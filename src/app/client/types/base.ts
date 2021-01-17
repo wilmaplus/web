@@ -8,14 +8,16 @@ export class ApiError {
   private _errorDescription: any = null
   private _additionalDetails: any = null
   private _wilmaError: boolean = false;
+  private _reLogin: boolean = false;
 
 
-  constructor(errorCode: any, errorDescription: any, additionalDetails: any, error=true, wilmaError=false) {
+  constructor(errorCode: any, errorDescription: any, additionalDetails: any, error=true, wilmaError=false, reLogin=false) {
     this._error = error;
     this._errorCode = errorCode;
     this._errorDescription = errorDescription;
     this._additionalDetails = additionalDetails;
     this._wilmaError = wilmaError;
+    this._reLogin = reLogin;
   }
 
 
@@ -43,6 +45,11 @@ export class ApiError {
     return this._additionalDetails;
   }
 
+
+  get reLogin(): boolean {
+    return this._reLogin;
+  }
+
   set additionalDetails(value: any) {
     this._additionalDetails = value;
   }
@@ -60,6 +67,10 @@ export class ApiError {
     let code = response.cause;
     let reason = code;
     if (response.wilma) {
+      if (response.wilma.id === "common-20" || response.wilma.id === "common-18" || response.wilma.id === "common-15" || response.wilma.id === "common-34") {
+        callback(new ApiError(response.wilma.id+": "+response.wilma.message, response.wilma.description, response, true, true, true));
+        return;
+      }
       callback(new ApiError(response.wilma.id+": "+response.wilma.message, response.wilma.description, response, true, true));
       return;
     }
@@ -74,6 +85,10 @@ export class ApiError {
   }
 
   public static parseWilmaApiError(response: WilmaError, callback: (apiError: ApiError) => void) {
+    if (response.error.id === "common-20" || response.error.id === "common-18" || response.error.id === "common-15" || response.error.id === "common-34") {
+      callback(new ApiError(response.error.id+': '+response.error.message, response.error.description, response, true, true, true));
+      return;
+    }
     callback(new ApiError(response.error.id+': '+response.error.message, response.error.description, response, true, true));
   }
 

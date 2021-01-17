@@ -25,5 +25,9 @@
   "account_exists": "Tili on jo lisätty",
   "add_account": "Lisää tili",
   "accounts": "Tilit",
-  "select_account_or_role": "Valitse tili tai rooli"
+  "select_account_or_role": "Valitse tili tai rooli",
+  "cancel": "Peruuta",
+  "signing_in": "Kirjaudutaan sisään",
+  "please_wait": "Odota hetki...",
+  "roles": "Roolit"
 }

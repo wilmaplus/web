@@ -1,2 +1,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Ubuntu, "Helvetica Neue", sans-serif; }
+
+.removePadding {
+  padding: 0 !important;
+}
+
+.bottomSheetPadding {
+  padding: 8px 16px;
+}

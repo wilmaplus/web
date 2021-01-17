@@ -25,5 +25,9 @@
   "account_exists": "Account is already added",
   "add_account": "Add account",
   "accounts": "Accounts",
-  "select_account_or_role": "Select account or role"
+  "select_account_or_role": "Select account or role",
+  "cancel": "Cancel",
+  "signing_in": "Signing in",
+  "please_wait": "Please wait...",
+  "roles": "Roles"
 }

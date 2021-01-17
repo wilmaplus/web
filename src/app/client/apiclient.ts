@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaderResponse, HttpHeaders} from "@angular/common/http";
 import {GlobalConfig} from "../config/global";
 import {TranslateService} from "@ngx-translate/core";
 import {ServerResponse} from "./types/servers";
@@ -7,6 +7,8 @@ import {ApiError} from "./types/base";
 import {Session} from "./types/wilma_api/session";
 import {SignInResponse} from "./types/sign_in";
 import {Homepage} from "./types/wilma_api/homepage";
+import {IAccountModel} from "../authapi/accounts_db/model";
+import {Headers, RequestOptions} from "@angular/http";
 
 
 @Injectable()
@@ -67,6 +69,46 @@ export class ApiClient {
         error(new ApiError('internal-2', exception.statusText, exception));
       }
     });
+  }
+
+  /**
+   * Getting homepage through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...
+   * @param account
+   * @param callback callback
+   * @param error error callback
+   */
+  public getHomepage(account:IAccountModel, callback: (homepage: Homepage) => void, error: (apiError: ApiError) => void) {
+    let translateService = this.translate;
+    this.http.post<SignInResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/homepage', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer}).toPromise().then(function (response) {
+      if (response.status) {
+        try {
+          callback(response.response);
+        } catch (e) {
+          error(new ApiError('internal-5', e.toString(), e));
+        }
+      } else {
+        ApiError.parseApiError(response, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      }
+    }).catch(function (exception) {
+      if (exception.status != 0) {
+        ApiError.parseApiError(exception.error, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      } else {
+        error(new ApiError('internal-2', exception.statusText, exception));
+      }
+    });
+  }
+
+  private static extractSessionId(sessionId: string) {
+    let regex = /^(.*)Wilma2SID=([^;]+)(.*)$/;
+    let results = regex.exec(sessionId);
+    if (results != null && results.length > 2) {
+      return results[2];
+    }
+    return sessionId;
   }
 
   private static correctAddress(url: string) {
@@ -131,4 +173,6 @@ export class ApiClient {
       }
     })
   }
+
+
 }
