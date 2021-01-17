@@ -12,6 +12,7 @@ export class ReLoginUtils {
       bottomSheet = _bottomSheet.open(WilmaPlusBottomSheet, {data: {translate: true, title: 'signing_in', details: 'please_wait', showProgressBar: true}, disableClose: true})
     }
     if (account == null) {
+      console.log("account notnull");
       authApi.getSelectedAccount((selectedAccount) => {
         if (selectedAccount !== undefined) {
           this.doReLogin(api, authApi, () => {
@@ -19,10 +20,20 @@ export class ReLoginUtils {
               bottomSheet.dismiss();
             doneCallback();
           }, errorCallback, selectedAccount, () => {
-            errorCallback(new ApiError('internal-12', 'Unexpected value: '+selectedAccount, selectedAccount));
+            if (bottomSheet != null)
+              bottomSheet.dismiss();
           });
         }
       }, errorCallback);
+    } else {
+      this.doReLogin(api, authApi, () => {
+        if (bottomSheet != null)
+          bottomSheet.dismiss();
+        doneCallback();
+      }, errorCallback, account, () => {
+        if (bottomSheet != null)
+          bottomSheet.dismiss();
+      });
     }
   }
 

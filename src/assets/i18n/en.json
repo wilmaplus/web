@@ -32,5 +32,13 @@
   "roles": "Roles",
   "select_role": "Select role",
   "home": "Homepage",
-  "settings": "Settings"
+  "settings": "Settings",
+  "welcome_user": "Welcome {{name}}",
+  "teacher": "Teacher",
+  "student": "Student",
+  "guardian": "Parent",
+  "account": "Wilma account",
+  "leaders": "Management",
+  "staff": "Staff",
+  "work_instructor": "Workplace Instructor"
 }

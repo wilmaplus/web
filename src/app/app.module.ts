@@ -37,6 +37,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {WilmaPlusBottomSheet} from "./main/wilmaplus_bottomsheet/wilmaplus_bottomsheet";
 import {Homepage} from "./main/pages/homepage/homepage";
 import {Settings} from "./main/pages/settings/settings";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatBadgeModule} from '@angular/material/badge';
+import {ScheduleTab} from "./main/pages/homepage/mobile/tabs/schedule/schedule";
+import {MessagesTab} from "./main/pages/homepage/mobile/tabs/messages/messages";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -55,7 +59,9 @@ export function createTranslateLoader(http: HttpClient) {
     AccountSelector,
     WilmaPlusBottomSheet,
     Homepage,
-    Settings
+    Settings,
+    ScheduleTab,
+    MessagesTab
   ],
   imports: [
 
@@ -86,7 +92,9 @@ export function createTranslateLoader(http: HttpClient) {
     MatBottomSheetModule,
     MatSnackBarModule,
     MatSidenavModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule,
+    MatBadgeModule
   ],
   providers: [HttpClientModule, ApiClient, GlobalConfig, AccountModel, AuthDatabase, AuthApi],
   bootstrap: [WilmaPlusAppComponent]

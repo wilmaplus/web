@@ -17,16 +17,18 @@ import {MiscUtils} from "../utils/misc";
 import {MatSidenav} from "@angular/material/sidenav";
 import { ActivatedRoute } from '@angular/router';
 
-class UISettings {
+export class UISettings {
   name: string|null
   school: string|null
   profileImage: string|null
+  type: string|null
 
 
   constructor() {
     this.name = null;
     this.school = null;
     this.profileImage = null;
+    this.type = null;
   }
 }
 
@@ -201,6 +203,6 @@ export class WilmaClient extends WilmaPlusAppComponent {
         this.refreshUI(this.authApi, this.router);
       }
     };
-    this._bottomSheet.open(AccountSelector, {data: {onAccountSelect: onAccountSelect, onRoleSelect:onRoleSelect, title: null, addAccounts: true}, panelClass: 'removePadding'});
+    this._bottomSheet.open(AccountSelector, {data: {addAccount: () => {this.router.navigate(['/login'], {state: {add: true}})}, onAccountSelect: onAccountSelect, onRoleSelect:onRoleSelect, title: null, addAccounts: true}, panelClass: 'removePadding'});
   }
 }

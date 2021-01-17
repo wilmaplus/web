@@ -21,7 +21,7 @@
 <div [ngClass]="'server-selector'" align="center">
   <wilmaplus-error [apiError]="error" [hidden]="!error.error"></wilmaplus-error>
   <mat-list role="list" style="overflow-y: auto">
-    <mat-card [ngClass]="'server-card'" role="listitem" *ngFor="let server of filterServers()" [style]="{margin: '12px'}" routerLink="/login/wilma" [state]="{server: server}" matRipple>
+    <mat-card [ngClass]="'server-card'" role="listitem" *ngFor="let server of filterServers()" [style]="{margin: '12px'}" routerLink="/login/wilma" [state]="{server: server, add: true}" matRipple>
       <mat-card-content [ngClass]="'rippleCorrection'">
         <h3 matLine> {{server.name}} </h3>
         <p matLine>

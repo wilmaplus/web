@@ -70,7 +70,7 @@ export class AccountModel implements IAccountModel {
     return newModel;
   }
 
-  public updateUser(homepage: Homepage, session: string) {
+  public updateUser(homepage: Homepage, session: string|null=null) {
     let account: Homepage|Role = homepage;
     if (homepage.Roles.length > 0) {
       homepage.Roles.forEach(function (role) {
@@ -79,7 +79,8 @@ export class AccountModel implements IAccountModel {
         }
       });
     }
-    this.cookies = session;
+    if (session !== null)
+      this.cookies = session;
     this.formKey = account.FormKey;
     this.type = account.Type;
     this.primusId = account.PrimusId;
@@ -87,6 +88,7 @@ export class AccountModel implements IAccountModel {
     this.photo = account.Photo;
     this.name = account.Name;
   }
+
 
   id: string;
 

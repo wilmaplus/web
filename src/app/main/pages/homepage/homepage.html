@@ -1,1 +1,27 @@
-<h1>Das ist homepage</h1>
+<div class="homepage-container" *ngIf="!mobile">
+  <h1>Das ist homepage</h1>
+</div>
+
+<div class="homepage-container mobile" *ngIf="mobile">
+  <mat-card class="mobile-card">
+    <div class="user-info" align="center">
+      <h1 translate [translateParams]="{name: ui.name}">welcome_user</h1>
+      <h3>{{ui.type != null ? (ui.type | translate) : ''}}</h3>
+      <img class="profile-image" alt="Profile image" [src]="ui.profileImage ? getBase64Image(ui.profileImage) : '../../assets/profile_placeholder.jpg'"/>
+      <div class="date-box">
+        <mat-icon>today</mat-icon><h2>Sunnuntai 17.01.2021</h2>
+      </div>
+    </div>
+    <div class="section">
+      <mat-tab-group color="accent">
+        <mat-tab *ngFor="let tab of tabs">
+          <ng-template mat-tab-label>
+            <mat-icon [matBadge]="tab.badge" matBadgeColor="warn">{{tab.icon}}</mat-icon>
+          </ng-template>
+          <wilmaplus-tab-schedule *ngIf="tab.type==1"></wilmaplus-tab-schedule>
+          <wilmaplus-tab-messages *ngIf="tab.type==2"></wilmaplus-tab-messages>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </mat-card>
+</div>

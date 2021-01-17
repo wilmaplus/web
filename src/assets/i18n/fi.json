@@ -32,5 +32,13 @@
   "roles": "Roolit",
   "select_role": "Valitse rooli",
   "home": "Etusivu",
-  "settings": "Asetukset"
+  "settings": "Asetukset",
+  "welcome_user": "Tervetuloa {{name}}",
+  "teacher": "Opettaja",
+  "student": "Opiskelija",
+  "guardian": "Huoltaja",
+  "account": "Wilma-tili",
+  "leaders": "Johtokunta",
+  "staff": "Henkilökunta",
+  "work_instructor": "Workplace Instructor"
 }

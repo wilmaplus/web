@@ -1,0 +1,78 @@
+$medium: 700px;
+
+.homepage-container {
+  height: calc(100% - 64px);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.user-info {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  @media screen and (min-width: $medium) {
+    flex: 1;
+  }
+}
+
+.profile-image {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  margin: 3px;
+}
+
+.user-info h1, h2 h3 {
+  flex: 0;
+  margin: 0;
+  width: fit-content;
+}
+
+.date-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-box h2 {
+  width: auto;
+  margin: 0;
+}
+.date-box mat-icon {
+  margin-right: 3px;
+}
+
+.mobile-card {
+  margin-left: 16px;
+  margin-right: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width: $medium) {
+    flex-direction: column;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+.section {
+  flex: 1;
+  margin-left: 3px;
+  @media screen and (max-width: $medium) {
+    margin: 0;
+
+  }
+}

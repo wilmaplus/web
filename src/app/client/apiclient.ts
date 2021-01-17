@@ -102,6 +102,37 @@ export class ApiClient {
     });
   }
 
+  /**
+   * Getting homepage through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...
+   * @param account
+   * @param callback callback
+   * @param error error callback
+   */
+  public getSchedule(account:IAccountModel, callback: (homepage: Homepage) => void, error: (apiError: ApiError) => void) {
+    let translateService = this.translate;
+    this.http.post<SignInResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/schedule', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer}).toPromise().then(function (response) {
+      if (response.status) {
+        try {
+          callback(response.response);
+        } catch (e) {
+          error(new ApiError('internal-5', e.toString(), e));
+        }
+      } else {
+        ApiError.parseApiError(response, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      }
+    }).catch(function (exception) {
+      if (exception.status != 0) {
+        ApiError.parseApiError(exception.error, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      } else {
+        error(new ApiError('internal-2', exception.statusText, exception));
+      }
+    });
+  }
+
   private static extractSessionId(sessionId: string) {
     let regex = /^(.*)Wilma2SID=([^;]+)(.*)$/;
     let results = regex.exec(sessionId);

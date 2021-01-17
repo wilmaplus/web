@@ -1,13 +1,12 @@
 import {ChangeDetectorRef, Component, Inject} from "@angular/core";
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetRef} from "@angular/material/bottom-sheet";
-import {AccountModel, IAccountModel} from "../../authapi/accounts_db/model";
+import {IAccountModel} from "../../authapi/accounts_db/model";
 import {Role} from "../../client/types/wilma_api/homepage";
 import {AuthApi} from "../../authapi/auth_api";
 import {TranslateService} from "@ngx-translate/core";
 import {ApiClient} from "../../client/apiclient";
 import {ReLoginUtils} from "../../utils/relogin";
 import {DomSanitizer} from "@angular/platform-browser";
-import {RoleModel} from "../../authapi/roles_db/model";
 import {ApiError} from "../../client/types/base";
 import {AccountTypes} from "../../authapi/account_types";
 import {MiscUtils} from "../../utils/misc";
@@ -28,12 +27,13 @@ export class AccountSelector {
   loading = true
   selectedAccount:IAccountModel | undefined = undefined
   roleLoadError: ApiError = ApiError.emptyError();
+
   refreshCallback: () => void = () => {
     this.loading = true;
     this.refreshRoles();
   }
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {onAccountSelect: (account: IAccountModel) => void, onRoleSelect: (role: Role) => void, title: string|null, addAccounts: boolean, onlySelectRole: boolean}, private _bottomSheetRef: MatBottomSheetRef<AccountSelector>, private authApi: AuthApi, private translator:TranslateService, private apiClient:ApiClient, private _bottomSheet: MatBottomSheet, private _sanitizer: DomSanitizer, private chRef: ChangeDetectorRef) {
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {addAccount: () => void, onAccountSelect: (account: IAccountModel) => void, onRoleSelect: (role: Role) => void, title: string|null, addAccounts: boolean, onlySelectRole: boolean}, private _bottomSheetRef: MatBottomSheetRef<AccountSelector>, private authApi: AuthApi, private translator:TranslateService, private apiClient:ApiClient, private _bottomSheet: MatBottomSheet, private _sanitizer: DomSanitizer, private chRef: ChangeDetectorRef) {
     this.onAccountSelect = data.onAccountSelect;
     this.onRoleSelect = data.onRoleSelect;
     this.addAccountsEnabled = data.addAccounts;
@@ -138,7 +138,8 @@ export class AccountSelector {
   }
 
   addAccount() {
-    console.log("add");
+    this._bottomSheetRef.dismiss();
+    this.data.addAccount();
   }
 
 }
