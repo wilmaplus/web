@@ -12,8 +12,6 @@ export class RoleModel implements IRoleModel {
 
   constructor(owner: string, public Slug:string, public Name: string, public Type: number, public PrimusId: number, public FormKey: string, public Photo: string, public EarlyEduUser: boolean, public School: string) {
     this.owner = owner;
-    console.log(Md5.init("sdasdads"));
-    console.log(Md5.init(Slug+owner).toString());
     this.id = Md5.init(Slug+owner);
   }
 

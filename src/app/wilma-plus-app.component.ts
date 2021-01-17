@@ -10,6 +10,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {ApiClient} from "./client/apiclient";
 import {AuthApi} from "./authapi/auth_api";
 import {AccountModel, IAccountModel} from "./authapi/accounts_db/model";
+import {BottomSheetError} from "./elements/error/bottomsheet/error_botomsheet";
 
 @Component({
   selector: 'app-root',
@@ -41,6 +42,7 @@ export class WilmaPlusAppComponent {
   }
 
   openError(apiError: ApiError, retryCallback: () => void) {
+    console.log(apiError);
     if (apiError.wilmaError)
       this.openErrorDialog(apiError.errorCode, apiError.errorDescription, retryCallback)
     else
@@ -50,7 +52,7 @@ export class WilmaPlusAppComponent {
   }
 
   private openErrorDialog(title: any, message: any, retryCallback: () => void) {
-    this._bottomSheet.open(AccountSelector, {data: {title: title, message: message, retryCallback: () => {retryCallback()}}});
+    this._bottomSheet.open(BottomSheetError, {data: {title: title, message: message, retryCallback: () => {retryCallback()}}});
   }
 
 

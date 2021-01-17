@@ -28,11 +28,10 @@ export interface IAccountModel {
 
 @Injectable()
 export class AccountModel implements IAccountModel {
-  private _id: string;
   password: string;
 
   constructor(@Inject(String) public composeCardColor: string|null, @Inject(String) public cookies: string, @Inject(Boolean) public darkTheme: boolean, @Inject(String) public formKey: string, @Inject(Boolean) public fullscreenHomepage: boolean, @Inject(String) public messageBackground: string|null, @Inject(String) public messageReceivedColor: string|null, @Inject(String) public messageSentColor: string|null, @Inject(String) public name: string, @Inject(String) password: string, @Inject(String) public photo: string|null, @Inject(Number) public primusId: number, @Inject(String) public school: string|null, @Inject(String) public selectedRole: string|null, @Inject(String) public sendFabButton: string|null, @Inject(Object) public settings: object|null, @Inject(Number) public type: number, @Inject(String) public username: string, @Inject(String) public wilmaServer: string) {
-    this._id = v4();
+    this.id = v4();
     this.password = btoa(password);
   }
 
@@ -41,13 +40,15 @@ export class AccountModel implements IAccountModel {
   }
 
 
-  get id(): string {
-    return this._id;
+
+  get _id(): string {
+    return this.id;
   }
 
-  set id(value: string) {
-    this._id = value;
+  set _id(value: string) {
+    this.id = value;
   }
+
 
   public static newUser(homepage: Homepage, server: string, username: string, password: string, session: string) {
     let account: Homepage|Role = homepage;
@@ -86,5 +87,7 @@ export class AccountModel implements IAccountModel {
     this.photo = account.Photo;
     this.name = account.Name;
   }
+
+  id: string;
 
 }

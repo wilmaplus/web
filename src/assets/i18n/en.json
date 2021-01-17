@@ -29,5 +29,8 @@
   "cancel": "Cancel",
   "signing_in": "Signing in",
   "please_wait": "Please wait...",
-  "roles": "Roles"
+  "roles": "Roles",
+  "select_role": "Select role",
+  "homepage": "Homepage",
+  "settings": "Settings"
 }

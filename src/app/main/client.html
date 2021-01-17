@@ -7,10 +7,16 @@
           <mat-icon>swap_horiz</mat-icon>
         </button>
       </div>
-      <img class="profile-image" alt="Profile image" [src]="ui.profileImage || '../../assets/profile_placeholder.jpg'"/>
+      <img class="profile-image" alt="Profile image" [src]="ui.profileImage ? getBase64Image(ui.profileImage) : '../../assets/profile_placeholder.jpg'"/>
       <h2>{{ui.name || appName}}</h2>
       <h3>{{(ui.name && ui.school) ? ui.school || version : ''}}</h3>
     </div>
+    <mat-nav-list>
+      <a mat-list-item (click)="navigateToPage(page.path, true)" *ngFor="let page of pages">
+        <mat-icon matListIcon>{{page.icon}}</mat-icon>
+        <span mat-line>{{page.name | translate}}</span>
+      </a>
+    </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
     <div class="client">
@@ -21,6 +27,7 @@
         <span>{{pageTitle}}</span>
         <span class="toolbar-spacer"></span>
       </mat-toolbar>
+      <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

@@ -29,5 +29,8 @@
   "cancel": "Peruuta",
   "signing_in": "Kirjaudutaan sisään",
   "please_wait": "Odota hetki...",
-  "roles": "Roolit"
+  "roles": "Roolit",
+  "select_role": "Valitse rooli",
+  "homepage": "Etusivu",
+  "settings": "Asetukset"
 }

@@ -55,11 +55,20 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
              // Adding account and setting as selected
               this.authApi.addAccount(account, () => {
                 this.authApi.selectAccount(account);
-                // Navigating to client
-                this.router.navigate(['/']);
-              },  (error) => {this.openError(error, () => {this.signIn()})})
+                this.authApi.addOrReplaceRoles(this.authApi.convertApiRoles(account.id, homepage.Roles), () => {
+                  // Navigating to client
+                  this.router.navigate(['/']);
+                }, error => {
+                  this.loading = false;
+                  this.openError(error, () => {this.signIn()})
+                })
+              },  (error) => {
+                this.loading = false;
+                this.openError(error, () => {this.signIn()})})
             }
-          }, (error) => {this.openError(error, () => {this.signIn()})});
+          }, (error) => {
+            this.loading = false;
+            this.openError(error, () => {this.signIn()})});
           console.log(homepage);
         }, (error) => {
           if (error.errorCode === "internal-4" || error.errorCode === "invalid_auth") {

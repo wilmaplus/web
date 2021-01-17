@@ -34,17 +34,16 @@ export class AuthApi {
     this.authDb.accounts.where('[wilmaServer+username+type+primusId]')
       .equals([account.wilmaServer, account.username, account.type, account.primusId]).count()
       .then((count: number) => {
-        callback(count>1);
+        callback(count>0);
       }).catch((exception: any) => {
         error(new ApiError('db-2', exception.toString(), exception));
       });
   }
 
   roleExists(role: RoleModel, callback: (exists:boolean) => void, error: (apiError: ApiError) => void) {
-    this.authDb.roles.where('[Slug+owner]')
-      .equals([role.Slug, role.owner]).count()
+    this.authDb.roles.where({id: role.id}).count()
       .then((count: number) => {
-        callback(count>1);
+        callback(count>0);
       }).catch((exception: any) => {
       error(new ApiError('db-7', exception.toString(), exception));
     });
@@ -110,6 +109,14 @@ export class AuthApi {
       });
   }
 
+  getRole(id: string, callback: (accounts:RoleModel|undefined) => void, error: (apiError: ApiError) => void) {
+    this.authDb.roles.where({id: id}).first()
+      .then(callback)
+      .catch((exception: any) => {
+        error(new ApiError('db-4', exception.toString(), exception));
+      });
+  }
+
 
   private searchForAlternative(callback: (accountModel:IAccountModel|undefined) => void, error: (apiError: ApiError) => void) {
     this.accountsExist((exists) => {
@@ -127,7 +134,6 @@ export class AuthApi {
   }
 
   addAccount(account: AccountModel, callback: () => void, error: (apiError: ApiError) => void) {
-    console.log(account);
     this.authDb.accounts.add(account).then(callback)
       .catch((exception: any) => {
         error(new ApiError('db-4', exception.toString(), exception));
@@ -135,7 +141,6 @@ export class AuthApi {
   }
 
   updateAccount(account: AccountModel, callback: () => void, error: (apiError: ApiError) => void) {
-    console.log(account);
     this.authDb.accounts.update(account.id, account).then(callback)
       .catch((exception: any) => {
         error(new ApiError('db-4', exception.toString(), exception));
@@ -143,7 +148,6 @@ export class AuthApi {
   }
 
   addRole(role: RoleModel, callback: () => void, error: (apiError: ApiError) => void) {
-    console.log(role);
     this.authDb.roles.add(role).then(callback)
       .catch((exception: any) => {
         error(new ApiError('db-6', exception.toString(), exception));
@@ -151,7 +155,6 @@ export class AuthApi {
   }
 
   updateRole(role: RoleModel, callback: () => void, error: (apiError: ApiError) => void) {
-    console.log(role);
     this.authDb.roles.update(role.id, role).then(callback)
       .catch((exception: any) => {
         error(new ApiError('db-6', exception.toString(), exception));
@@ -185,7 +188,6 @@ export class AuthApi {
       if (item.Type != AccountTypes.ACCOUNT)
         newRoles.push(RoleModel.fromRole(owner, item));
     }
-    console.log(newRoles);
     return newRoles;
   }
 

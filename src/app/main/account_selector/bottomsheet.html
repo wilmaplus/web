@@ -1,13 +1,18 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading" color="accent"></mat-progress-bar>
 <div class="bottomSheetPadding">
-  <h1 style="margin-top: 9px; text-align: center; width: 100%">{{title | translate}}</h1>
+  <div class="selector-header">
+    <h1 style="margin-top: 9px; text-align: center; width: 100%">{{title | translate}}</h1>
+    <button mat-icon-button (click)="refreshCallback()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
   <div class="accounts_list" *ngIf="selectedAccount !== undefined && selectedAccount.type==7">
     <span>{{'roles' | translate}}</span>
     <div *ngIf="roleLoadError.error" align="center">
       <wilmaplus-error [apiError]="roleLoadError" [retry]="refreshCallback"></wilmaplus-error>
     </div>
     <mat-list role="list">
-      <mat-card [ngClass]="'account-card'" role="listitem" *ngFor="let role of roles" [style]="{margin: '12px'}" matRipple>
+      <mat-card [ngClass]="'account-card'" role="listitem" *ngFor="let role of roles" [style]="{margin: '12px'}" matRipple (click)="selectRole(role);">
         <mat-card-content [ngClass]="'rippleCorrection card-body'">
           <img class="profile-image" alt="Profile image" [src]="role.Photo ? getBase64Image(role.Photo) : '../../assets/profile_placeholder.jpg'"/>
           <div class="card-text">
@@ -18,10 +23,10 @@
       </mat-card>
     </mat-list>
   </div>
-  <div class="accounts_list">
+  <div class="accounts_list" *ngIf="!data.onlySelectRole">
     <span>{{'accounts' | translate}}</span>
     <mat-list role="list">
-      <mat-card [ngClass]="'account-card'" role="listitem" *ngFor="let account of accounts" [style]="{margin: '12px'}" matRipple>
+      <mat-card [ngClass]="'account-card'" role="listitem" *ngFor="let account of accounts" [style]="{margin: '12px'}" matRipple (click)="selectAccount(account);">
         <mat-card-content [ngClass]="'rippleCorrection card-body'">
           <img class="profile-image" alt="Profile image" [src]="account.photo ? getBase64Image(account.photo) : '../../assets/profile_placeholder.jpg'"/>
           <div class="card-text">

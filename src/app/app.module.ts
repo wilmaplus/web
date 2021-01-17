@@ -35,6 +35,8 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {BottomSheetError} from "./elements/error/bottomsheet/error_botomsheet";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {WilmaPlusBottomSheet} from "./main/wilmaplus_bottomsheet/wilmaplus_bottomsheet";
+import {Homepage} from "./main/pages/homepage/homepage";
+import {Settings} from "./main/pages/settings/settings";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -51,7 +53,9 @@ export function createTranslateLoader(http: HttpClient) {
     CustomServerBottomSheet,
     WilmaClient,
     AccountSelector,
-    WilmaPlusBottomSheet
+    WilmaPlusBottomSheet,
+    Homepage,
+    Settings
   ],
   imports: [
 

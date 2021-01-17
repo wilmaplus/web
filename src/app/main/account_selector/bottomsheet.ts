@@ -10,6 +10,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {RoleModel} from "../../authapi/roles_db/model";
 import {ApiError} from "../../client/types/base";
 import {AccountTypes} from "../../authapi/account_types";
+import {MiscUtils} from "../../utils/misc";
 
 @Component({
   selector: 'account-selector',
@@ -32,18 +33,27 @@ export class AccountSelector {
     this.refreshRoles();
   }
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {onAccountSelect: (account: IAccountModel) => void, onRoleSelect: (role: Role) => void, title: string|null, addAccounts: boolean}, private _bottomSheetRef: MatBottomSheetRef<AccountSelector>, private authApi: AuthApi, private translator:TranslateService, private apiClient:ApiClient, private _bottomSheet: MatBottomSheet, private _sanitizer: DomSanitizer, private chRef: ChangeDetectorRef) {
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {onAccountSelect: (account: IAccountModel) => void, onRoleSelect: (role: Role) => void, title: string|null, addAccounts: boolean, onlySelectRole: boolean}, private _bottomSheetRef: MatBottomSheetRef<AccountSelector>, private authApi: AuthApi, private translator:TranslateService, private apiClient:ApiClient, private _bottomSheet: MatBottomSheet, private _sanitizer: DomSanitizer, private chRef: ChangeDetectorRef) {
     this.onAccountSelect = data.onAccountSelect;
     this.onRoleSelect = data.onRoleSelect;
     this.addAccountsEnabled = data.addAccounts;
     this.init(data.title);
   }
 
+  selectRole(role: Role) {
+    this.onRoleSelect(role);
+    this._bottomSheetRef.dismiss();
+  }
+
+  selectAccount(account: IAccountModel) {
+    this.onAccountSelect(account);
+    this._bottomSheetRef.dismiss();
+  }
+
   init(title: string|null) {
     this.title = title==null ? 'select_account_or_role' : title;
     this.authApi.getAllAccounts((allAccounts) => {
       this.accounts = allAccounts;
-      console.log(allAccounts);
     }, (error) => {
       console.log(error);
     });
@@ -123,28 +133,8 @@ export class AccountSelector {
     })
   }
 
-  private static b64toBlob(b64Data: string, contentType='', sliceSize=512) {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-
-    return new Blob(byteArrays, {type: contentType});
-  }
-
   getBase64Image(imageString: string) {
-    let blob = URL.createObjectURL(AccountSelector.b64toBlob(imageString));
-    return this._sanitizer.bypassSecurityTrustUrl(blob);
+    return MiscUtils.getBase64Image(imageString, this._sanitizer);
   }
 
   addAccount() {
