@@ -41,6 +41,8 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatBadgeModule} from '@angular/material/badge';
 import {ScheduleTab} from "./main/pages/homepage/mobile/tabs/schedule/schedule";
 import {MessagesTab} from "./main/pages/homepage/mobile/tabs/messages/messages";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ReservationElement} from "./main/pages/homepage/mobile/tabs/schedule/elements/reservation/reservation-element.component";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,7 +63,8 @@ export function createTranslateLoader(http: HttpClient) {
     Homepage,
     Settings,
     ScheduleTab,
-    MessagesTab
+    MessagesTab,
+    ReservationElement
   ],
   imports: [
 
@@ -94,7 +97,8 @@ export function createTranslateLoader(http: HttpClient) {
     MatSidenavModule,
     MatCheckboxModule,
     MatTabsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatProgressSpinnerModule
   ],
   providers: [HttpClientModule, ApiClient, GlobalConfig, AccountModel, AuthDatabase, AuthApi],
   bootstrap: [WilmaPlusAppComponent]

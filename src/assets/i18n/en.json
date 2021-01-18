@@ -40,5 +40,12 @@
   "account": "Wilma account",
   "leaders": "Management",
   "staff": "Staff",
-  "work_instructor": "Workplace Instructor"
+  "work_instructor": "Workplace Instructor",
+  "loading": "Loading...",
+  "no_items_near_future": "No lessons in near future",
+  "schedule_multiple": "s",
+  "today": "today",
+  "tomorrow": "tomorrow",
+  "lesson_count": "{{count}} lesson{{multiple}} {{time}}",
+  "school_starts": "School starts in {{time}}"
 }

@@ -1,0 +1,13 @@
+<mat-card class="lesson-card" role="listitem" matRipple>
+  <mat-card-content [ngClass]="'rippleCorrection lesson-card-content'">
+    <div class="lesson-card-row">
+      <p>{{getCodeName()}}</p>
+      <h3>{{getFullName()}}</h3>
+    </div>
+    <div class="lesson-card-row">
+      <span>{{getFormattedTime(reservation.start)}}-{{getFormattedTime(reservation.end)}}</span>
+      <span>{{getTeachers()}}</span>
+      <span>{{getRooms()}}</span>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -2,40 +2,190 @@ import {Component} from "@angular/core";
 import {WilmaPlusAppComponent} from "../../../../../../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
-import {DomSanitizer, Title} from "@angular/platform-browser";
+import {Title} from "@angular/platform-browser";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {TranslateService} from "@ngx-translate/core";
 import {AuthApi} from "../../../../../../authapi/auth_api";
 import {ApiClient} from "../../../../../../client/apiclient";
-
+import {ScheduleDay} from "../../../../../../client/types/schedule/schedule_day";
+import * as moment from 'moment';
+import {MiscUtils} from "../../../../../../utils/misc";
 
 @Component({
   selector: 'wilmaplus-tab-schedule',
   templateUrl: './schedule.html',
-  styleUrls: []
+  styleUrls: ['./schedule.scss']
 })
 
 export class ScheduleTab extends WilmaPlusAppComponent {
-  loading = false;
+  loading = true;
+  schedule: ScheduleDay[] = []
+  schedule_ui_text = {
+    translationRes: '',
+    params: {}
+  }
+  private translateProvider:TranslateService
+  titleUpdaterTimeout: number = 0
+
 
   constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient: ApiClient) {
     super(snackBar, router, titleService, translate, bottomSheet);
+    this.translateProvider = translate;
+    this.loadSchedule();
   }
 
   loadSchedule() {
-    this.authApi.getSelectedAccount(accountModel => {
+    this.loading = true;
+    this.authApi.getSelectedAccountWithCorrectUrl(accountModel => {
       if (accountModel !== undefined) {
-        this.apiClient.getSchedule(accountModel, schedule => {
+        let weekForwardTimestamp = Date.now() + (6.048e+8 * 2);
+        this.apiClient.getScheduleInRange(new Date(), new Date(weekForwardTimestamp), accountModel, schedule => {
+          this.loading = false;
+          this.schedule = schedule.schedule;
+          this.updateUI();
           console.log(schedule);
         }, error => {
+          this.loading = false;
+          console.log(error);
           // Re-login is handled by homepage, so tab is being silent while homepage re-logins.
           if (error.reLogin)
             return;
           this.openError(error, () => {this.loadSchedule()});
         })
-      }
+      } else
+        this.loading = false;
     }, error => {
+      this.loading = false;
+      console.log(error);
       this.openError(error, () => {this.loadSchedule()});
     })
+  }
+
+  updateUI() {
+    if (this.titleUpdaterTimeout > 0)
+      clearInterval(this.titleUpdaterTimeout);
+    this.titleUpdaterTimeout = setInterval(() => {this.getHeaderTitle()}, 1000)
+    this.getHeaderTitle();
+  }
+
+  getCurrentListOfLessons(removeExpiredItems: boolean = true) {
+    let now = moment();
+    let finalList = [];
+    for (let scheduleDay of this.schedule) {
+      let finalReservations = [];
+      let realCount = 0;
+      for (let reservation of scheduleDay.reservations) {
+        if (reservation.start !== null && reservation.end !== null) {
+          let endDate = moment(reservation.end);
+          if (now.isBefore(endDate)) {
+            finalReservations.push(reservation);
+            realCount++;
+          } else if (!removeExpiredItems)
+            finalReservations.push(reservation);
+        }
+      }
+      if (realCount > 0) {
+        scheduleDay.reservations = finalReservations;
+        finalList.push(scheduleDay);
+      }
+    }
+    if (finalList.length > 0)
+      return finalList[0];
+    return {reservations: [], date: null};
+  }
+
+  getHeaderTitle() {
+    let lessonLists = this.getCurrentListOfLessons(false);
+    if (lessonLists.reservations.length < 1) {
+      this.schedule_ui_text.translationRes = 'no_items_near_future';
+      this.schedule_ui_text.params = {};
+    } else {
+      let draftParams = {
+        count: lessonLists.reservations.length,
+        multiple: '',
+        time: ''
+      }
+      let draftRes = 'lesson_count';
+      let today = moment();
+      let tomorrow = moment();
+      tomorrow.add(1, 'day');
+      console.log(tomorrow);
+      if (today.isSame(lessonLists.date, 'day')) {
+        // TODO
+        // @ts-ignore
+        let scheduleDayDetails = ScheduleTab.getCurrentDayDetails(lessonLists);
+        if (scheduleDayDetails != null) {
+          if (!scheduleDayDetails.schoolStarted) {
+            let startOfDay = moment(scheduleDayDetails.length.startOfDay);
+            let diffInHours = today.diff(startOfDay, 'hours');
+            if (diffInHours < 5) {
+              this.schedule_ui_text.translationRes = 'school_starts';
+              this.schedule_ui_text.params = {
+                time: MiscUtils.millisecondsToStr(startOfDay.unix()-today.unix())
+              }
+            } else
+              this.applyDateHeader('today', draftParams, lessonLists, draftRes);
+          }
+        } else {
+          this.applyDateHeader('today',draftParams, lessonLists, draftRes);
+        }
+      } else if (tomorrow.isSame(lessonLists.date, 'day')) {
+        this.applyDateHeader('tomorrow', draftParams, lessonLists, draftRes);
+      }
+    }
+  }
+
+  private applyDateHeader(dateKey: string, draftParams: any, lessonLists: any, draftRes: any) {
+    this.translateProvider.get(dateKey).subscribe((value) => {
+      draftParams.time = value;
+      if (lessonLists.reservations.length > 1) {
+        this.translateProvider.get('schedule_multiple').subscribe((value2) => {
+          draftParams.multiple = value2;
+          this.schedule_ui_text.params = draftParams;
+          this.schedule_ui_text.translationRes = draftRes;
+        });
+      } else {
+        this.schedule_ui_text.params = draftParams;
+        this.schedule_ui_text.translationRes = draftRes;
+      }
+    });
+  }
+
+  private static getScheduleDayFullLength(scheduleDay: ScheduleDay) {
+    let startOfDay: Date|null = null;
+    let endOfDay: Date|null = null;
+    if (scheduleDay.reservations.length > 0) {
+      let startRes = scheduleDay.reservations[0];
+      let endRes = scheduleDay.reservations[scheduleDay.reservations.length-1];
+      if (startRes.start !== null && endRes.end !== null) {
+        startOfDay = moment(startRes.start).toDate();
+        endOfDay = moment(endRes.end).toDate();
+      }
+    }
+    return {startOfDay, endOfDay};
+  }
+
+  private static getCurrentDayDetails(scheduleDay: ScheduleDay) {
+    let now = moment();
+    let length = ScheduleTab.getScheduleDayFullLength(scheduleDay);
+    if (length.startOfDay != null && length.endOfDay != null) {
+      let schoolStarted = now.isAfter(moment(length.startOfDay));
+      let schoolEnded = now.isAfter(moment(length.endOfDay));
+      let realCount = 0;
+      for (let reservation of scheduleDay.reservations) {
+        if (reservation.start !== null && reservation.end !== null) {
+          let endDate = moment(reservation.end);
+          if (now.isBefore(endDate)) {
+            realCount++;
+          }
+        }
+      }
+      return {schoolStarted, schoolEnded, scheduleDay, realCount, length};
+    }
+    return null;
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.titleUpdaterTimeout);
   }
 }

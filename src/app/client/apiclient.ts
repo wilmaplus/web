@@ -208,9 +208,15 @@ export class ApiClient {
     return sessionId;
   }
 
-  private static correctAddress(url: string) {
+  public static correctAddress(url: string) {
     if (!url.endsWith("/"))
       return url+"/"
+    return url;
+  }
+
+  public static correctAddressForSlug(url: string) {
+    if (url.endsWith("/"))
+      return url.slice(0, -1);
     return url;
   }
 

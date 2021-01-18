@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="section">
-      <mat-tab-group color="accent">
+      <mat-tab-group color="accent" selectedIndex="0">
         <mat-tab *ngFor="let tab of tabs">
           <ng-template mat-tab-label>
             <mat-icon [matBadge]="tab.badge" matBadgeColor="warn">{{tab.icon}}</mat-icon>

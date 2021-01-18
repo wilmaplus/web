@@ -1,0 +1,28 @@
+@import "../../../../../../../../icon_fix";
+@import '~@angular/material/theming';
+@import '../../../../../../../../../theme/colorpalette';
+
+.lesson-card-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.lesson-card-row * {
+  margin-left: 4px;
+  margin-bottom: 0;
+}
+
+.lesson-card {
+  margin: 6px;
+  padding: 3px;
+  cursor: pointer;
+  background-color: mat-color($wilmaplus-primary, main);
+  color: mat-contrast($wilmaplus-primary, main);
+}
+
+// Fixing issue of card expanding while showing its ripple
+.rippleCorrection {
+  margin-bottom: 0
+}

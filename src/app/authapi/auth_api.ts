@@ -6,6 +6,7 @@ import {IRoleModel, RoleModel} from "./roles_db/model";
 import {AsyncIterator} from "../utils/iterator";
 import {Role} from "../client/types/wilma_api/homepage";
 import {AccountTypes} from "./account_types";
+import {ApiClient} from "../client/apiclient";
 
 @Injectable()
 export class AuthApi {
@@ -91,6 +92,22 @@ export class AuthApi {
     } else {
       this.searchForAlternative(callback, error);
     }
+  }
+
+  getSelectedAccountWithCorrectUrl(callback: (accountModel:IAccountModel|undefined) => void, errorCallback: (apiError: ApiError) => void) {
+    this.getSelectedAccount((account) => {
+      if (account !== undefined) {
+        if (account.type == AccountTypes.ACCOUNT && account.selectedRole != null) {
+          this.getRole(account.selectedRole, (role) => {
+            if (role != undefined && role.Slug) {
+              account.wilmaServer = ApiClient.correctAddressForSlug(account.wilmaServer)+role.Slug;
+            }
+            callback(account);
+          }, errorCallback);
+        }
+      } else
+        callback(undefined);
+    }, errorCallback);
   }
 
   getAllAccounts(callback: (accounts:IAccountModel[]) => void, error: (apiError: ApiError) => void) {

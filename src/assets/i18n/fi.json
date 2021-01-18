@@ -40,5 +40,12 @@
   "account": "Wilma-tili",
   "leaders": "Johtokunta",
   "staff": "Henkilökunta",
-  "work_instructor": "Workplace Instructor"
+  "work_instructor": "Workplace Instructor",
+  "loading": "Ladataan...",
+  "no_items_near_future": "Ei oppitunteja lähiaikoina",
+  "schedule_multiple": "a",
+  "today": "tänään",
+  "tomorrow": "huomenna",
+  "lesson_count": "{{count}} oppitunti{{multiple}} {{time}}",
+  "school_starts": "Koulun alkuun on {{time}}"
 }
