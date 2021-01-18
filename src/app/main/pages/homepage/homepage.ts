@@ -14,7 +14,7 @@ import {MiscUtils} from "../../../utils/misc";
 import {ApiClient} from "../../../client/apiclient";
 import {ReLoginUtils} from "../../../utils/relogin";
 import * as moment from 'moment';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'wilmaplus-homepage',
@@ -113,10 +113,16 @@ export class Homepage extends WilmaPlusAppComponent {
     if (!this.fetchedHomepage)
       this.refreshProfile();
     if (this.mobile) {
-      this.tabs = [
-        {icon: 'calendar_today', type: 1, badge: ''},
-        {icon: 'message', type: 2, badge: '4'}
-      ]
+      if (environment.production) {
+        this.tabs = [
+          {icon: 'calendar_today', type: 1, badge: ''}
+          ]
+      } else {
+        this.tabs = [
+          {icon: 'calendar_today', type: 1, badge: ''},
+          {icon: 'message', type: 2, badge: '4'}
+        ]
+      }
     }
   }
 

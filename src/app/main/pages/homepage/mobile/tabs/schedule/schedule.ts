@@ -63,7 +63,7 @@ export class ScheduleTab extends WilmaPlusAppComponent {
   updateUI() {
     if (this.titleUpdaterTimeout > 0)
       clearInterval(this.titleUpdaterTimeout);
-    //this.titleUpdaterTimeout = setInterval(() => {this.getHeaderTitle()}, 1000)
+    this.titleUpdaterTimeout = setInterval(() => {this.getHeaderTitle()}, 1000)
     this.getHeaderTitle();
   }
 
