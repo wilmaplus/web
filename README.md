@@ -1,6 +1,8 @@
 # Wilma Plus Web
 Wilma Plus Web, your favorite Android app for Wilma, now also in web version!
 
+Alpha version is out at [https://web.wilmaplus.fi](https://web.wilmaplus.fi)
+
 __NOTE__: Work is still in progress!
 
 ## TODO
