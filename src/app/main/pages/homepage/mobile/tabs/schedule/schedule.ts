@@ -68,7 +68,7 @@ export class ScheduleTab extends WilmaPlusAppComponent {
   }
 
   getCurrentListOfLessons(removeExpiredItems: boolean = true) {
-    let now = moment('2021-01-19 10:30');
+    let now = moment();
     let finalList = [];
     // This hack creates a new "instance" of schedule, to not reference main variable, which should be intact in its original state.
     const scheduleCopy = JSON.parse(JSON.stringify(this.schedule));
@@ -107,7 +107,7 @@ export class ScheduleTab extends WilmaPlusAppComponent {
         time: ''
       }
       let draftRes = 'lesson_count';
-      let today = moment('2021-01-19 10:30');
+      let today = moment();
       let tomorrow = moment();
       tomorrow.add(1, 'day');
       if (today.isSame(lessonLists.date, 'day')) {
@@ -189,7 +189,7 @@ export class ScheduleTab extends WilmaPlusAppComponent {
   }
 
   private static getCurrentDayDetails(scheduleDay: ScheduleDay) {
-    let now = moment('2021-01-19 10:30');
+    let now = moment();
     let length = ScheduleTab.getScheduleDayFullLength(scheduleDay);
     if (length.startOfDay != null && length.endOfDay != null) {
       let schoolStarted = now.isAfter(moment(length.startOfDay));

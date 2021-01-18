@@ -92,7 +92,7 @@ export class ReservationElement extends WilmaPlusAppComponent {
   }
 
   isOngoing() {
-    let now = moment('2021-01-19 10:30');
+    let now = moment();
     let beginTime = moment(this.reservation?.start);
     let endTime = moment(this.reservation?.end);
     return now.isAfter(beginTime) && now.isBefore(endTime);
