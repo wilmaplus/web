@@ -1,7 +1,7 @@
 {
-  "name": "wilmaplus-web",
-  "short_name": "wilmaplus-web",
-  "theme_color": "#1976d2",
+  "name": "Wilma Plus Web",
+  "short_name": "Wilma Plus",
+  "theme_color": "#059fcd",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
