@@ -53,19 +53,19 @@ export class MiscUtils {
 
     let days = Math.floor((temp %= 31536000) / 86400);
     if (days) {
-      return days + 'd';
+      return days + ' d';
     }
     let hours = Math.floor((temp %= 86400) / 3600);
     if (hours) {
-      return hours + 'h' ;
+      return hours + ' h' ;
     }
     let minutes = Math.floor((temp %= 3600) / 60);
     if (minutes) {
-      return minutes + 'min';
+      return minutes + ' min';
     }
     let seconds = temp % 60;
     if (seconds) {
-      return seconds + 's';
+      return seconds + ' s';
     }
     return '< 1s';
   }

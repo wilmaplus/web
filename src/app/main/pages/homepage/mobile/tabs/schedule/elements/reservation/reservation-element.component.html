@@ -3,6 +3,7 @@
     <div class="lesson-card-row">
       <p>{{getCodeName()}}</p>
       <h3>{{getFullName()}}</h3>
+      <mat-icon *ngIf="isOngoing()">track_changes</mat-icon>
     </div>
     <div class="lesson-card-row">
       <span>{{reservation !== undefined ? getFormattedTime(reservation.start) : ''}}-{{reservation !== undefined ? getFormattedTime(reservation.end) : ''}}</span>
