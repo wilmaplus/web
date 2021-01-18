@@ -47,5 +47,8 @@
   "today": "tänään",
   "tomorrow": "huomenna",
   "lesson_count": "{{count}} oppitunti{{multiple}} {{time}}",
-  "school_starts": "Koulun alkuun on {{time}}"
+  "school_starts": "Koulun alkuun on {{time}}",
+  "school_ends": "Koulu loppuu {{time}} päästä",
+  "lesson_ends": "Tämä oppitunti loppuu {{time}} päästä",
+  "lesson_starts": "Seuraava oppitunti alkaa {{time}} päästä"
 }

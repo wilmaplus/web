@@ -43,7 +43,6 @@ export class ScheduleTab extends WilmaPlusAppComponent {
           this.loading = false;
           this.schedule = schedule.schedule;
           this.updateUI();
-          console.log(schedule);
         }, error => {
           this.loading = false;
           console.log(error);
@@ -71,7 +70,9 @@ export class ScheduleTab extends WilmaPlusAppComponent {
   getCurrentListOfLessons(removeExpiredItems: boolean = true) {
     let now = moment();
     let finalList = [];
-    for (let scheduleDay of this.schedule) {
+    // This hack creates a new "instance" of schedule, to not reference main variable, which should be intact in its original state.
+    const scheduleCopy = JSON.parse(JSON.stringify(this.schedule));
+    for (let scheduleDay of scheduleCopy) {
       let finalReservations = [];
       let realCount = 0;
       for (let reservation of scheduleDay.reservations) {
@@ -109,22 +110,44 @@ export class ScheduleTab extends WilmaPlusAppComponent {
       let today = moment();
       let tomorrow = moment();
       tomorrow.add(1, 'day');
-      console.log(tomorrow);
       if (today.isSame(lessonLists.date, 'day')) {
-        // TODO
         // @ts-ignore
         let scheduleDayDetails = ScheduleTab.getCurrentDayDetails(lessonLists);
         if (scheduleDayDetails != null) {
           if (!scheduleDayDetails.schoolStarted) {
             let startOfDay = moment(scheduleDayDetails.length.startOfDay);
-            let diffInHours = today.diff(startOfDay, 'hours');
-            if (diffInHours < 5) {
+            let diffInHours = startOfDay.diff(today, 'hours');
+            if (diffInHours <= 5) {
               this.schedule_ui_text.translationRes = 'school_starts';
               this.schedule_ui_text.params = {
                 time: MiscUtils.millisecondsToStr(startOfDay.unix()-today.unix())
               }
             } else
               this.applyDateHeader('today', draftParams, lessonLists, draftRes);
+          } else {
+            let endOfDay = moment(scheduleDayDetails.length.endOfDay);
+            if (scheduleDayDetails.ongoing) {
+              if (scheduleDayDetails.realReservations.length < 2) {
+                this.schedule_ui_text.translationRes = 'school_ends';
+                this.schedule_ui_text.params = {
+                  time: MiscUtils.millisecondsToStr(endOfDay.unix()-today.unix())
+                }
+              } else {
+                let reservation = scheduleDayDetails.realReservations[0];
+                let resEnd = moment(reservation.end);
+                this.schedule_ui_text.translationRes = 'lesson_ends';
+                this.schedule_ui_text.params = {
+                  time: MiscUtils.millisecondsToStr(resEnd.unix()-today.unix())
+                }
+              }
+            } else if (scheduleDayDetails.realReservations.length > 0) {
+              let reservation = scheduleDayDetails.realReservations[0];
+              let resStart = moment(reservation.start);
+              this.schedule_ui_text.translationRes = 'lesson_starts';
+              this.schedule_ui_text.params = {
+                time: MiscUtils.millisecondsToStr(resStart.unix()-today.unix())
+              }
+            }
           }
         } else {
           this.applyDateHeader('today',draftParams, lessonLists, draftRes);
@@ -171,16 +194,20 @@ export class ScheduleTab extends WilmaPlusAppComponent {
     if (length.startOfDay != null && length.endOfDay != null) {
       let schoolStarted = now.isAfter(moment(length.startOfDay));
       let schoolEnded = now.isAfter(moment(length.endOfDay));
-      let realCount = 0;
+      let realReservations = [];
+      let ongoing = false;
       for (let reservation of scheduleDay.reservations) {
         if (reservation.start !== null && reservation.end !== null) {
           let endDate = moment(reservation.end);
+          let startDate = moment(reservation.start);
           if (now.isBefore(endDate)) {
-            realCount++;
+            if (now.isAfter(startDate))
+              ongoing = true;
+            realReservations.push(reservation);
           }
         }
       }
-      return {schoolStarted, schoolEnded, scheduleDay, realCount, length};
+      return {schoolStarted, schoolEnded, scheduleDay, realReservations, length, ongoing};
     }
     return null;
   }

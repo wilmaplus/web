@@ -47,5 +47,8 @@
   "today": "today",
   "tomorrow": "tomorrow",
   "lesson_count": "{{count}} lesson{{multiple}} {{time}}",
-  "school_starts": "School starts in {{time}}"
+  "school_starts": "School begins in {{time}}",
+  "school_ends": "School ends in {{time}}",
+  "lesson_ends": "This lesson ends in {{time}}",
+  "lesson_starts": "Next lesson begins in {{time}}"
 }
