@@ -13,6 +13,8 @@ __NOTE__: Work is still in progress!
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+**NOTE!** API Backend is required for UI to function correctly: [https://github.com/wilmaplus/web-backend](https://github.com/wilmaplus/web-backend)
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
