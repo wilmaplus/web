@@ -16,9 +16,26 @@ import {ApiClient} from "../../../../../../client/apiclient";
 })
 
 export class ScheduleTab extends WilmaPlusAppComponent {
+  loading = false;
 
   constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient: ApiClient) {
     super(snackBar, router, titleService, translate, bottomSheet);
-    console.log("test3");
+  }
+
+  loadSchedule() {
+    this.authApi.getSelectedAccount(accountModel => {
+      if (accountModel !== undefined) {
+        this.apiClient.getSchedule(accountModel, schedule => {
+          console.log(schedule);
+        }, error => {
+          // Re-login is handled by homepage, so tab is being silent while homepage re-logins.
+          if (error.reLogin)
+            return;
+          this.openError(error, () => {this.loadSchedule()});
+        })
+      }
+    }, error => {
+      this.openError(error, () => {this.loadSchedule()});
+    })
   }
 }
