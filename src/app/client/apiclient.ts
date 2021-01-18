@@ -8,7 +8,7 @@ import {Session} from "./types/wilma_api/session";
 import {SignInResponse} from "./types/sign_in";
 import {Homepage} from "./types/wilma_api/homepage";
 import {IAccountModel} from "../authapi/accounts_db/model";
-import {Headers, RequestOptions} from "@angular/http";
+import {ScheduleResponse} from "./types/schedule";
 
 
 @Injectable()
@@ -103,17 +103,17 @@ export class ApiClient {
   }
 
   /**
-   * Getting homepage through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...
+   * Getting schedule through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...
    * @param account
    * @param callback callback
    * @param error error callback
    */
-  public getSchedule(account:IAccountModel, callback: (homepage: Homepage) => void, error: (apiError: ApiError) => void) {
+  public getSchedule(account:IAccountModel, callback: (schedule: ScheduleResponse) => void, error: (apiError: ApiError) => void) {
     let translateService = this.translate;
-    this.http.post<SignInResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/schedule', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer}).toPromise().then(function (response) {
+    this.http.post<ScheduleResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/schedule', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer}).toPromise().then(function (response) {
       if (response.status) {
         try {
-          callback(response.response);
+          callback(response);
         } catch (e) {
           error(new ApiError('internal-5', e.toString(), e));
         }
@@ -132,6 +132,72 @@ export class ApiClient {
       }
     });
   }
+
+  /**
+   * Getting schedule through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...
+   * @param date Date
+   * @param account Account
+   * @param callback callback
+   * @param error error callback
+   */
+  public getScheduleWithDate(date: Date, account:IAccountModel, callback: (schedule: ScheduleResponse) => void, error: (apiError: ApiError) => void) {
+    let translateService = this.translate;
+    this.http.post<ScheduleResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/schedule/withdate', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer, date: date.toISOString()}).toPromise().then(function (response) {
+      if (response.status) {
+        try {
+          callback(response);
+        } catch (e) {
+          error(new ApiError('internal-5', e.toString(), e));
+        }
+      } else {
+        ApiError.parseApiError(response, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      }
+    }).catch(function (exception) {
+      if (exception.status != 0) {
+        ApiError.parseApiError(exception.error, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      } else {
+        error(new ApiError('internal-2', exception.statusText, exception));
+      }
+    });
+  }
+
+  /**
+   * Getting schedule through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...
+   * @param start Start of range
+   * @param end End of range
+   * @param account Account
+   * @param callback callback
+   * @param error error callback
+   */
+  public getScheduleInRange(start: Date, end: Date, account:IAccountModel, callback: (schedule: ScheduleResponse) => void, error: (apiError: ApiError) => void) {
+    let translateService = this.translate;
+    this.http.post<ScheduleResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/schedule/range', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer, start: start.toISOString(), end: end.toISOString()}).toPromise().then(function (response) {
+      if (response.status) {
+        try {
+          callback(response);
+        } catch (e) {
+          error(new ApiError('internal-5', e.toString(), e));
+        }
+      } else {
+        ApiError.parseApiError(response, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      }
+    }).catch(function (exception) {
+      if (exception.status != 0) {
+        ApiError.parseApiError(exception.error, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      } else {
+        error(new ApiError('internal-2', exception.statusText, exception));
+      }
+    });
+  }
+
 
   private static extractSessionId(sessionId: string) {
     let regex = /^(.*)Wilma2SID=([^;]+)(.*)$/;
