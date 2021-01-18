@@ -121,13 +121,13 @@ export class Homepage extends WilmaPlusAppComponent {
   }
 
   getCurrentDateAndTime() {
-    console.log(moment.locale());
     moment.locale(this.translateService.currentLang || this.translateService.defaultLang);
     let now = moment();
     return now.format("dddd L");
   }
 
   ngOnInit() {
+    // TODO remove after mobile homepage is done
     if (true || window.screen.width >= 360 && window.screen.width < 1024) { // 768px portrait
       this.mobile = true;
     }
