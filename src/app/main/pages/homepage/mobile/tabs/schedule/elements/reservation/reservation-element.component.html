@@ -5,7 +5,7 @@
       <h3>{{getFullName()}}</h3>
     </div>
     <div class="lesson-card-row">
-      <span>{{getFormattedTime(reservation.start)}}-{{getFormattedTime(reservation.end)}}</span>
+      <span>{{reservation !== undefined ? getFormattedTime(reservation.start) : ''}}-{{reservation !== undefined ? getFormattedTime(reservation.end) : ''}}</span>
       <span>{{getTeachers()}}</span>
       <span>{{getRooms()}}</span>
     </div>

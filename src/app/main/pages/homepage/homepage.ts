@@ -11,9 +11,9 @@ import {RoleModel} from "../../../authapi/roles_db/model";
 import {AccountTypes} from "../../../authapi/account_types";
 import {AuthApi} from "../../../authapi/auth_api";
 import {MiscUtils} from "../../../utils/misc";
-import {ScheduleTab} from "./mobile/tabs/schedule/schedule";
 import {ApiClient} from "../../../client/apiclient";
 import {ReLoginUtils} from "../../../utils/relogin";
+import * as moment from 'moment';
 
 
 @Component({
@@ -28,9 +28,11 @@ export class Homepage extends WilmaPlusAppComponent {
   account:IAccountModel|undefined=undefined
   tabs: any = []
   fetchedHomepage = false
+  private translateService: TranslateService
 
   constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient:ApiClient, private _sanitizer: DomSanitizer) {
     super(snackBar, router, titleService, translate, bottomSheet);
+    this.translateService = translate;
     this.refreshUI(true);
   }
 
@@ -116,6 +118,13 @@ export class Homepage extends WilmaPlusAppComponent {
         {icon: 'message', type: 2, badge: '4'}
       ]
     }
+  }
+
+  getCurrentDateAndTime() {
+    console.log(moment.locale());
+    moment.locale(this.translateService.currentLang || this.translateService.defaultLang);
+    let now = moment();
+    return now.format("dddd L");
   }
 
   ngOnInit() {
