@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 @import '../../../theme/colorpalette';
 @import "../../icon_fix";
+@import '../../../theme/wilmaplus_theme';
 
 .wplus-login {
   display: flex;
@@ -13,7 +14,7 @@
 .login-background {
   height: 100%;
   width: 100%;
-  background: linear-gradient(135deg, mat-color($wilmaplus-primary, main) 35%, mat-color($dark-primary, darker) 100%);
+  @include themeBgGradient(background, primary);
 }
 
 .login_button {

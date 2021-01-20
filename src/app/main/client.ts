@@ -74,6 +74,7 @@ export class WilmaClient extends WilmaPlusAppComponent {
       }
     }, error => {
       console.log(error);
+      router.navigate(['/login']);
     });
   }
 

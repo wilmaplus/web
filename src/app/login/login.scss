@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import '../../theme/wilmaplus_theme';
 @import '../../theme/colorpalette';
 
 .wplus-login {
@@ -10,7 +11,7 @@
   justify-content: center;
   flex-direction: column;
   color: white;
-  background: linear-gradient(135deg, mat-color($wilmaplus-primary, main) 35%, mat-color($dark-primary, darker) 100%);
+  @include themeBgGradient(background, primary);
   box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
 }
 

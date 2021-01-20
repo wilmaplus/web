@@ -1,6 +1,7 @@
 @import "../../icon_fix";
 @import '~@angular/material/theming';
 @import '../../../theme/colorpalette';
+@import '../../../theme/wilmaplus_theme';
 
 .add_button {
   display: flex;
@@ -22,7 +23,7 @@
 }
 
 .add_button mat-icon {
-  color: mat-color($wilmaplus-primary, main);
+  @include theme(color, primary, main);
 }
 
 .account-card {

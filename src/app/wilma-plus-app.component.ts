@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import {TranslateService} from "@ngx-translate/core";
 import {GlobalConfig} from "./config/global";
@@ -11,6 +11,7 @@ import {ApiClient} from "./client/apiclient";
 import {AuthApi} from "./authapi/auth_api";
 import {AccountModel, IAccountModel} from "./authapi/accounts_db/model";
 import {BottomSheetError} from "./elements/error/bottomsheet/error_botomsheet";
+import {OverlayContainer} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,9 @@ import {BottomSheetError} from "./elements/error/bottomsheet/error_botomsheet";
 
 export class WilmaPlusAppComponent {
   _snackbar: MatSnackBar
+  @HostBinding('class') componentCssClass: any;
   _bottomSheet: MatBottomSheet
+
 
   public constructor(_snackBar: MatSnackBar,router: Router, private titleService: Title, private translate: TranslateService, _bottomSheet: MatBottomSheet) {
     this._snackbar = _snackBar;

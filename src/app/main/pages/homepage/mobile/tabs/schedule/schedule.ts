@@ -90,8 +90,13 @@ export class ScheduleTab extends WilmaPlusAppComponent {
         finalList.push(scheduleDay);
       }
     }
-    if (finalList.length > 0)
-      return finalList[0];
+    if (finalList.length > 0) {
+      for (let item of finalList) {
+        if (moment().isBefore(moment(item.date))) {
+          return item;
+        }
+      }
+    }
     return {reservations: [], date: null};
   }
 

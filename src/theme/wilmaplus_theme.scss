@@ -52,6 +52,43 @@ $wilmaplus-dark-theme: mat-dark-theme((
 // that you are using.
 @include angular-material-theme($wilmaplus-theme);
 
+
+@media (prefers-color-scheme: dark) {
+  @include angular-material-theme($wilmaplus-dark-theme);
+  $selectedTheme: $wilmaplus-dark-theme;
+  body {background-color: black};
+}
+
+@mixin theme($property: null, $key: null, $key2: null) {
+  & {
+    #{$property}: mat-color(map_get($wilmaplus-theme, $key), $key2);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    #{$property}: mat-color(map_get($wilmaplus-dark-theme, $key), $key2);
+  }
+}
+
+@mixin themeContrast($property: null, $key: null, $key2: null) {
+  & {
+    #{$property}: mat-contrast(map_get($wilmaplus-theme, $key), $key2);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    #{$property}: mat-contrast(map_get($wilmaplus-dark-theme, $key), $key2);
+  }
+}
+
+@mixin themeBgGradient($property: null, $key: null) {
+  & {
+    #{$property}: linear-gradient(135deg, mat-color(map_get($wilmaplus-theme, $key), main) 35%, mat-color($dark-primary, darker) 100%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    #{$property}: linear-gradient(135deg, mat-color(map_get($wilmaplus-dark-theme, $key), main) 35%, mat-color($dark-primary, darker) 100%);
+  }
+}
+
 .login-button-dark {
   @include mat-button-color($wilmaplus-dark-theme);
 }

@@ -1,11 +1,12 @@
 @import "../icon_fix";
 @import '~@angular/material/theming';
 @import '../../theme/colorpalette';
+@import '../../theme/wilmaplus_theme';
 
 .client {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, mat-color($wilmaplus-primary, main) 35%, mat-color($dark-primary, darker) 100%);
+  @include themeBgGradient(background, primary);
 }
 
 
@@ -15,8 +16,8 @@
 
 .sidenav .header {
   min-height: 150px;
-  background-color: mat-color($wilmaplus-primary, main);
-  color: mat-contrast($wilmaplus-primary, main);
+  @include theme(background-color, primary, main);
+  @include themeContrast(color, primary, main);
   padding: 32px 32px 7px;
 }
 

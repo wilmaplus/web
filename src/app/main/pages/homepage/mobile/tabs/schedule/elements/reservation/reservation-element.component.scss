@@ -1,6 +1,7 @@
 @import "../../../../../../../../icon_fix";
 @import '~@angular/material/theming';
 @import '../../../../../../../../../theme/colorpalette';
+@import '../../../../../../../../../theme/wilmaplus_theme';
 
 .lesson-card-row {
   display: flex;
@@ -22,8 +23,8 @@
   margin: 6px;
   padding: 3px;
   cursor: pointer;
-  background-color: mat-color($wilmaplus-primary, main);
-  color: mat-contrast($wilmaplus-primary, main);
+  @include theme(background-color, primary, main);
+  @include themeContrast(color, primary, main);
 }
 
 // Fixing issue of card expanding while showing its ripple
