@@ -43,6 +43,17 @@ $medium: 700px;
   font-size: 17px;
 }
 
+mat-list {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .date-box {
   width: 100%;
   display: flex;

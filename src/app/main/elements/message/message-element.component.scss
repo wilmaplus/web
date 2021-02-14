@@ -1,0 +1,65 @@
+@import "../../../icon_fix";
+@import '~@angular/material/theming';
+@import '../../../../theme/colorpalette';
+@import '../../../../theme/wilmaplus_theme';
+
+.messagebox-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.messagebox-details h3 {
+  margin-bottom: 0;
+}
+
+.messagebox-details p {
+  margin-bottom: 0;
+}
+
+.messagebox-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.messagebox-recipient-ball {
+  margin: 9px;
+  border-radius: 50%;
+  background-color: #32af24;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  font-size: 25px;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.messagebox-recipient-ball .txt {
+  margin-bottom: 2px;
+}
+
+
+.messagebox * {
+  margin-left: 4px;
+  margin-bottom: 0;
+}
+
+.messagebox h3 {
+  flex: 1 1 auto;
+}
+
+.messagebox {
+  margin: 6px;
+  padding: 3px;
+  cursor: pointer;
+  @include theme(background-color, primary, main);
+  @include themeContrast(color, primary, main);
+}
+
+// Fixing issue of card expanding while showing its ripple
+.rippleCorrection {
+  margin-bottom: 0
+}

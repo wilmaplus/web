@@ -4,7 +4,7 @@
 
 <div class="homepage-container mobile" *ngIf="mobile">
   <mat-card class="mobile-card">
-    <div class="user-info" align="center">
+    <div class="user-info" align="center" #userHeader>
       <h1 translate [translateParams]="{name: ui.name}">welcome_user</h1>
       <h3>{{ui.type != null ? (ui.type | translate) : ''}}</h3>
       <img class="profile-image" alt="Profile image" [src]="ui.profileImage ? getBase64Image(ui.profileImage) : '../../assets/profile_placeholder.jpg'"/>
@@ -14,12 +14,14 @@
     </div>
     <div class="section">
       <mat-tab-group color="accent" selectedIndex="0">
-        <mat-tab *ngFor="let tab of tabs">
+        <mat-tab *ngFor="let tab of tabs" class="">
           <ng-template mat-tab-label>
             <mat-icon [matBadge]="tab.badge" matBadgeColor="warn">{{tab.icon}}</mat-icon>
           </ng-template>
-          <wilmaplus-tab-schedule *ngIf="tab.type==1"></wilmaplus-tab-schedule>
-          <wilmaplus-tab-messages *ngIf="tab.type==2"></wilmaplus-tab-messages>
+          <div class="list-container">
+            <wilmaplus-tab-schedule *ngIf="tab.type==1" [userHeader]="userHeader"></wilmaplus-tab-schedule>
+            <wilmaplus-tab-messages *ngIf="tab.type==2"></wilmaplus-tab-messages>
+          </div>
         </mat-tab>
       </mat-tab-group>
     </div>

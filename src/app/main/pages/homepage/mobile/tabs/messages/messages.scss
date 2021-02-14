@@ -1,5 +1,5 @@
 
-.schedule-header {
+.messages-header {
   margin-top: 8px;
   margin-left: 12px;
   width: calc(95% - 12px);
@@ -9,9 +9,13 @@
 }
 
 
-.schedule-header h3 {
+.messages-header h3 {
   width: fit-content;
   flex: 1 1 auto;
   margin: 0;
   font-size: 17px;
+}
+
+.messages-divider {
+  margin: 6px;
 }

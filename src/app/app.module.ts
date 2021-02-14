@@ -45,6 +45,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ReservationElement} from "./main/pages/homepage/mobile/tabs/schedule/elements/reservation/reservation-element.component";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {MessageElement} from "./main/elements/message/message-element.component";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -66,7 +67,8 @@ export function createTranslateLoader(http: HttpClient) {
     Settings,
     ScheduleTab,
     MessagesTab,
-    ReservationElement
+    ReservationElement,
+    MessageElement
   ],
   imports: [
 

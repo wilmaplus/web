@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {ChangeDetectorRef, Component, ElementRef, HostListener, Input, ViewChild} from "@angular/core";
 import {WilmaPlusAppComponent} from "../../../../../../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
@@ -10,12 +10,14 @@ import {ApiClient} from "../../../../../../client/apiclient";
 import {ScheduleDay} from "../../../../../../client/types/schedule/schedule_day";
 import * as moment from 'moment';
 import {MiscUtils} from "../../../../../../utils/misc";
+import {MatCard} from "@angular/material/card";
 
 @Component({
   selector: 'wilmaplus-tab-schedule',
   templateUrl: './schedule.html',
   styleUrls: ['./schedule.scss']
 })
+
 
 export class ScheduleTab extends WilmaPlusAppComponent {
   loading = true;
@@ -24,11 +26,14 @@ export class ScheduleTab extends WilmaPlusAppComponent {
     translationRes: '',
     params: {}
   }
+  @Input("userHeader") userHeader: HTMLDivElement | undefined
+  height:any = 'auto'
   private translateProvider:TranslateService
   titleUpdaterTimeout: number = 0
 
+  @ViewChild('scheduleHeader', {read: ElementRef, static:false}) listView: ElementRef | undefined;
 
-  constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient: ApiClient) {
+  constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient: ApiClient, private chRef: ChangeDetectorRef) {
     super(snackBar, router, titleService, translate, bottomSheet);
     this.translateProvider = translate;
     this.loadSchedule();
@@ -98,6 +103,19 @@ export class ScheduleTab extends WilmaPlusAppComponent {
       }
     }
     return {reservations: [], date: null};
+  }
+
+  /**
+   * Calculates proper height for list
+   */
+  fixListHeight() {
+    if (this.listView !== undefined && this.userHeader !== undefined && this.userHeader.parentElement !== undefined) {
+      // @ts-ignore
+      let heightCalc = this.userHeader?.parentElement?.clientHeight-this.userHeader?.clientHeight-this.listView.nativeElement.offsetParent.offsetParent.parentElement.firstChild.clientHeight-this.listView.nativeElement.clientHeight;
+      this.height = heightCalc-8-19+'px'; // 8 is padding of title, and 19 padding of main card
+      console.log(this.height);
+      this.chRef.detectChanges();
+    }
   }
 
   getHeaderTitle() {

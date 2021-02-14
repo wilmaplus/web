@@ -9,6 +9,7 @@ import {SignInResponse} from "./types/sign_in";
 import {Homepage} from "./types/wilma_api/homepage";
 import {IAccountModel} from "../authapi/accounts_db/model";
 import {ScheduleResponse} from "./types/schedule";
+import {MessagesResponse} from "./types/messages";
 
 
 @Injectable()
@@ -132,6 +133,38 @@ export class ApiClient {
       }
     });
   }
+
+  /**
+   * Getting messages through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...
+   * @param account
+   * @param callback callback
+   * @param error error callback
+   */
+  public getMessages(account:IAccountModel, callback: (schedule: MessagesResponse) => void, error: (apiError: ApiError) => void) {
+    let translateService = this.translate;
+    this.http.post<MessagesResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/messages', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer}).toPromise().then(function (response) {
+      if (response.status) {
+        try {
+          callback(response);
+        } catch (e) {
+          error(new ApiError('internal-5', e.toString(), e));
+        }
+      } else {
+        ApiError.parseApiError(response, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      }
+    }).catch(function (exception) {
+      if (exception.status != 0) {
+        ApiError.parseApiError(exception.error, (apiError: ApiError) => {
+          error(apiError);
+        }, translateService);
+      } else {
+        error(new ApiError('internal-2', exception.statusText, exception));
+      }
+    });
+  }
+
 
   /**
    * Getting schedule through backend, because Visma hasn't heard about OPTIONS request (pre-flighting) and that CORS exists in browsers, so...

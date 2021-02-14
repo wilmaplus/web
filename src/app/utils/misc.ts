@@ -61,7 +61,7 @@ export class MiscUtils {
     }
     let minutes = Math.floor((temp %= 3600) / 60);
     if (minutes) {
-      return minutes + ' min';
+      return minutes +1+ ' min';
     }
     let seconds = temp % 60;
     if (seconds) {

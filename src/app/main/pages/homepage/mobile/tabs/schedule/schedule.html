@@ -1,7 +1,8 @@
-<div class="schedule-header">
+<div class="schedule-header" #scheduleHeader>
   <h3>{{loading ? ('loading' | translate) : schedule_ui_text.translationRes | translate:schedule_ui_text.params}}</h3>
   <mat-progress-spinner mode="indeterminate" color="accent" diameter="20" *ngIf="loading"></mat-progress-spinner>
 </div>
-<mat-list role="list" style="overflow-y: auto; padding-top: 0;" *ngIf="!loading" >
+<mat-list class="schedule_list" role="list" style="overflow-y: auto; padding-top: 0;" *ngIf="!loading" [style]="{height: height}" (window:resize)="fixListHeight()">
   <wilmaplus-schedule-reservation *ngFor="let reservation of getCurrentListOfLessons().reservations" [reservation]="reservation"></wilmaplus-schedule-reservation>
 </mat-list>
+
