@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {WilmaPlusAppComponent} from "../../../../../../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
@@ -17,6 +17,8 @@ import {ApiClient} from "../../../../../../client/apiclient";
 })
 
 export class MessagesTab extends WilmaPlusAppComponent {
+  @Input()
+  badgeCallback: ((badgeValue: string) => void) | undefined
   loading = true;
   unreadMessages: Message[] = []
   inboxMessages: Message[] = []
@@ -34,6 +36,9 @@ export class MessagesTab extends WilmaPlusAppComponent {
           this.loading = false;
           this.unreadMessages = messages.messages.filter((item: Message) => {return item.Status});
           this.inboxMessages = messages.messages.filter((item: Message) => {return !item.Status});
+          if (this.badgeCallback !== undefined) {
+            this.badgeCallback(this.unreadMessages.length > 0 ? this.unreadMessages.length.toString() : '');
+          }
           if (this.inboxMessages.length > 5) {
             this.inboxMessages = this.inboxMessages.copyWithin(0, 0, 5);
           }

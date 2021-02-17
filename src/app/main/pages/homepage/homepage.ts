@@ -109,7 +109,7 @@ export class Homepage extends WilmaPlusAppComponent {
     });
   }
 
-  private renderUI() {
+  private renderUI(msgBadge: string='') {
     if (!this.fetchedHomepage)
       this.refreshProfile();
     if (this.mobile) {
@@ -120,10 +120,15 @@ export class Homepage extends WilmaPlusAppComponent {
       } else {
         this.tabs = [
           {icon: 'calendar_today', type: 1, badge: ''},
-          {icon: 'message', type: 2, badge: '4'}
-        ]
+          {icon: 'message', type: 2, badge: msgBadge}
+        ];
+        console.log(this.tabs);
       }
     }
+  }
+
+  getMessagesCallback = (badgeValue: string) => {
+    this.tabs[1].badge = badgeValue;
   }
 
   getCurrentDateAndTime() {

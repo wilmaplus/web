@@ -10,7 +10,6 @@ import {ApiClient} from "../../../../../../client/apiclient";
 import {ScheduleDay} from "../../../../../../client/types/schedule/schedule_day";
 import * as moment from 'moment';
 import {MiscUtils} from "../../../../../../utils/misc";
-import {MatCard} from "@angular/material/card";
 
 @Component({
   selector: 'wilmaplus-tab-schedule',

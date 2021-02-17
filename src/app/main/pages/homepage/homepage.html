@@ -20,7 +20,7 @@
           </ng-template>
           <div class="list-container">
             <wilmaplus-tab-schedule *ngIf="tab.type==1" [userHeader]="userHeader"></wilmaplus-tab-schedule>
-            <wilmaplus-tab-messages *ngIf="tab.type==2"></wilmaplus-tab-messages>
+            <wilmaplus-tab-messages *ngIf="tab.type==2" [badgeCallback]="getMessagesCallback"></wilmaplus-tab-messages>
           </div>
         </mat-tab>
       </mat-tab-group>

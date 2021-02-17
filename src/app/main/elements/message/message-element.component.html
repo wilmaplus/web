@@ -1,13 +1,18 @@
-<div class="lesson-card" role="listitem" matRipple>
+<div class="messagebox" role="listitem" matRipple>
   <div class="messagebox-row">
-    <div class="messagebox-recipient-ball">
-      <span class="txt">S</span>
+    <div class="messagebox-unread-ball" *ngIf="unreadMessage()">
+
+    </div>
+    <div class="messagebox-recipient-ball" [style]="{backgroundColor: getColorCode()}">
+      <span class="txt" [style]="{color: getLetterColor()}">{{getMessageSender().substr(0, 1)}}</span>
     </div>
     <div class="messagebox-details">
-      <h3><b>{{getMessageSender()}}</b></h3>
+      <h4><b>{{getMessageSender()}}</b></h4>
       <p>{{getMessageName()}}</p>
       <!-- Placeholder! -->
-      <p>perjantai</p>
+      <div class="messagebox-row bottom-info">
+        <p>{{getMessageTimeStamp()}} <mat-icon style="font-size: 22px;" *ngIf="getConversationCount()>0">forum</mat-icon> {{getConversationCount()}}</p>
+      </div>
     </div>
   </div>
 </div>
