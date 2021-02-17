@@ -61,7 +61,7 @@ export class ServerSelectComponent extends WilmaPlusAppComponent {
   openAddServer() {
     let callback = (url: string) => {
       console.log(url);
-      this.router.navigate(['/login/wilma'], {state: {server: {url: url, name: null}}})
+      this.router.navigate(['/login/wilma'], {state: {server: {url: url, name: null}, add: true}});
     };
     this._bottomSheet.open(CustomServerBottomSheet, {data: {doneCallback: callback}});
   }

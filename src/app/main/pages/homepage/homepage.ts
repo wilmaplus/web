@@ -115,8 +115,9 @@ export class Homepage extends WilmaPlusAppComponent {
     if (this.mobile) {
       if (environment.production) {
         this.tabs = [
-          {icon: 'calendar_today', type: 1, badge: ''}
-          ]
+          {icon: 'calendar_today', type: 1, badge: ''},
+          {icon: 'message', type: 2, badge: msgBadge}
+        ]
       } else {
         this.tabs = [
           {icon: 'calendar_today', type: 1, badge: ''},

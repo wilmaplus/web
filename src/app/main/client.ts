@@ -87,7 +87,7 @@ export class WilmaClient extends WilmaPlusAppComponent {
             this.authApi.getRole(account.selectedRole, (role) => {
               if (role !== undefined) {
                 this.updateUIWithRole(role);
-                this.startupUI();
+                this.forcedNavigateToPage('home');
               } else {
                 this.openForcedRoleSelectionDialog();
               }
@@ -118,7 +118,7 @@ export class WilmaClient extends WilmaPlusAppComponent {
 
   private startupUI() {
     if (this.router.url === "/")
-      this.navigateToPage('home');
+      this.forcedNavigateToPage('home');
     else {
       this.updateTitle();
     }
@@ -137,6 +137,14 @@ export class WilmaClient extends WilmaPlusAppComponent {
     if (closeDrawer)
       this.sidenav?.close();
     this.router.navigate([pageName], {relativeTo: this.activatedRoute});
+  }
+
+  forcedNavigateToPage(pageName: string, closeDrawer: boolean=false) {
+    if (closeDrawer)
+      this.sidenav?.close();
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=> {
+      this.router.navigate([pageName], {relativeTo: this.activatedRoute});
+    });
   }
 
   navigateFromSideNav(page: any) {
@@ -175,6 +183,7 @@ export class WilmaClient extends WilmaPlusAppComponent {
         accountModel.selectedRole = role.id;
         this.authApi.updateAccount(accountModel, () => {
           this.refreshUI(this.authApi, this.router);
+          this.forcedNavigateToPage('home');
         }, error => {
           this.openError(error, () => {this.openForcedRoleSelectionDialog();})
         })
