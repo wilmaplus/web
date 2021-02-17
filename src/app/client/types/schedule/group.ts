@@ -3,6 +3,7 @@ import {Room} from "./room";
 
 export interface Group {
   id: number,
+  courseId: number,
   scheduleId: number,
   shortCode: string|null,
   codeName: string|null,

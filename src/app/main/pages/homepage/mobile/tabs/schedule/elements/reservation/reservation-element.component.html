@@ -1,4 +1,4 @@
-<mat-card class="lesson-card" role="listitem" matRipple>
+<mat-card class="lesson-card" role="listitem" matRipple [style]="{backgroundColor: getColorCode(), color: getLetterColor()}">
   <mat-card-content [ngClass]="'rippleCorrection lesson-card-content'">
     <div class="lesson-card-row">
       <p>{{getCodeName()}}</p>

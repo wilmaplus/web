@@ -117,6 +117,8 @@ export class ScheduleTab extends WilmaPlusAppComponent {
     }
   }
 
+
+
   getHeaderTitle() {
     let lessonLists = this.getCurrentListOfLessons(false);
     if (lessonLists.reservations.length < 1) {

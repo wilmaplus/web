@@ -7,6 +7,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import * as moment from "moment";
 import {Reservation} from "../../../../../../../../client/types/schedule/reservation";
+import {Md5} from "ts-md5";
 
 
 @Component({
@@ -74,6 +75,48 @@ export class ReservationElement extends WilmaPlusAppComponent {
     }
     return '';
   }
+
+  hashCode(content: string) {
+    let hash = 0;
+    for (let i = 0; i < content.length; i++) {
+      hash = content.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+  }
+
+  private static getContrastColor(hex: string) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  getLetterColor() {
+    let colorRGB = ReservationElement.getContrastColor(this.getColorCode());
+    if (colorRGB != null) {
+      let sum = (colorRGB.r*299 + colorRGB.g*587+colorRGB.b*114)/1000;
+      return sum >= 128 ? "#000" : "#fff";
+    } else {
+      return "#fff";
+    }
+  }
+
+  groupToMD5() {
+    if (this.reservation === undefined)
+      return ""
+    return new Md5().appendStr(String(this.reservation.groups[0].courseId)).end(false).toString();
+  }
+
+  intToRGB(number: number) {
+    return "#"+((number)>>>0).toString(16).slice(-6);
+  }
+
+  getColorCode() {
+    return this.intToRGB(this.hashCode(this.groupToMD5()));
+  }
+
 
   getFullName() {
     if (this.reservation !== undefined) {

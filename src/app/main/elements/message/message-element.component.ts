@@ -57,7 +57,7 @@ export class MessageElement extends WilmaPlusAppComponent {
     return hash;
   }
 
-  private getContrastColor(hex: string) {
+  private static getContrastColor(hex: string) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
       r: parseInt(result[1], 16),
@@ -67,7 +67,7 @@ export class MessageElement extends WilmaPlusAppComponent {
   }
 
   getLetterColor() {
-    let colorRGB = this.getContrastColor(this.getColorCode());
+    let colorRGB = MessageElement.getContrastColor(this.getColorCode());
     if (colorRGB != null) {
       let sum = (colorRGB.r*299 + colorRGB.g*587+colorRGB.b*114)/1000;
       return sum >= 128 ? "#000" : "#fff";
