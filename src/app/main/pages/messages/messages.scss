@@ -1,0 +1,50 @@
+$medium: 700px;
+
+.messages-container {
+  height: calc(100% - 64px);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  overflow-y: auto;
+}
+
+.folder-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.loader mat-card {
+  height: 60px;
+  width: 60px;
+}
+
+.folder-header h2 {
+  width: auto;
+  margin: 0;
+}
+.folder-header mat-icon {
+  margin-right: 3px;
+}
+
+.wide-card {
+  margin-left: 16px;
+  margin-right: 16px;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width: $medium) {
+    flex-direction: column;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}

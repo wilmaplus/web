@@ -1,0 +1,11 @@
+<mat-card class="desktop-card schedule-card">
+  <mat-card-content>
+    <div class="schedule-header" #scheduleHeader>
+      <h3>{{loading ? ('loading' | translate) : schedule_ui_text.translationRes | translate:schedule_ui_text.params}}</h3>
+      <mat-progress-spinner mode="indeterminate" color="accent" diameter="20" *ngIf="loading"></mat-progress-spinner>
+    </div>
+    <mat-list class="schedule_list" role="list" style="" *ngIf="!loading">
+      <wilmaplus-schedule-reservation *ngFor="let reservation of getCurrentListOfLessons().reservations" [reservation]="reservation"></wilmaplus-schedule-reservation>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

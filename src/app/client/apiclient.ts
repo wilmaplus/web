@@ -139,10 +139,11 @@ export class ApiClient {
    * @param account
    * @param callback callback
    * @param error error callback
+   * @param folder Folder name (optional)
    */
-  public getMessages(account:IAccountModel, callback: (schedule: MessagesResponse) => void, error: (apiError: ApiError) => void) {
+  public getMessages(account:IAccountModel, callback: (schedule: MessagesResponse) => void, error: (apiError: ApiError) => void, folder='') {
     let translateService = this.translate;
-    this.http.post<MessagesResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/messages', {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer}).toPromise().then(function (response) {
+    this.http.post<MessagesResponse>(ApiClient.correctAddress(this.config.backend_url)+'api/v1/messages/'+folder, {session: ApiClient.extractSessionId(account.cookies), server: account.wilmaServer}).toPromise().then(function (response) {
       if (response.status) {
         try {
           callback(response);

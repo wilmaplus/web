@@ -1,5 +1,7 @@
 import {DomSanitizer} from "@angular/platform-browser";
 import {AccountTypes} from "../authapi/account_types";
+import * as moment from "moment";
+import {TranslateService} from "@ngx-translate/core";
 
 export class MiscUtils {
   public static b64toBlob(b64Data: string, contentType='', sliceSize=512) {
@@ -21,6 +23,12 @@ export class MiscUtils {
   public static getBase64Image(imageString: string, _sanitizer: DomSanitizer) {
     let blob = URL.createObjectURL(MiscUtils.b64toBlob(imageString));
     return _sanitizer.bypassSecurityTrustUrl(blob);
+  }
+
+  public static getCurrentDateAndTime(translateService: TranslateService) {
+    moment.locale(translateService.currentLang || translateService.defaultLang);
+    let now = moment();
+    return now.format("dddd L");
   }
 
   public static getType(type: number) {

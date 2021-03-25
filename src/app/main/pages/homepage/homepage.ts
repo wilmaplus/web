@@ -13,8 +13,9 @@ import {AuthApi} from "../../../authapi/auth_api";
 import {MiscUtils} from "../../../utils/misc";
 import {ApiClient} from "../../../client/apiclient";
 import {ReLoginUtils} from "../../../utils/relogin";
-import * as moment from 'moment';
+import {CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray} from '@angular/cdk/drag-drop';
 import { environment } from 'src/environments/environment';
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
   selector: 'wilmaplus-homepage',
@@ -23,6 +24,9 @@ import { environment } from 'src/environments/environment';
 })
 
 export class Homepage extends WilmaPlusAppComponent {
+  @ViewChild(CdkDropListGroup) listGroup: CdkDropListGroup<CdkDropList> | undefined;
+  @ViewChild(CdkDropList) placeholder: CdkDropList | undefined;
+
   mobile: boolean = false
   ui = new UISettings()
   account:IAccountModel|undefined=undefined
@@ -30,7 +34,18 @@ export class Homepage extends WilmaPlusAppComponent {
   fetchedHomepage = false
   private translateService: TranslateService
 
-  constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient:ApiClient, private _sanitizer: DomSanitizer) {
+  cols : number = 0;
+
+  gridByBreakpoint = {
+    xl: 3,
+    lg: 3,
+    md: 3,
+    sm: 2,
+    xs: 1
+  }
+
+
+  constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient:ApiClient, private _sanitizer: DomSanitizer, private breakpointObserver: BreakpointObserver) {
     super(snackBar, router, titleService, translate, bottomSheet);
     this.translateService = translate;
     this.refreshUI(true);
@@ -133,15 +148,37 @@ export class Homepage extends WilmaPlusAppComponent {
   }
 
   getCurrentDateAndTime() {
-    moment.locale(this.translateService.currentLang || this.translateService.defaultLang);
-    let now = moment();
-    return now.format("dddd L");
+    return MiscUtils.getCurrentDateAndTime(this.translateService);
   }
 
   ngOnInit() {
     // TODO remove after mobile homepage is done
-    if (true || window.screen.width >= 360 && window.screen.width < 1024) { // 768px portrait
+    if (window.screen.width >= 360 && window.screen.width < 1024) { // 768px portrait
       this.mobile = true;
+    } else {
+      this.breakpointObserver.observe([
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ]).subscribe(result => {
+        if (result.matches) {
+          if (result.breakpoints[Breakpoints.XSmall]) {
+            this.cols = this.gridByBreakpoint.xs;
+          }
+          if (result.breakpoints[Breakpoints.Small]) {
+            this.cols = this.gridByBreakpoint.sm;
+          }
+          if (result.breakpoints[Breakpoints.Medium]) {
+            this.cols = this.gridByBreakpoint.md;
+          }
+          if (result.breakpoints[Breakpoints.Large]) {
+            this.cols = this.gridByBreakpoint.lg;
+          }
+          if (result.breakpoints[Breakpoints.XLarge]) {
+            this.cols = this.gridByBreakpoint.xl;
+          }
+        }
+      });
     }
   }
 

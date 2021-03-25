@@ -1,5 +1,7 @@
-<div class="homepage-container" *ngIf="!mobile">
-  <h1>Das ist homepage</h1>
+<div *ngIf="!mobile" class="grid-container grid-container--fill">
+  <wilmaplus-card-badge [ui]="ui"></wilmaplus-card-badge>
+  <wilmaplus-card-messages></wilmaplus-card-messages>
+  <wilmaplus-card-schedule></wilmaplus-card-schedule>
 </div>
 
 <div class="homepage-container mobile" *ngIf="mobile">

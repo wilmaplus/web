@@ -1,0 +1,10 @@
+@import "../common/card";
+@import "../../common/messages";
+
+
+.messages-card {
+  grid-column: auto / span 2;
+  grid-row: auto / span 2;
+  height: 250px;
+  overflow-y: auto;
+}

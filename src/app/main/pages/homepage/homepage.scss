@@ -7,6 +7,22 @@ $medium: 700px;
   align-content: center;
 }
 
+.grid-container {
+  margin-left: 9px;
+  margin-right: 9px;
+  display: grid;
+  grid-auto-rows: 1fr;
+  overflow-y: auto;
+}
+
+.grid-container--fill {
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-areas:
+          "desktop-card desktop-card desktop-card"
+          "desktop-card messages-card-card desktop-card"
+          "desktop-card desktop-card desktop-card";
+}
+
 .user-info {
   display: flex;
   display: -webkit-box;

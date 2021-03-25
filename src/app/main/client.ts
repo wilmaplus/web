@@ -1,4 +1,4 @@
-import {Component, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {WilmaPlusAppComponent} from "../wilma-plus-app.component";
 import {GlobalConfig} from "../config/global";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -12,10 +12,11 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AccountSelector} from "./account_selector/bottomsheet";
 import {Role} from "../client/types/wilma_api/homepage";
 import {AccountTypes} from "../authapi/account_types";
-import {IRoleModel, RoleModel} from "../authapi/roles_db/model";
+import {RoleModel} from "../authapi/roles_db/model";
 import {MiscUtils} from "../utils/misc";
 import {MatSidenav} from "@angular/material/sidenav";
 import { ActivatedRoute } from '@angular/router';
+import {MediaMatcher} from "@angular/cdk/layout";
 
 export class UISettings {
   name: string|null
@@ -45,14 +46,20 @@ export class WilmaClient extends WilmaPlusAppComponent {
   ui = new UISettings()
   translateService: TranslateService
   account: IAccountModel|null = null
+  private _mobileQueryListener: () => void;
+  mobileQuery: MediaQueryList;
   private router: Router;
+  isExpanded = true;
+  mobile = false;
+
   @ViewChild('drawer', {static: true}) sidenav: MatSidenav | undefined;
   pages = [
     {name: 'home', path: '/home', icon: 'home'},
+    {name: 'messages', path: '/messages', icon: 'email'},
     {name: 'settings', path: '/settings', icon: 'settings'}
   ]
 
-  constructor(snackBar: MatSnackBar, _bottomSheet: MatBottomSheet, router: Router, titleService: Title, translate: TranslateService, private authApi: AuthApi, private _sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) {
+  constructor(snackBar: MatSnackBar, _bottomSheet: MatBottomSheet, router: Router, titleService: Title, translate: TranslateService, private authApi: AuthApi, private _sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     super(snackBar, router, titleService, translate, _bottomSheet);
     console.log(version);
     this.translateService = translate;
@@ -62,8 +69,31 @@ export class WilmaClient extends WilmaPlusAppComponent {
       if (event instanceof NavigationEnd) {
         this.updateTitle();
       }
-    })
+    });
+    this.mobileQuery = media.matchMedia('(max-width: 800px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+
   }
+
+  ngOnDestroy(): void {
+    this.mobileQuery?.removeListener(this._mobileQueryListener);
+  }
+
+  ngOnInit() {
+    this.mobileQuery.addListener(this._mobileQueryListener);
+    if (window.screen.width >= 360 && window.screen.width < 1024) {
+      this.mobile = true;
+    }
+    if (!this.mobileQuery.matches && !this.mobile)
+      this.isExpanded = false;
+  }
+
+  hover() {
+    if (!this.mobileQuery.matches) {
+      this.isExpanded = !this.isExpanded;
+    }
+  }
+
 
   init(authApi: AuthApi, router: Router) {
     authApi.accountsExist(exists => {
@@ -79,6 +109,8 @@ export class WilmaClient extends WilmaPlusAppComponent {
   }
 
   private refreshUI(authApi: AuthApi, router: Router) {
+    if (this.isExpanded)
+      this.sidenav?.open();
     authApi.getSelectedAccount(account => {
       if (account !== undefined) {
         this.account = account;
@@ -134,13 +166,13 @@ export class WilmaClient extends WilmaPlusAppComponent {
   }
 
   navigateToPage(pageName: string, closeDrawer: boolean=false) {
-    if (closeDrawer)
+    if (closeDrawer && this.mobileQuery?.matches)
       this.sidenav?.close();
     this.router.navigate([pageName], {relativeTo: this.activatedRoute});
   }
 
   forcedNavigateToPage(pageName: string, closeDrawer: boolean=false) {
-    if (closeDrawer)
+    if (closeDrawer && this.mobileQuery?.matches)
       this.sidenav?.close();
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=> {
       this.router.navigate([pageName], {relativeTo: this.activatedRoute});
@@ -148,7 +180,8 @@ export class WilmaClient extends WilmaPlusAppComponent {
   }
 
   navigateFromSideNav(page: any) {
-    this.sidenav?.close();
+    if (this.mobileQuery?.matches)
+      this.sidenav?.close();
     this.router.navigate([page.path], {relativeTo: this.activatedRoute});
   }
 

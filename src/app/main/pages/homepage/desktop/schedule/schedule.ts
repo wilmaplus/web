@@ -1,24 +1,24 @@
-import {ChangeDetectorRef, Component, ElementRef, HostListener, Input, ViewChild} from "@angular/core";
-import {WilmaPlusAppComponent} from "../../../../../../wilma-plus-app.component";
+import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from "@angular/core";
+import {WilmaPlusAppComponent} from "../../../../../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {TranslateService} from "@ngx-translate/core";
-import {AuthApi} from "../../../../../../authapi/auth_api";
-import {ApiClient} from "../../../../../../client/apiclient";
-import {ScheduleDay} from "../../../../../../client/types/schedule/schedule_day";
+import {AuthApi} from "../../../../../authapi/auth_api";
+import {ApiClient} from "../../../../../client/apiclient";
+import {ScheduleDay} from "../../../../../client/types/schedule/schedule_day";
 import * as moment from 'moment';
-import {MiscUtils} from "../../../../../../utils/misc";
+import {MiscUtils} from "../../../../../utils/misc";
 
 @Component({
-  selector: 'wilmaplus-tab-schedule',
+  selector: 'wilmaplus-card-schedule',
   templateUrl: './schedule.html',
   styleUrls: ['./schedule.scss']
 })
 
 
-export class ScheduleTab extends WilmaPlusAppComponent {
+export class ScheduleCardElement extends WilmaPlusAppComponent {
   loading = true;
   schedule: ScheduleDay[] = []
   schedule_ui_text = {
@@ -121,7 +121,7 @@ export class ScheduleTab extends WilmaPlusAppComponent {
       tomorrow.add(1, 'day');
       if (today.isSame(lessonLists.date, 'day')) {
         // @ts-ignore
-        let scheduleDayDetails = ScheduleTab.getCurrentDayDetails(lessonLists);
+        let scheduleDayDetails = ScheduleCardElement.getCurrentDayDetails(lessonLists);
         if (scheduleDayDetails != null) {
           if (!scheduleDayDetails.schoolStarted) {
             let startOfDay = moment(scheduleDayDetails.length.startOfDay);
@@ -199,7 +199,7 @@ export class ScheduleTab extends WilmaPlusAppComponent {
 
   private static getCurrentDayDetails(scheduleDay: ScheduleDay) {
     let now = moment();
-    let length = ScheduleTab.getScheduleDayFullLength(scheduleDay);
+    let length = ScheduleCardElement.getScheduleDayFullLength(scheduleDay);
     if (length.startOfDay != null && length.endOfDay != null) {
       let schoolStarted = now.isAfter(moment(length.startOfDay));
       let schoolEnded = now.isAfter(moment(length.endOfDay));

@@ -1,0 +1,81 @@
+@import "../common/card";
+
+$medium: 700px;
+
+mat-card{
+  display:flex;
+  flex-direction: column;
+}
+
+mat-card-header {
+  flex-shrink: 0;
+}
+
+mat-card-content{
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.user-info {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  @media screen and (min-width: $medium) {
+    flex: 1;
+  }
+}
+
+
+.content {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-image {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  margin: 3px;
+}
+
+.user-info h1, h2 h3 {
+  flex: 0;
+  margin: 0;
+  width: fit-content;
+}
+
+.user-info h2 {
+  font-size: 17px;
+}
+
+.date-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-box h2 {
+  width: auto;
+  margin: 0;
+}
+.date-box mat-icon {
+  margin-right: 3px;
+}

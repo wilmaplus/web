@@ -7,18 +7,27 @@
   width: 100%;
   height: 100%;
   @include themeBgGradient(background, primary);
+  overflow-y: auto;
 }
 
 
-.sidenav {
+.sidenav-fixed {
   width: 300px;
 }
+
+@media screen and (min-width: 800px) {
+  .sidenav, .sidenav *, .wilmaplus-drawer, mat-drawer-container, mat-drawer-container *,mat-drawer, mat-drawer *, .sidenav .header, .sidenav .header *, #drawer, #drawer * {
+    transition: all .2s ease !important;
+  }
+}
+
 
 .sidenav .header {
   min-height: 150px;
   @include theme(background-color, primary, main);
   @include themeContrast(color, primary, main);
   padding: 32px 32px 7px;
+  transition: all .2s ease;
 }
 
 .sidenav .header h2 {

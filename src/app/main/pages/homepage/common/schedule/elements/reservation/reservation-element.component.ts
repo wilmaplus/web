@@ -1,12 +1,12 @@
 import {Component, Input} from "@angular/core";
-import {WilmaPlusAppComponent} from "../../../../../../../../wilma-plus-app.component";
+import {WilmaPlusAppComponent} from "../../../../../../../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {TranslateService} from "@ngx-translate/core";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import * as moment from "moment";
-import {Reservation} from "../../../../../../../../client/types/schedule/reservation";
+import {Reservation} from "../../../../../../../client/types/schedule/reservation";
 import {Md5} from "ts-md5";
 
 

@@ -1,0 +1,25 @@
+<div class="messages-container" *ngIf="!loading">
+  <mat-accordion>
+    <mat-expansion-panel hideToggle *ngFor="let item of this.folders">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="folder-header">
+          <mat-icon>{{item.icon}}</mat-icon><h2 translate>{{item.name}}</h2><h2> ({{item.messages.length}})</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <mat-list role="list" style="overflow-y: auto; padding-top: 0;">
+          <wilmaplus-message *ngFor="let message of item.messages" [message]="message"></wilmaplus-message>
+        </mat-list>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+
+<div class="messages-container loader" *ngIf="loading" align="center">
+  <mat-card>
+    <mat-card-content>
+      <mat-progress-spinner mode="indeterminate" color="accent" diameter="60" *ngIf="loading"></mat-progress-spinner>
+    </mat-card-content>
+  </mat-card>
+</div>

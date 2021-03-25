@@ -42,10 +42,17 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {ScheduleTab} from "./main/pages/homepage/mobile/tabs/schedule/schedule";
 import {MessagesTab} from "./main/pages/homepage/mobile/tabs/messages/messages";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {ReservationElement} from "./main/pages/homepage/mobile/tabs/schedule/elements/reservation/reservation-element.component";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import {MessageElement} from "./main/elements/message/message-element.component";
+import {BadgeCardElement} from "./main/pages/homepage/desktop/badge/badge";
+import {MessagesCardElement} from "./main/pages/homepage/desktop/messages/messages";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {ReservationElement} from "./main/pages/homepage/common/schedule/elements/reservation/reservation-element.component";
+import {ScheduleCardElement} from "./main/pages/homepage/desktop/schedule/schedule";
+import {Messages} from "./main/pages/messages/messages";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -68,7 +75,11 @@ export function createTranslateLoader(http: HttpClient) {
     ScheduleTab,
     MessagesTab,
     ReservationElement,
-    MessageElement
+    MessageElement,
+    BadgeCardElement,
+    MessagesCardElement,
+    ScheduleCardElement,
+    Messages
   ],
   imports: [
 
@@ -103,7 +114,10 @@ export function createTranslateLoader(http: HttpClient) {
     MatTabsModule,
     MatBadgeModule,
     MatProgressSpinnerModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    FlexLayoutModule,
+    DragDropModule,
+    MatExpansionModule
   ],
   providers: [HttpClientModule, ApiClient, GlobalConfig, AccountModel, AuthDatabase, AuthApi],
   bootstrap: [WilmaPlusAppComponent]

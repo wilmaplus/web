@@ -51,5 +51,11 @@
   "school_ends": "School ends in {{time}}",
   "lesson_ends": "This lesson ends in {{time}}",
   "lesson_starts": "Next lesson begins in {{time}}",
-  "no_unread_messages": "No unread messages"
+  "no_unread_messages": "No unread messages",
+  "messages": "Messages",
+  "inbox": "Inbox",
+  "unread": "Unread",
+  "sent": "Sent",
+  "archive": "Archive",
+  "drafts": "Drafts"
 }

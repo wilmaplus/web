@@ -1,7 +1,9 @@
 
-<mat-drawer-container [hasBackdrop]="true" style="height: 100%;">
-  <mat-drawer #drawer mode="over" class="sidenav">
-    <div class="header">
+
+
+<mat-drawer-container [hasBackdrop]="mobileQuery.matches" style="height: 100%;" autosize class="wilmaplus-drawer" *ngIf="!mobileQuery.matches">
+  <mat-drawer #drawer [mode]="'side'" [class]="isExpanded ? 'sidenav sidenav-fixed' : 'sidenav'" [disableClose]="!mobileQuery.matches" [opened]="!mobileQuery.matches">
+    <div class="header" *ngIf="isExpanded">
       <div class="actions">
         <button mat-icon-button (click)="openSelectorDialog()">
           <mat-icon>swap_horiz</mat-icon>
@@ -14,22 +16,55 @@
     <mat-nav-list>
       <a mat-list-item (click)="navigateFromSideNav(page)" *ngFor="let page of pages">
         <mat-icon matListIcon>{{page.icon}}</mat-icon>
-        <span mat-line>{{page.name | translate}}</span>
+        <span mat-line *ngIf="isExpanded">{{page.name | translate}}</span>
       </a>
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
     <div class="client">
       <mat-toolbar color="primary" style="background: transparent;">
-        <button mat-icon-button (click)="drawer.toggle()">
+        <button mat-icon-button (click)="isExpanded = !isExpanded">
           <mat-icon>menu</mat-icon>
         </button>
         <span>{{pageTitle}}</span>
         <span class="toolbar-spacer"></span>
       </mat-toolbar>
-      <router-outlet></router-outlet>
+      <router-outlet style="overflow-y: auto"></router-outlet>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
 
 
+
+<mat-drawer-container [hasBackdrop]="true" style="height: 100%;" *ngIf="mobileQuery.matches">
+  <mat-drawer #drawer mode="over" class="sidenav">
+    <div class="header" *ngIf="mobileQuery.matches || isExpanded">
+      <div class="actions">
+        <button mat-icon-button (click)="openSelectorDialog()">
+          <mat-icon>swap_horiz</mat-icon>
+        </button>
+      </div>
+      <img class="profile-image" alt="Profile image" [src]="ui.profileImage ? getBase64Image(ui.profileImage) : '../../assets/profile_placeholder.jpg'"/>
+      <h2>{{ui.name || appName}}</h2>
+      <h3>{{(ui.name && ui.school) ? ui.school || version : ''}}</h3>
+    </div>
+    <mat-nav-list>
+      <a mat-list-item (click)="navigateFromSideNav(page)" *ngFor="let page of pages">
+        <mat-icon matListIcon>{{page.icon}}</mat-icon>
+        <span mat-line *ngIf="mobileQuery.matches || isExpanded">{{page.name | translate}}</span>
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="client">
+      <mat-toolbar color="primary" style="background: transparent;">
+        <button mat-icon-button (click)="mobileQuery.matches ? drawer.toggle() : isExpanded = !isExpanded">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>{{pageTitle}}</span>
+        <span class="toolbar-spacer"></span>
+      </mat-toolbar>
+      <router-outlet style="overflow-y: auto"></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

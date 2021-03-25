@@ -51,5 +51,11 @@
   "school_ends": "Koulu loppuu {{time}} päästä",
   "lesson_ends": "Tämä oppitunti loppuu {{time}} päästä",
   "lesson_starts": "Seuraava oppitunti alkaa {{time}} päästä",
-  "no_unread_messages": "Ei lukemattomia viestejä"
+  "no_unread_messages": "Ei lukemattomia viestejä",
+  "messages": "Viestit",
+  "inbox": "Saapuneet",
+  "unread": "Lukemattomat",
+  "sent": "Lähetetyt",
+  "archive": "Arkisto",
+  "drafts": "Luonnokset"
 }
