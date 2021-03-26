@@ -104,6 +104,8 @@ export class AuthApi {
             }
             callback(account);
           }, errorCallback);
+        } else {
+          callback(account);
         }
       } else
         callback(undefined);

@@ -96,7 +96,7 @@ export class ScheduleTab extends WilmaPlusAppComponent {
     }
     if (finalList.length > 0) {
       for (let item of finalList) {
-        if (moment().isBefore(moment(item.date))) {
+        if (moment().isBefore(moment(item.date)) || moment().isSame(item.date, 'day')) {
           return item;
         }
       }

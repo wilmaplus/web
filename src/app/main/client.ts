@@ -49,7 +49,7 @@ export class WilmaClient extends WilmaPlusAppComponent {
   private _mobileQueryListener: () => void;
   mobileQuery: MediaQueryList;
   private router: Router;
-  isExpanded = true;
+  isExpanded = false;
   mobile = false;
 
   @ViewChild('drawer', {static: true}) sidenav: MatSidenav | undefined;
@@ -84,15 +84,8 @@ export class WilmaClient extends WilmaPlusAppComponent {
     if (window.screen.width >= 360 && window.screen.width < 1024) {
       this.mobile = true;
     }
-    if (!this.mobileQuery.matches && !this.mobile)
-      this.isExpanded = false;
   }
 
-  hover() {
-    if (!this.mobileQuery.matches) {
-      this.isExpanded = !this.isExpanded;
-    }
-  }
 
 
   init(authApi: AuthApi, router: Router) {

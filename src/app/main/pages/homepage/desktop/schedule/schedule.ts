@@ -82,7 +82,7 @@ export class ScheduleCardElement extends WilmaPlusAppComponent {
       for (let reservation of scheduleDay.reservations) {
         if (reservation.start !== null && reservation.end !== null) {
           let endDate = moment(reservation.end);
-          if (now.isBefore(endDate)) {
+          if (now.isBefore(endDate) || now.isSame(endDate)) {
             finalReservations.push(reservation);
             realCount++;
           } else if (!removeExpiredItems)
@@ -96,7 +96,7 @@ export class ScheduleCardElement extends WilmaPlusAppComponent {
     }
     if (finalList.length > 0) {
       for (let item of finalList) {
-        if (moment().isBefore(moment(item.date))) {
+        if (moment().isBefore(moment(item.date)) || moment().isSame(item.date, 'day')) {
           return item;
         }
       }
@@ -119,9 +119,11 @@ export class ScheduleCardElement extends WilmaPlusAppComponent {
       let today = moment();
       let tomorrow = moment();
       tomorrow.add(1, 'day');
+      console.log(lessonLists);
       if (today.isSame(lessonLists.date, 'day')) {
         // @ts-ignore
         let scheduleDayDetails = ScheduleCardElement.getCurrentDayDetails(lessonLists);
+        console.log(scheduleDayDetails);
         if (scheduleDayDetails != null) {
           if (!scheduleDayDetails.schoolStarted) {
             let startOfDay = moment(scheduleDayDetails.length.startOfDay);

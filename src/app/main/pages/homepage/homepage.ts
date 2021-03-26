@@ -140,6 +140,21 @@ export class Homepage extends WilmaPlusAppComponent {
         ];
         console.log(this.tabs);
       }
+    } else {
+      if (environment.production) {
+        this.tabs = [
+          {type: 1},
+          {type: 2}
+        ]
+      } else {
+        this.tabs = [
+          this.tabs = [
+            {type: 1},
+            {type: 2}
+          ]
+        ];
+        console.log(this.tabs);
+      }
     }
   }
 
