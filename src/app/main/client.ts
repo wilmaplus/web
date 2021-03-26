@@ -101,8 +101,8 @@ export class WilmaClient extends WilmaPlusAppComponent {
     });
   }
 
-  private refreshUI(authApi: AuthApi, router: Router, accountChange=false) {
-    if (accountChange && this.isExpanded && !this.mobileQuery.matches)
+  private refreshUI(authApi: AuthApi, router: Router) {
+    if (this.isExpanded && !this.mobileQuery.matches)
       this.sidenav?.open();
     authApi.getSelectedAccount(account => {
       if (account !== undefined) {
@@ -208,7 +208,7 @@ export class WilmaClient extends WilmaPlusAppComponent {
         let accountModel = AccountModel.fromRawModel(account);
         accountModel.selectedRole = role.id;
         this.authApi.updateAccount(accountModel, () => {
-          this.refreshUI(this.authApi, this.router, true);
+          this.refreshUI(this.authApi, this.router);
           this.forcedNavigateToPage('home');
         }, error => {
           this.openError(error, () => {this.openForcedRoleSelectionDialog();})
@@ -230,7 +230,7 @@ export class WilmaClient extends WilmaPlusAppComponent {
       this.authApi.selectAccount(account);
       this.account = AccountModel.fromRawModel(account);
       this.sidenav?.toggle(false);
-      this.refreshUI(this.authApi, this.router, true);
+      this.refreshUI(this.authApi, this.router);
     };
     let onRoleSelect = (role:Role) => {
       if (this.account !== null) {
