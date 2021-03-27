@@ -9,6 +9,7 @@ import {AuthApi} from "../../../authapi/auth_api";
 import {Message} from "../../../client/types/wilma_api/message";
 import {AccountTypes} from "../../../authapi/account_types";
 import {ApiClient} from "../../../client/apiclient";
+import {ReLoginUtils} from "../../../utils/relogin";
 
 
 
@@ -48,10 +49,16 @@ export class Messages extends WilmaPlusAppComponent {
         }, error => {
           this.loading = false;
           console.log(error);
-          // Re-login is handled by homepage, so tab is being silent while homepage re-logins.
-          if (error.reLogin)
+          if (error.reLogin) {
+            ReLoginUtils.reLogin(this.apiClient, this.authApi, () => {
+              this.loadMessages();
+            }, (error) => {
+              this.openError(error, () => {this.loadMessages()})
+            }, account, this._bottomSheet);
             return;
-          this.openError(error, () => {this.loadMessages()});
+          } else {
+            this.openError(error, () => {this.loadMessages()})
+          }
         }, 'all');
       } else
         this.loading = false;
