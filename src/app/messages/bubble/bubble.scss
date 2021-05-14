@@ -1,0 +1,38 @@
+@import "../../icon_fix";
+@import '~@angular/material/theming';
+@import '../../../theme/colorpalette';
+@import '../../../theme/wilmaplus_theme';
+
+.wplus-bubble {
+  border-radius: 25px;
+  //margin: 20px;
+  margin-top: 5px;
+  max-width: 400px;
+  padding: 10px;
+  width: max-content;
+  word-wrap: break-word;
+}
+
+.wplus-bubble > * {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.wplus-bubble-receiving {
+  @include theme(background-color, accent, main);
+  @include themeContrast(color, accent, main);
+  margin-left: 25px;
+  margin-right: 5px;
+}
+
+.wplus-bubble-sending {
+  @include theme(background-color, primary, main);
+  @include themeContrast(color, primary, main);
+  margin-left: 5px;
+}
+
+@media only screen and (max-width: 560px) {
+  .wplus-bubble {
+    max-width: 200px;
+  }
+}

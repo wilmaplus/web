@@ -56,7 +56,7 @@ $wilmaplus-dark-theme: mat-dark-theme((
 @media (prefers-color-scheme: dark) {
   @include angular-material-theme($wilmaplus-dark-theme);
   $selectedTheme: $wilmaplus-dark-theme;
-  body {background-color: black};
+  body {background-color: black; color: white;};
 }
 
 @mixin theme($property: null, $key: null, $key2: null) {

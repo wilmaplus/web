@@ -10,8 +10,8 @@ export class AuthDatabase extends Dexie {
 
   constructor() {
     super("auth");
-    this.version(4).stores({
-      accounts: '&id, wilmaServer, username, password, name, type, primusId, formKey, cookies, settings, photo, school, selectedRole, fullscreenHomepage, messageReceivedColor, messageSentColor, sendFabButton, composeCardColor, messageBackground, darkTheme, [wilmaServer+username+type+primusId]',
+    this.version(5).stores({
+      accounts: '&id, wilmaServer, username, password, name, type, primusId, formKey, cookies, mfaToken, settings, photo, school, selectedRole, fullscreenHomepage, messageReceivedColor, messageSentColor, sendFabButton, composeCardColor, messageBackground, darkTheme, [wilmaServer+username+type+primusId]',
       roles: '&id, Slug, Name, Type, PrimusId, FormKey, Photo, EarlyEduUser, School, owner, [Slug+owner], [PrimusId+Type+owner]'
     });
     this.accounts = this.table('accounts');

@@ -1,0 +1,41 @@
+<div class="client">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{message?.Subject || ('loading' | translate)}}</span>
+    <span class="toolbar-spacer"></span>
+  </mat-toolbar>
+  <div class="message-container loader" style="overflow-y: auto" *ngIf="loading" align="center">
+    <mat-card>
+      <mat-card-content>
+        <mat-progress-spinner mode="indeterminate" color="accent" diameter="60" *ngIf="loading"></mat-progress-spinner>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="viewer-container" *ngIf="!loading">
+    <div class="chat">
+      <mat-list role="list" style="overflow-y: auto">
+        <div *ngFor="let reply of chat">
+          <message-chat-bubble-received *ngIf="!replySenderIsUser(reply)" [reply]="reply"></message-chat-bubble-received>
+          <message-chat-bubble-sent *ngIf="replySenderIsUser(reply)" [reply]="reply"></message-chat-bubble-sent>
+        </div>
+      </mat-list>
+      <div class="compose-box" *ngIf="this.message?.AllowCollatedReply">
+        <button
+          mat-icon-button
+          (click)="toggled = !toggled"
+          [(emojiPickerIf)]="toggled"
+          [emojiPickerDirection]="'left'"
+          (emojiPickerSelect)="handleSelection($event)"><mat-icon>emoji_emotions</mat-icon></button>
+        <mat-form-field floatLabel="never" style="overflow-y: auto">
+          <mat-label>{{'msg_placeholder' | translate}}</mat-label>
+          <textarea [(ngModel)]="composeContent" matInput [placeholder]="'msg_placeholder' | translate" rows="1" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMaxRows="6"></textarea>
+        </mat-form-field>
+        <button mat-mini-fab color="primary" aria-label="Send message" (click)="sendBtnClick()">
+          <mat-icon>{{composeContent.length>0 ? 'send' : 'attach_file'}}</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

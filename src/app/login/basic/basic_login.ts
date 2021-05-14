@@ -76,6 +76,8 @@ export class LoginWilmaComponent extends WilmaPlusAppComponent implements OnInit
             this.translateService.get('invalid_credentials').subscribe((value: string) => {
               this.showSnackBar(value, 3500);
             })
+          } else if (error.completeMFA) {
+            this.showSnackBar("MFA Required!", 3500);
           } else {
             this.openError(error, () => {this.signIn()});
           }

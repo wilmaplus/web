@@ -37,6 +37,10 @@ export class MessageElement extends WilmaPlusAppComponent {
     return this.message.SenderGuardianName || this.message.Sender;
   }
 
+  getMessageURL() {
+    return '/messages/'+this.message?.Id;
+  }
+
   unreadMessage() {
     if (this.message === undefined)
       return false;

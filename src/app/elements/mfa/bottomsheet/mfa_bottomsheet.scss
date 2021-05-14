@@ -1,0 +1,45 @@
+.mfaSheet {
+  margin-bottom: 5px;
+}
+
+.mfaSheet > button {
+  margin-top: 15px;
+}
+
+
+.checkBoxMargin {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.progressBar {
+  margin-top: 3px;
+}
+
+.buttonsContainer {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.buttonsContainer button {
+  flex: 1 1 auto;
+  margin: 3px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.warnBox {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+}
+
+.warnBox > * {
+  margin: 2px;
+}

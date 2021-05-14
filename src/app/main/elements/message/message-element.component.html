@@ -1,4 +1,4 @@
-<div class="messagebox" role="listitem" matRipple>
+<div class="messagebox" role="listitem" matRipple [routerLink]="getMessageURL()">
   <div class="messagebox-row">
     <div class="messagebox-unread-ball" *ngIf="unreadMessage()">
 

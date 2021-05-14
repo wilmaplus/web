@@ -57,5 +57,15 @@
   "unread": "Lukemattomat",
   "sent": "Lähetetyt",
   "archive": "Arkisto",
-  "drafts": "Luonnokset"
+  "drafts": "Luonnokset",
+  "mfa_sheet_title": "Monivaiheinen tunnistautuminen",
+  "mfa_sheet_desc": "Syötä MFA koodisi Google Authenticatorista tai toisesta sovelluksesta.",
+  "change_account": "Vaihda käyttäjätili",
+  "invalid_mfa": "Virheellinen koodi!",
+  "msg_missing": "Viestiä ei löytynyt. Väärä linkki tai osoite?",
+  "msg_status_sent": "Lähetetty",
+  "msg_status_failed": "Epäonnistui",
+  "msg_status_pending": "Odottaa",
+  "msg_status_sending": "Lähetetään",
+  "msg_placeholder": "Kirjoita jotakin lähettääksesi viestin..."
 }

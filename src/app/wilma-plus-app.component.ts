@@ -10,7 +10,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {ApiClient} from "./client/apiclient";
 import {AuthApi} from "./authapi/auth_api";
 import {AccountModel, IAccountModel} from "./authapi/accounts_db/model";
-import {BottomSheetError} from "./elements/error/bottomsheet/error_botomsheet";
+import {BottomSheetError} from "./elements/error/bottomsheet/error_bottomsheet";
 import {OverlayContainer} from "@angular/cdk/overlay";
 
 @Component({
@@ -44,18 +44,18 @@ export class WilmaPlusAppComponent {
     });
   }
 
-  openError(apiError: ApiError, retryCallback: () => void) {
+  openError(apiError: ApiError, retryCallback: () => void, cancelAllowed = true) {
     console.log(apiError);
     if (apiError.wilmaError)
-      this.openErrorDialog(apiError.errorCode, apiError.errorDescription, retryCallback)
+      this.openErrorDialog(apiError.errorCode, apiError.errorDescription, retryCallback, cancelAllowed)
     else
       this.translate.get('error_occurred').subscribe((value: string) => {
-        this.openErrorDialog(value, apiError.errorDescription, retryCallback)
+        this.openErrorDialog(value, apiError.errorDescription, retryCallback, cancelAllowed)
       });
   }
 
-  private openErrorDialog(title: any, message: any, retryCallback: () => void) {
-    this._bottomSheet.open(BottomSheetError, {data: {title: title, message: message, retryCallback: () => {retryCallback()}}});
+  private openErrorDialog(title: any, message: any, retryCallback: () => void, cancelAllowed = true) {
+    this._bottomSheet.open(BottomSheetError, {data: {title: title, message: message, retryCallback: () => {retryCallback()}}, disableClose: !cancelAllowed});
   }
 
 

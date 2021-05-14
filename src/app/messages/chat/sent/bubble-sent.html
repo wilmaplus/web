@@ -1,0 +1,12 @@
+<div class="horizontalFlexBox sendingBox">
+  <div class="wplus-bubble wplus-bubble-sending">
+    <div class="wilma-htmlbox" #msgContent>
+
+    </div>
+  </div>
+</div>
+<div class="horizontalFlexBox sendingBox dataBox">
+  <p [style]="{color: (getStatus()=='msg_status_failed'?'red':'inherit')}">{{getStatus() | translate}}</p>
+  <p>{{getMessageTimeStamp()}}</p>
+</div>
+

@@ -1,0 +1,48 @@
+@import "../../bubble/bubble";
+
+.horizontalFlexBox {
+  display: flex;
+}
+
+.senderIcon {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+  height: 35px;
+  width: 35px;
+  font-size: 20px;
+  background-color: #32af24;
+  color: white;
+}
+
+.senderName {
+  @include themeContrast(color, primary, );
+  justify-content: end;
+  align-content: end;
+  align-self: flex-end;
+  margin: 5px;
+}
+
+.senderNameColor {
+  color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  .senderNameColor {
+    color: white;
+  }
+}
+
+
+.senderIcon > p {
+  margin: 0;
+}
+
+.timestamp {
+  align-self: flex-end;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 3px;
+}

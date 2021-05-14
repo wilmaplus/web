@@ -8,3 +8,23 @@ body { margin: 0; font-family: Ubuntu, "Helvetica Neue", sans-serif; }
 .bottomSheetPadding {
   padding: 8px 16px;
 }
+
+.wilma-htmlbox > * {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.wilma-htmlbox > a, .wilma-htmlbox > * > a {
+  filter: invert();
+}
+
+.wilma-htmlbox {
+  margin-top: -10px !important;
+  margin-bottom: -10px !important;
+}
+
+.emoji-picker-icon{
+  font-size:20px;
+  right: 86px;
+  top: 17px;
+}

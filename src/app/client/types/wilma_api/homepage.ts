@@ -12,6 +12,8 @@ export interface Homepage {
   Photo: string;
   EarlyEduUser: boolean;
   Roles: Role[];
+  // Session for MFA auth
+  session: string;
 }
 
 export interface Role {

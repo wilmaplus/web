@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { WilmaPlusAppComponent } from './wilma-plus-app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,7 +32,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {AccountSelector} from "./main/account_selector/bottomsheet";
 import {WilmaClient} from './main/client';
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {BottomSheetError} from "./elements/error/bottomsheet/error_botomsheet";
+import {BottomSheetError} from "./elements/error/bottomsheet/error_bottomsheet";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {WilmaPlusBottomSheet} from "./main/wilmaplus_bottomsheet/wilmaplus_bottomsheet";
 import {Homepage} from "./main/pages/homepage/homepage";
@@ -53,6 +53,12 @@ import {ReservationElement} from "./main/pages/homepage/common/schedule/elements
 import {ScheduleCardElement} from "./main/pages/homepage/desktop/schedule/schedule";
 import {Messages} from "./main/pages/messages/messages";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {BottomSheetMFAPrompt} from "./elements/mfa/bottomsheet/mfa_bottomsheet";
+import {NgOtpInputModule} from "ng-otp-input";
+import {MessageViewer} from "./messages/viewer/message-viewer";
+import {ChatBubbleReceived} from "./messages/chat/received/chat-bubble-received";
+import {ChatBubbleSent} from "./messages/chat/sent/chat-bubble-sent";
+import {NgxEmojiPickerModule} from "ngx-emoji-picker";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -79,7 +85,11 @@ export function createTranslateLoader(http: HttpClient) {
     BadgeCardElement,
     MessagesCardElement,
     ScheduleCardElement,
-    Messages
+    Messages,
+    BottomSheetMFAPrompt,
+    MessageViewer,
+    ChatBubbleReceived,
+    ChatBubbleSent
   ],
   imports: [
 
@@ -117,7 +127,9 @@ export function createTranslateLoader(http: HttpClient) {
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     FlexLayoutModule,
     DragDropModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgOtpInputModule,
+    NgxEmojiPickerModule
   ],
   providers: [HttpClientModule, ApiClient, GlobalConfig, AccountModel, AuthDatabase, AuthApi],
   bootstrap: [WilmaPlusAppComponent]

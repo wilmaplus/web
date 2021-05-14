@@ -1,0 +1,22 @@
+@import "../../bubble/bubble";
+
+.horizontalFlexBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.sendingBox {
+  justify-content: flex-end;
+  justify-items: flex-end;
+  align-items: flex-end;
+  align-content: flex-end;
+}
+
+.dataBox {
+  font-size: 14px;
+  margin-top: 4px !important;
+}
+
+.dataBox > * {
+  margin: 3px;
+}

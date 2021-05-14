@@ -1,0 +1,15 @@
+<div class="horizontalFlexBox">
+  <div class="senderIcon" [style]="{color: getLetterColor(), 'background-color': getSenderColor()}">
+    <p>{{getSenderLetter()}}</p>
+  </div>
+  <p class="senderName senderNameColor">{{this.reply?.Sender}}</p>
+</div>
+<div class="horizontalFlexBox">
+  <div class="wplus-bubble wplus-bubble-receiving">
+    <div class="wilma-htmlbox" #msgContent>
+
+    </div>
+  </div>
+  <p class="timestamp">{{getMessageTimeStamp()}}</p>
+</div>
+

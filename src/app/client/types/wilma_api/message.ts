@@ -6,6 +6,13 @@ export enum Folder {
   draft="draft"
 }
 
+export enum SendStatus {
+  sending = "msg_status_sending",
+  pending = "msg_status_pending",
+  fained = "msg_status_failed",
+  sent = "msg_status_sent",
+}
+
 export interface Message {
   Id: number
   Subject: string
@@ -34,5 +41,6 @@ export interface Reply {
   TimeStamp: string,
   SenderId: number,
   SenderType: number,
-  Sender: string
+  Sender: string,
+  SendStatus: string|undefined
 }

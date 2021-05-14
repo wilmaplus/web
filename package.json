@@ -31,9 +31,13 @@
     "dexie": "^3.0.3",
     "md5-typescript": "^1.0.5",
     "moment": "^2.29.1",
+    "ng-otp-input": "^1.7.1",
+    "ngx-emoji-picker": "^0.1.6",
+    "node-html-parser": "^3.3.0",
     "rxjs": "~6.6.0",
     "ts-md5": "^1.2.7",
     "tslib": "^2.0.0",
+    "twemoji": "^13.0.2",
     "uuid": "^8.3.2",
     "zone.js": "~0.10.2"
   },

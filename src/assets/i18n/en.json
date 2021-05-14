@@ -57,5 +57,15 @@
   "unread": "Unread",
   "sent": "Sent",
   "archive": "Archive",
-  "drafts": "Drafts"
+  "drafts": "Drafts",
+  "mfa_sheet_title": "Multi Factor authentication",
+  "mfa_sheet_desc": "Enter your MFA Code from Google Authenticator or other app.",
+  "change_account": "Change Account",
+  "invalid_mfa": "Invalid code!",
+  "msg_missing": "Message not found. Invalid link or ID?",
+  "msg_status_sent": "Sent",
+  "msg_status_failed": "Failed",
+  "msg_status_pending": "Pending",
+  "msg_status_sending": "Sending",
+  "msg_placeholder": "Type something to send a message..."
 }
