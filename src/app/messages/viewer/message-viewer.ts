@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {WilmaPlusAppComponent} from "../../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
@@ -32,6 +32,7 @@ export class MessageViewer extends WilmaPlusAppComponent {
   chat: Reply[] = []
   composeContent: string = '';
   toggled: boolean = false;
+  @ViewChild('chatBox', {read: ElementRef}) private chatBox: ElementRef | undefined;
 
   constructor(snackBar: MatSnackBar, _bottomSheet: MatBottomSheet, router: Router, titleService: Title, translate: TranslateService, private _location: Location, private authApi: AuthApi, private apiClient:ApiClient, private _sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) {
     super(snackBar, router, titleService, translate, _bottomSheet);
@@ -62,6 +63,7 @@ export class MessageViewer extends WilmaPlusAppComponent {
       this.setTitle(this.message.Subject);
       this.chat = [{Id: -1, SenderId: this.message.SenderId, ContentHtml: this.message.ContentHtml, Sender: this.message.Sender, SenderType: this.message.SenderType, TimeStamp: this.message.TimeStamp, SendStatus: SendStatus.sent}];
       this.message.ReplyList.map(item => {this.chat.push(item)});
+      setTimeout(() => {this.scrollToBottom();}, 300);
     }, error => {
       this.playAudio('message_failure');
       this.openError(error, () => {this.loadMessage()}, false);
@@ -119,10 +121,12 @@ export class MessageViewer extends WilmaPlusAppComponent {
       let uName = this.role?.Name || this.account?.name || '';
       let reply = {Id: new Date().getMilliseconds(), SenderId: uId, ContentHtml: this.composeContent, Sender: uName, SenderType: uType, TimeStamp: moment().toISOString(true), SendStatus: SendStatus.sending};
       this.chat.push(reply);
+      setTimeout(()=>{this.scrollToBottom()}, 100);
       this.apiClient.collatedReply(this.account, this.messageId, this.composeContent, msg => {
         this.message = msg.message;
         this.chat = [{Id: -1, SenderId: this.message.SenderId, ContentHtml: this.message.ContentHtml, Sender: this.message.Sender, SenderType: this.message.SenderType, TimeStamp: this.message.TimeStamp, SendStatus: SendStatus.sent}];
         this.message.ReplyList.map(item => {this.chat.push(item)});
+        this.scrollToBottom();
         this.composeContent = "";
         this.playAudio("message_sent");
       }, err => {
@@ -142,6 +146,14 @@ export class MessageViewer extends WilmaPlusAppComponent {
     audio.src = "../../../assets/media/"+name+".wav";
     audio.load();
     audio.play();
+  }
+
+  scrollToBottom(): void {
+    if (this.chatBox === undefined)
+      return;
+    try {
+      this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
+    } catch(err) {console.log(err);}
   }
 
 }

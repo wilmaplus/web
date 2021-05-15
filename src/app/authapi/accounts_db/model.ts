@@ -66,8 +66,6 @@ export class AccountModel implements IAccountModel {
   public static fromRawModel(model: IAccountModel) {
     let newModel = new AccountModel(model.composeCardColor, model.cookies, model.mfaToken, model.darkTheme, model.formKey, model.fullscreenHomepage, model.messageBackground, model.messageReceivedColor, model.messageSentColor, model.name, AccountModel.getPassword(model.password), model.photo, model.primusId, model.school, model.selectedRole, model.sendFabButton, model.settings, model.type, model.username, model.wilmaServer);
     newModel.id = model.id;
-    console.log(newModel);
-    console.log(model);
     return newModel;
   }
 

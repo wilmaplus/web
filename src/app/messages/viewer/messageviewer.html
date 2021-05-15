@@ -15,7 +15,7 @@
   </div>
   <div class="viewer-container" *ngIf="!loading">
     <div class="chat">
-      <mat-list role="list" style="overflow-y: auto">
+      <mat-list role="list" style="overflow-y: auto" #chatBox>
         <div *ngFor="let reply of chat">
           <message-chat-bubble-received *ngIf="!replySenderIsUser(reply)" [reply]="reply"></message-chat-bubble-received>
           <message-chat-bubble-sent *ngIf="replySenderIsUser(reply)" [reply]="reply"></message-chat-bubble-sent>

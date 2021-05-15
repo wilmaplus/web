@@ -67,5 +67,6 @@
   "msg_status_failed": "Epäonnistui",
   "msg_status_pending": "Odottaa",
   "msg_status_sending": "Lähetetään",
-  "msg_placeholder": "Kirjoita jotakin lähettääksesi viestin..."
+  "msg_placeholder": "Kirjoita jotakin lähettääksesi viestin...",
+  "sign_out": "Kirjaudu ulos"
 }

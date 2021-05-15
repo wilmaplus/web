@@ -67,5 +67,6 @@
   "msg_status_failed": "Failed",
   "msg_status_pending": "Pending",
   "msg_status_sending": "Sending",
-  "msg_placeholder": "Type something to send a message..."
+  "msg_placeholder": "Type something to send a message...",
+  "sign_out": "Sign out"
 }

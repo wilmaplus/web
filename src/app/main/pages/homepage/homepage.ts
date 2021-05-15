@@ -142,16 +142,16 @@ export class Homepage extends WilmaPlusAppComponent {
       }
     } else {
       if (environment.production) {
+        this.tabs = [];
         this.tabs = [
           {type: 1},
           {type: 2}
         ]
       } else {
+        this.tabs = [];
         this.tabs = [
-          this.tabs = [
-            {type: 1},
-            {type: 2}
-          ]
+          {type: 1},
+          {type: 2}
         ];
         console.log(this.tabs);
       }

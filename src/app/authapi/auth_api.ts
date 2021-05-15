@@ -159,6 +159,16 @@ export class AuthApi {
       });
   }
 
+  deleteAccount(account: AccountModel, callback: () => void, error: (apiError: ApiError) => void) {
+    this.authDb.accounts.delete(account.id).then(() => {
+      this.deleteAllRolesOfAccount(account, () => {
+        callback();
+      }, err => {error(err)});
+    }).catch((exception: any) => {
+      error(new ApiError('db-4', exception.toString(), exception));
+    });
+  }
+
   updateAccount(account: AccountModel, callback: () => void, error: (apiError: ApiError) => void) {
     this.authDb.accounts.update(account.id, account).then(callback)
       .catch((exception: any) => {
@@ -199,6 +209,12 @@ export class AuthApi {
     }, () => {
       callback();
     }, roles).nextItem();
+  }
+
+  deleteAllRolesOfAccount(account: AccountModel, callback: () => void, error: (apiError: ApiError) => void) {
+    this.authDb.roles.where({owner: account.id}).delete().then(callback).catch((exception: any) => {
+      error(new ApiError('db-6', exception.toString(), exception));
+    });
   }
 
   convertApiRoles(owner: string, roles: Role[]) {

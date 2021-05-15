@@ -7,5 +7,5 @@
     <mat-icon>error</mat-icon>
     <p>{{'invalid_mfa' | translate}}</p>
   </div>
-  <button color="accent" mat-raised-button [disabled]="loading">{{'change_account' | translate}}</button>
+  <button color="accent" mat-raised-button [disabled]="loading" (click)="changeAccount()">{{(otherAccountsFound ? 'change_account' : 'sign_out') | translate}}</button>
 </div>
