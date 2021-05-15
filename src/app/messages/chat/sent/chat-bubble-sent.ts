@@ -27,7 +27,6 @@ export class ChatBubbleSent extends WilmaPlusAppComponent {
 
   constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet) {
     super(snackBar, router, titleService, translate, bottomSheet);
-    // @ts-ignore
   }
 
 
@@ -64,32 +63,6 @@ export class ChatBubbleSent extends WilmaPlusAppComponent {
       return SendStatus.sent;
     } else
       return this.reply.SendStatus;
-  }
-
-  getSenderColor() {
-    return this.intToRGB(this.hashCode(this.senderToMD5()));
-  }
-  private static getContrastColor(hex: string) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
-  }
-
-  getLetterColor() {
-    let colorRGB = ChatBubbleSent.getContrastColor(this.getSenderColor());
-    if (colorRGB != null) {
-      let sum = (colorRGB.r*299 + colorRGB.g*587+colorRGB.b*114)/1000;
-      return sum >= 128 ? "#000" : "#fff";
-    } else {
-      return "#fff";
-    }
-  }
-
-  getSenderLetter() {
-    return this.reply?.Sender?.substr(0,1).toUpperCase();
   }
 
   intToRGB(number: number) {
