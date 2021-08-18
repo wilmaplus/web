@@ -20,14 +20,14 @@
 
 .wplus-bubble-receiving {
   @include theme(background-color, accent, main);
-  @include themeContrast(color, accent, main);
+  @include themeContrast(color, accent, contrast);
   margin-left: 25px;
   margin-right: 5px;
 }
 
 .wplus-bubble-sending {
   @include theme(background-color, primary, main);
-  @include themeContrast(color, primary, main);
+  @include themeContrast(color, primary, contrast);
   margin-left: 5px;
 }
 

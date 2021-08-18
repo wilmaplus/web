@@ -5,11 +5,11 @@
       <mat-progress-spinner mode="indeterminate" color="accent" diameter="20" *ngIf="loading"></mat-progress-spinner>
     </div>
     <mat-list role="list" style="overflow-y: auto; padding-top: 0;" *ngIf="!loading">
-      <wilmaplus-message *ngFor="let message of unreadMessages" [message]="message"></wilmaplus-message>
+      <wilmaplus-message *ngFor="let message of unreadMessages" [message]="message" [userId]="userInfo.id" [type]="userInfo.type"></wilmaplus-message>
     </mat-list>
     <hr *ngIf="inboxMessages.length>0" class="messages-divider">
     <mat-list role="list" style="overflow-y: auto; padding-top: 0;" *ngIf="!loading">
-      <wilmaplus-message *ngFor="let message of inboxMessages" [message]="message"></wilmaplus-message>
+      <wilmaplus-message *ngFor="let message of inboxMessages" [message]="message" [userId]="userInfo.id" [type]="userInfo.type"></wilmaplus-message>
     </mat-list>
   </mat-card-content>
 </mat-card>

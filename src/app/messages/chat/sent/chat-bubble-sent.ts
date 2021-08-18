@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, Renderer2, ViewChild} from "@angular/core";
+import {Component, ElementRef, Input, ViewChild} from "@angular/core";
 import {WilmaPlusAppComponent} from "../../../wilma-plus-app.component";
 import {Reply, SendStatus} from "../../../client/types/wilma_api/message";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -7,9 +7,7 @@ import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {Md5} from 'ts-md5/dist/md5';
-import {Renderer} from "@angular/compiler-cli/ngcc/src/rendering/renderer";
 import * as moment from "moment";
-import {reworkMessageHTML} from "../utils";
 
 
 @Component({
@@ -74,6 +72,7 @@ export class ChatBubbleSent extends WilmaPlusAppComponent {
   }
 
   applyContent() {
-    this.content?.nativeElement.insertAdjacentHTML('beforeend', reworkMessageHTML(this.reply?.ContentHtml));
+    // TODO replace this dangerous operation with something else!
+    this.content?.nativeElement.insertAdjacentHTML('beforeend', this.reply?.ContentHtml);
   }
 }

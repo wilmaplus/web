@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef} from "@angular/core";
+import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {WilmaPlusAppComponent} from "../../../wilma-plus-app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
@@ -13,7 +13,7 @@ import {AuthApi} from "../../../authapi/auth_api";
 import {MiscUtils} from "../../../utils/misc";
 import {ApiClient} from "../../../client/apiclient";
 import {ReLoginUtils} from "../../../utils/relogin";
-import {CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDropList, CdkDropListGroup} from '@angular/cdk/drag-drop';
 import { environment } from 'src/environments/environment';
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
@@ -33,6 +33,7 @@ export class Homepage extends WilmaPlusAppComponent {
   tabs: any = []
   fetchedHomepage = false
   private translateService: TranslateService
+  wPlusRouter: Router
 
   cols : number = 0;
 
@@ -45,9 +46,10 @@ export class Homepage extends WilmaPlusAppComponent {
   }
 
 
-  constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient:ApiClient, private _sanitizer: DomSanitizer, private breakpointObserver: BreakpointObserver) {
+  constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient:ApiClient, private _sanitizer: DomSanitizer, private breakpointObserver: BreakpointObserver, private cdr: ChangeDetectorRef) {
     super(snackBar, router, titleService, translate, bottomSheet);
     this.translateService = translate;
+    this.wPlusRouter = router;
     this.refreshUI(true);
   }
 
@@ -106,14 +108,22 @@ export class Homepage extends WilmaPlusAppComponent {
       model.updateUser(homepage)
       this.authApi.updateAccount(model, () => {
         this.fetchedHomepage = true;
-        this.refreshUI(false);
+        this.refreshUI(true);
       }, error => {
         this.openError(error, () => {this.refreshProfile()})
       })
     }, error => {
       if (error.reLogin) {
         ReLoginUtils.reLogin(this.apiClient, this.authApi, () => {
-          this.refreshUI(true);
+          if (!this.mobile) {
+            // Small hack to fix glitchy homepage on desktop
+            this.wPlusRouter.navigate(['/']).then(() => {
+              setTimeout(() => {
+                this.wPlusRouter.navigate(['/home']);
+              }, 200);
+            });
+          } else
+            this.refreshUI(true);
         }, (error) => {
           this.openError(error, () => {this.refreshProfile()})
         }, this.account, this._bottomSheet);
@@ -142,18 +152,23 @@ export class Homepage extends WilmaPlusAppComponent {
       }
     } else {
       if (environment.production) {
-        this.tabs = [];
-        this.tabs = [
-          {type: 1},
-          {type: 2}
-        ]
+        setTimeout(() => {this.tabs = [];this.cdr.detectChanges();})
+        setTimeout(() => {
+          this.tabs = [
+            {type: 1},
+            {type: 2}
+          ];
+          this.cdr.detectChanges();
+        });
       } else {
-        this.tabs = [];
-        this.tabs = [
-          {type: 1},
-          {type: 2}
-        ];
-        console.log(this.tabs);
+        setTimeout(() => {this.tabs = [];this.cdr.detectChanges();})
+        setTimeout(() => {
+          this.tabs = [
+            {type: 1},
+            {type: 2}
+          ];
+          this.cdr.detectChanges();
+        });
       }
     }
   }
@@ -167,7 +182,6 @@ export class Homepage extends WilmaPlusAppComponent {
   }
 
   ngOnInit() {
-    // TODO remove after mobile homepage is done
     if (window.screen.width >= 360 && window.screen.width < 1024) { // 768px portrait
       this.mobile = true;
     } else {

@@ -68,5 +68,6 @@
   "msg_status_pending": "Odottaa",
   "msg_status_sending": "Lähetetään",
   "msg_placeholder": "Kirjoita jotakin lähettääksesi viestin...",
-  "sign_out": "Kirjaudu ulos"
+  "sign_out": "Kirjaudu ulos",
+  "other_recipients_text": "ja {{others}} muuta"
 }

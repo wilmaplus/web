@@ -8,7 +8,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {Message} from "../../../client/types/wilma_api/message";
 import * as moment from 'moment';
 import {Md5} from 'ts-md5/dist/md5';
-import has = Reflect.has;
+
 
 @Component({
   selector: 'wilmaplus-message',
@@ -21,8 +21,17 @@ export class MessageElement extends WilmaPlusAppComponent {
   @Input()
   message: Message | undefined
 
+  @Input()
+  userId: number = 0
+  @Input()
+  type: number = 0
+  langTranslate: TranslateService
+
+  senderName: string = ""
+
   constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet) {
     super(snackBar, router, titleService, translate, bottomSheet);
+    this.langTranslate = translate;
   }
 
   getMessageName() {
@@ -31,9 +40,22 @@ export class MessageElement extends WilmaPlusAppComponent {
     return this.message.Subject;
   }
 
-  getMessageSender() {
+  async getMessageSenderName() {
     if (this.message === undefined)
       return "";
+    // TODO cannot implement without fetching recipients list for every message. Leave this to be implemented, when offline messages would be a thing
+    /*
+    if (!this.message.SenderGuardianName && this.message.SenderId == this.userId && this.message.SenderType == this.type && this.message.Folder !== Folder.sent) {
+      let lastReplySender = this.message.Recipients.length > 2 ? this.message.Recipients[0] : (this.message.Recipients[0])+" "+(await this.langTranslate.get('other_recipients_text', {others: this.message.RecipientCount-1}).toPromise())
+      if (this.message.ReplyList) {
+        let reply = this.message.ReplyList[this.message.ReplyList.length-1];
+        if (reply.SenderId === this.type && reply.SenderType === this.type)
+           lastReplySender = this.message.Recipients.length == 1 ? reply.Sender : (reply.Sender)+" "+(await this.langTranslate.get('other_recipients_text', {others: this.message.RecipientCount-1}).toPromise())
+        else
+           lastReplySender = this.message.Recipients.length > 2 ? reply.Sender : (reply.Sender)+" "+(await this.langTranslate.get('other_recipients_text', {others: this.message.RecipientCount-1}).toPromise())
+        return lastReplySender;
+      }
+    }*/
     return this.message.SenderGuardianName || this.message.Sender;
   }
 
@@ -83,7 +105,16 @@ export class MessageElement extends WilmaPlusAppComponent {
   messageSenderToMD5() {
     if (this.message === undefined)
       return ""
-    return new Md5().appendStr(this.message.SenderId.toString()).end(false).toString();
+    let id = this.message.SenderId.toString();
+    // TODO cannot implement without fetching recipients list for every message. Leave this to be implemented, when offline messages would be a thing
+    /*
+    if (!this.message.SenderGuardianName && this.message.SenderId == this.userId && this.message.SenderType == this.type && this.message.Folder !== Folder.sent) {
+      id = this.message.Recipients[0];
+      if (this.message.ReplyList) {
+        id = this.message.ReplyList[this.message.ReplyList.length-1].SenderId.toString();
+      }
+    }*/
+    return new Md5().appendStr(id).end(false).toString();
   }
 
   intToRGB(number: number) {
@@ -106,5 +137,12 @@ export class MessageElement extends WilmaPlusAppComponent {
     } else {
       return sentDate.format("DD.MM.yyyy HH:mm");
     }
+  }
+
+  ngOnInit() {
+    this.getMessageSenderName().then(value => {
+      console.log(value);
+      this.senderName = value;
+    })
   }
 }

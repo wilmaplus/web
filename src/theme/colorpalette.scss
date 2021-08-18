@@ -33,10 +33,10 @@ $wilmaplus-primary: (
 
 
 $dark-accent: (
-  main: #c78028,
+  main: #00475d,
   lighter: #eed9bf,
-  darker: #b36318,
-  200: #c78028, // For slide toggle,
+  darker: #022f4b,
+  200: #25538c, // For slide toggle,
   contrast : (
     main: $dark-primary-text,
     lighter: $dark-primary-text,
@@ -45,10 +45,10 @@ $dark-accent: (
 );
 
 $dark-primary: (
-  main: #337480,
-  lighter: #c2d5d9,
-  darker: #205763,
-  200: #337480, // For slide toggle,
+  main: #282828,
+  lighter: #3b3b3b,
+  darker: #181818,
+  200: #646464, // For slide toggle,
   contrast : (
     main: $light-primary-text,
     lighter: $dark-primary-text,

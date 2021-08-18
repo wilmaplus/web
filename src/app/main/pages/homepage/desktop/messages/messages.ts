@@ -22,6 +22,7 @@ export class MessagesCardElement extends WilmaPlusAppComponent {
   loading = true;
   unreadMessages: Message[] = []
   inboxMessages: Message[] = []
+  userInfo: {type: number, id: number} = {type: 0, id: 0}
 
   constructor(snackBar: MatSnackBar, router: Router, titleService: Title, translate: TranslateService, bottomSheet: MatBottomSheet, private authApi: AuthApi, private apiClient: ApiClient) {
     super(snackBar, router, titleService, translate, bottomSheet);
@@ -30,8 +31,30 @@ export class MessagesCardElement extends WilmaPlusAppComponent {
 
   loadMessages() {
     this.loading = true;
-    this.authApi.getSelectedAccountWithCorrectUrl(accountModel => {
+    this.authApi.getSelectedAccountWithCorrectUrl(async accountModel => {
       if (accountModel !== undefined) {
+        if (accountModel.selectedRole !== null) {
+          try {
+            let role = await this.authApi.getRoleAsPromise(accountModel.selectedRole);
+            if (role !== null) {
+              this.userInfo.type = role.Type;
+              this.userInfo.id = role.PrimusId;
+            } else {
+              this.userInfo.type = accountModel.type;
+              this.userInfo.id = accountModel.primusId;
+            }
+          } catch (error) {
+            this.loading = false;
+            console.log(error);
+            // Re-login is handled by homepage, so tab is being silent while homepage re-logins.
+            if (error.reLogin)
+              return;
+            this.openError(error, () => {this.loadMessages()});
+          }
+        } else {
+          this.userInfo.type = accountModel.type;
+          this.userInfo.id = accountModel.primusId;
+        }
         this.apiClient.getMessages(accountModel, messages => {
           this.loading = false;
           this.unreadMessages = messages.messages.filter((item: Message) => {return item.Status});

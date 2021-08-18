@@ -136,6 +136,16 @@ export class AuthApi {
       });
   }
 
+  getRoleAsPromise(id: string) {
+    return new Promise<IRoleModel>((resolve, reject) => {
+      this.authDb.roles.where({id: id}).first()
+        .then(resolve)
+        .catch((exception: any) => {
+          reject(new ApiError('db-4', exception.toString(), exception));
+        });
+    })
+  }
+
 
   private searchForAlternative(callback: (accountModel:IAccountModel|undefined) => void, error: (apiError: ApiError) => void) {
     this.accountsExist((exists) => {

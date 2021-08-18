@@ -39,7 +39,6 @@
 .sidenav .header {
   min-height: 150px;
   @include theme(background-color, primary, main);
-  @include themeContrast(color, primary, main);
   padding: 32px 32px 7px;
   transition: all .2s ease;
 }
@@ -138,3 +137,4 @@ $medium: 700px;
     margin-right: 5px;
   }
 }
+
